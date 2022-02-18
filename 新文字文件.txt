@@ -1,0 +1,8 @@
+https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,45000&showMore=1&multiNotice=not_cover&searchtype=1
+#rent-list-app > div > div.list-container-content > div > section.vue-list-rent-content > div > section:nth-child(1)
+data-bind
+#rent-list-app > div > div.list-container-content > div > section.vue-list-rent-content > div > section:nth-child(1) > a
+#rent-list-app > div > div.list-container-content > div > section.vue-list-rent-content > div > section:nth-child(1) > a > div.rent-item-right > div.item-title
+#rent-list-app > div > div.list-container-content > div > section.vue-list-rent-content > div > section:nth-child(1) > a > div.rent-item-right > div.item-title
+#houseInfo > div.house-pattern > span:nth-child(1)
+#houseInfo > div.house-pattern
