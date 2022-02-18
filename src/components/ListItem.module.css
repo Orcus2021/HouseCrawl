@@ -16,6 +16,7 @@
 .bad {
   background-color: rgb(247, 128, 128);
 }
+
 .listContent p {
   margin: 0;
   text-align: center;
@@ -64,6 +65,16 @@
   border-radius: 0 5px 5px 0;
   border: red 2px solid;
   background-color: red;
+  font-size: 1rem;
+  cursor: pointer;
+  color: white;
+}
+.return {
+  width: 65px;
+  padding: 0.2rem 0.5rem;
+
+  border: rgb(202, 157, 106) 2px solid;
+  background-color: rgb(202, 157, 106);
   font-size: 1rem;
   cursor: pointer;
   color: white;

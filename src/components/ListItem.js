@@ -5,6 +5,7 @@ function ListItem(props) {
   const [comment, setComment] = useState(props.comment);
   const [saveShow, setSaveShow] = useState(false);
   const [deleteShow, setDeleteShow] = useState(false);
+
   useEffect(() => {
     if (props.state === "save") {
       setSaveShow(true);
@@ -17,12 +18,21 @@ function ListItem(props) {
     setDeleteShow(false);
     props.onSent(data);
   };
+
   const deleteHandler = () => {
     let data = { state: "delete" };
     setDeleteShow(true);
     setSaveShow(false);
     props.onSent(data);
   };
+
+  const returnHandler = () => {
+    let data = { state: "standby" };
+    setDeleteShow(false);
+    setSaveShow(false);
+    props.onSent(data);
+  };
+
   const commentHandler = () => {
     let data = { comment: comment };
     props.onSent(data);
@@ -67,10 +77,13 @@ function ListItem(props) {
         ></textarea>
         <div className={classes.btns}>
           <button className={classes.save} onClick={saveHandler}>
-            save
+            Save
+          </button>
+          <button className={classes.return} onClick={returnHandler}>
+            Return
           </button>
           <button className={classes.delete} onClick={deleteHandler}>
-            delete
+            Delete
           </button>
         </div>
       </div>
