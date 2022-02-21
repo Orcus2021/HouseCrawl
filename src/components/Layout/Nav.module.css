@@ -75,7 +75,7 @@
     min-height: 100vh;
     background-color: rgb(80, 16, 139);
     top: 0;
-    left: -100vw;
+    left: -400px;
     display: flex;
     justify-content: center;
     align-items: center;

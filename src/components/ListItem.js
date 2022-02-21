@@ -18,7 +18,7 @@ function ListItem(props) {
       setBtnName("待看");
       setWaitShow(true);
     }
-  }, []);
+  }, [props.state]);
 
   const saveHandler = () => {
     if (btnName === "發財") {
@@ -78,7 +78,7 @@ function ListItem(props) {
       <div className={state}>
         <p className={classes.id}>{props.id}</p>
         <p className={classes.title}>
-          <a href={props.link} target="_blank">
+          <a href={props.link} rel="noreferrer">
             {props.title}
           </a>
         </p>

@@ -50,10 +50,10 @@ function HouseList(props) {
 
       setListData(initArr);
     });
-  }, []);
+  }, [props.token, navigate]);
 
   const sentData = async (id, data) => {
-    const response = await fetch(url + "house/" + `${id}.json`, {
+    const response = await fetch(`${url}house/${id}.json`, {
       method: "PATCH",
       body: JSON.stringify(data),
     });
