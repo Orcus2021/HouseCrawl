@@ -17,6 +17,10 @@
   background-color: rgb(247, 128, 128);
 }
 
+.wait {
+  background-color: rgb(247, 126, 166);
+}
+
 .listContent p {
   margin: 0;
   text-align: center;

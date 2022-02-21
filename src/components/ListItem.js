@@ -5,18 +5,39 @@ function ListItem(props) {
   const [comment, setComment] = useState(props.comment);
   const [saveShow, setSaveShow] = useState(false);
   const [deleteShow, setDeleteShow] = useState(false);
+  const [waitShow, setWaitShow] = useState(false);
+  const [btnName, setBtnName] = useState("");
 
   useEffect(() => {
-    if (props.state === "save") {
+    if (props.state === "standby") {
+      setBtnName("待看");
+    } else if (props.state === "save") {
+      setBtnName("發財");
       setSaveShow(true);
+    } else if (props.state === "wait") {
+      setBtnName("待看");
+      setWaitShow(true);
     }
-  }, [props.state]);
+  }, []);
 
   const saveHandler = () => {
-    let data = { state: "save" };
-    setSaveShow(true);
-    setDeleteShow(false);
-    props.onSent(data);
+    if (btnName === "發財") {
+      let waitData = { state: "wait" };
+      setSaveShow(false);
+      setDeleteShow(false);
+      setWaitShow(true);
+      setBtnName("待看");
+      props.onSent(waitData);
+      props.onUpdate("wait");
+    } else if (btnName === "待看") {
+      let data = { state: "save" };
+      setSaveShow(true);
+      setDeleteShow(false);
+      setWaitShow(false);
+      setBtnName("發財");
+      props.onSent(data);
+      props.onUpdate("save");
+    }
   };
 
   const deleteHandler = () => {
@@ -31,6 +52,7 @@ function ListItem(props) {
     setDeleteShow(false);
     setSaveShow(false);
     props.onSent(data);
+    props.onUpdate("standby");
   };
 
   const commentHandler = () => {
@@ -41,17 +63,15 @@ function ListItem(props) {
     const comment = event.target.value;
     setComment(comment);
   };
-  useEffect(() => {
-    if (props.state === "save") {
-      setSaveShow(true);
-    }
-  }, []);
+
   let state = `${classes.listContent}`;
 
   if (saveShow) {
     state = `${classes.listContent} ${classes.active}`;
   } else if (deleteShow) {
     state = `${classes.listContent} ${classes.bad}`;
+  } else if (waitShow) {
+    state = `${classes.listContent} ${classes.wait}`;
   }
   return (
     <Fragment>
@@ -77,13 +97,13 @@ function ListItem(props) {
         ></textarea>
         <div className={classes.btns}>
           <button className={classes.save} onClick={saveHandler}>
-            Save
+            {btnName}
           </button>
           <button className={classes.return} onClick={returnHandler}>
-            Return
+            待問
           </button>
           <button className={classes.delete} onClick={deleteHandler}>
-            Delete
+            刪除
           </button>
         </div>
       </div>

@@ -24,3 +24,41 @@
   align-items: center;
   justify-content: center;
 }
+
+.btns {
+  margin-bottom: 1rem;
+}
+.btns span {
+  padding-right: 5px;
+}
+
+.wait {
+  width: 65px;
+  padding: 0.2rem 0.5rem;
+
+  border: rgb(247, 126, 166) 2px solid;
+  background-color: rgb(247, 126, 166);
+  font-size: 1rem;
+  cursor: pointer;
+  color: black;
+}
+.see {
+  width: 65px;
+  padding: 0.2rem 0.5rem;
+
+  border: rgb(188, 255, 197) 2px solid;
+  background-color: rgb(188, 255, 197);
+  font-size: 1rem;
+  cursor: pointer;
+  color: black;
+}
+.ask {
+  width: 65px;
+  padding: 0.2rem 0.5rem;
+
+  border: rgb(253, 247, 196) 2px solid;
+  background-color: rgb(253, 247, 196);
+  font-size: 1rem;
+  cursor: pointer;
+  color: black;
+}

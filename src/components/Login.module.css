@@ -1,0 +1,65 @@
+.container {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.container h1 {
+  width: fit-content;
+  border-bottom: 5px solid rgb(80, 16, 139);
+}
+.content {
+  display: flex;
+  flex-direction: column;
+}
+.email {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.email label {
+  color: rgb(87, 86, 86);
+  margin-bottom: 3px;
+}
+.email input {
+  margin-bottom: 10px;
+  border-radius: 50px;
+  font-size: 1rem;
+  outline-style: none;
+  border: 2px solid rgb(163, 163, 163);
+  padding: 5px 10px;
+}
+.password {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.password label {
+  color: rgb(87, 86, 86);
+  margin-bottom: 3px;
+}
+.password input {
+  margin-bottom: 10px;
+  border-radius: 50px;
+  font-size: 1rem;
+  outline-style: none;
+  border: 2px solid rgb(163, 163, 163);
+  padding: 5px 10px;
+}
+
+.container button {
+  width: 100%;
+  color: white;
+  border: none;
+  background-color: rgb(80, 16, 139);
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 5px 20px;
+  margin: 0 auto;
+  cursor: pointer;
+  margin-top: 30px;
+}
+.check {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
