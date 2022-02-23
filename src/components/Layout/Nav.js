@@ -32,6 +32,9 @@ const Nav = (props) => {
           <Link to="/list" className={classes.nav}>
             LIST
           </Link>
+          <Link to="/houseInfo" className={classes.nav}>
+            INFORMATION
+          </Link>
         </ul>
         <div className={classes.menu} onClick={menuHandler}>
           <p>—</p>

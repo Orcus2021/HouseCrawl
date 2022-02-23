@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import classes from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence,
+} from "firebase/auth";
 
 let isChecked = false;
 
@@ -17,6 +22,7 @@ const Login = (props) => {
   useEffect(() => {
     let localEmail = localStorage.getItem("houseListEmail");
     let localChecked = localStorage.getItem("houseListChecked");
+
     if (localEmail) {
       setEmail(localEmail);
     }
@@ -25,25 +31,6 @@ const Login = (props) => {
     }
   }, []);
 
-  // const loginCount = async () => {
-  //   const response = await fetch(url, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       email: email,
-  //       password: password,
-  //       returnSecureToken: true,
-  //     }),
-  //   });
-  //   if (!response.ok) {
-  //     let data = await response.json();
-
-  //     throw new Error(data.error.message || "Register Fail");
-  //   }
-
-  //   const data = await response.json();
-  //   return data;
-  // };
   const emailHandler = (e) => {
     setEmail(e.target.value);
   };
@@ -51,26 +38,8 @@ const Login = (props) => {
     setPassword(e.target.value);
   };
   const loginHandler = () => {
-    // loginCount()
-    //   .then((d) => {
-    //     let token = d.idToken;
-    //     localStorage.setItem("houseListToken", token);
-    //     localStorage.setItem("houseListChecked", "true");
-    //     props.onToken(token);
-    //     navigate("/list");
-    //     if (isChecked) {
-    //       localStorage.setItem("houseListEmail", email);
-    //     } else {
-    //       localStorage.removeItem("houseListEmail");
-    //       localStorage.removeItem("houseListChecked");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     localStorage.removeItem("houseListEmail");
-    //   });
-
-    signInWithEmailAndPassword(auth, email, password)
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => signInWithEmailAndPassword(auth, email, password))
       .then((userCredential) => {
         const user = userCredential.user;
         localStorage.setItem("houseListToken", user.accessToken);

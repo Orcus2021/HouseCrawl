@@ -3,8 +3,19 @@ import "./App.css";
 import HouseList from "./components/HouseList";
 import Login from "./components/Login";
 import Nav from "./components/Layout/Nav";
+import HouseInfoList from "./components/detail/info/HouseInfoList";
+import HouseDetail from "./components/detail/info/HouseDetail";
+import DetailCreate from "./components/detail/info/DetailCreate";
 import { Routes, Route, useNavigate } from "react-router";
 import { initializeApp } from "firebase/app";
+import { getAuth, signOut } from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyATHxfMJPgi6L2ca7OZmD21ZcrqLwcPgyo",
@@ -18,22 +29,45 @@ const firebaseConfig = {
 };
 
 function App() {
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
   const navigate = useNavigate();
   const [token, setToken] = useState("");
+
   useEffect(() => {
     const localToken = localStorage.getItem("houseListToken");
     if (localToken) {
       setToken(localToken);
+
       navigate("/list");
     }
-  }, []);
+  }, [navigate]);
+
   const tokenHandler = (d) => {
     setToken(d);
   };
-  const app = initializeApp(firebaseConfig);
+
   const logoutHandler = () => {
     localStorage.removeItem("houseListToken");
+    signOut(auth)
+      .then(() => {
+        console.log("logout");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     setToken("");
+  };
+
+  const addHouseData = async (dataObj) => {
+    // const docRef = await addDoc(collection(db, "rentData"), dataObj);
+    // console.log("Document written with ID: ", docRef.id);
+    await setDoc(doc(db, "rentData", "LA"), dataObj);
+  };
+  const addHandler = (dataObj) => {
+    addHouseData(dataObj);
   };
 
   return (
@@ -42,11 +76,18 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Login onToken={tokenHandler} firebaseApp={app} />}
+          element={
+            <Login onToken={tokenHandler} firebaseApp={app} token={token} />
+          }
         />
         <Route
           path="/list"
           element={<HouseList token={token} firebaseApp={app} />}
+        />
+        <Route path="houseInfo" element={<HouseInfoList />} />
+        <Route
+          path="houseInfo/create"
+          element={<DetailCreate onAdd={addHandler} />}
         />
       </Routes>
     </div>
