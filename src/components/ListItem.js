@@ -22,36 +22,32 @@ function ListItem(props) {
 
   const saveHandler = () => {
     if (btnName === "發財") {
-      let waitData = { state: "wait" };
       setSaveShow(false);
       setDeleteShow(false);
       setWaitShow(true);
       setBtnName("待看");
-      props.onSent(waitData);
+      props.onSent("wait");
       props.onUpdate("wait");
     } else if (btnName === "待看") {
-      let data = { state: "save" };
       setSaveShow(true);
       setDeleteShow(false);
       setWaitShow(false);
       setBtnName("發財");
-      props.onSent(data);
+      props.onSent("save");
       props.onUpdate("save");
     }
   };
 
   const deleteHandler = () => {
-    let data = { state: "delete" };
     setDeleteShow(true);
     setSaveShow(false);
-    props.onSent(data);
+    props.onSent("delete");
   };
 
   const returnHandler = () => {
-    let data = { state: "standby" };
     setDeleteShow(false);
     setSaveShow(false);
-    props.onSent(data);
+    props.onSent("standby");
     props.onUpdate("standby");
   };
 
