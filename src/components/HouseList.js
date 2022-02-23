@@ -25,76 +25,48 @@ function HouseList(props) {
     // };
 
     const dbRef = ref(getDatabase(props.firebaseApp));
-    get(child(dbRef, "house"))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          initData = [];
-          let val = snapshot.val();
-          for (const key in val) {
-            let dataObj = {
-              keyId: key,
-              id: val[key].id,
-              title: val[key].title,
-              pattern: val[key].pattern,
-              floor: val[key].floor,
-              type: val[key].type,
-              distant: val[key].distant,
-              price: val[key].price,
-              state: val[key].state,
-              link: val[key].link,
-              comment: val[key].comment,
-            };
+    const getDate = async () => {
+      await get(child(dbRef, "house"))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            initData = [];
+            let val = snapshot.val();
+            console.log(val);
+            for (const key in val) {
+              let dataObj = {
+                keyId: key,
+                id: val[key].id,
+                title: val[key].title,
+                pattern: val[key].pattern,
+                floor: val[key].floor,
+                type: val[key].type,
+                distant: val[key].distant,
+                price: val[key].price,
+                state: val[key].state,
+                link: val[key].link,
+                comment: val[key].comment,
+              };
 
-            initData.push(dataObj);
+              initData.push(dataObj);
+            }
+
+            let initArr = initData.filter((d) => {
+              return d.state !== "delete";
+            });
+
+            setListData(initArr);
+          } else {
+            console.log("No data available");
           }
-
-          let initArr = initData.filter((d) => {
-            return d.state !== "delete";
-          });
-
-          setListData(initArr);
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    // getData().then((res) => {
-    //   for (const key in res) {
-    //     let dataObj = {
-    //       keyId: key,
-    //       id: res[key].id,
-    //       title: res[key].title,
-    //       pattern: res[key].pattern,
-    //       floor: res[key].floor,
-    //       type: res[key].type,
-    //       distant: res[key].distant,
-    //       price: res[key].price,
-    //       state: res[key].state,
-    //       link: res[key].link,
-    //       comment: res[key].comment,
-    //     };
-    //     initData.push(dataObj);
-    //   }
-
-    //   let initArr = initData.filter((d) => {
-    //     return d.state !== "delete";
-    //   });
-
-    //   setListData(initArr);
-    // });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+    getDate();
   }, [props.token, navigate, props.firebaseApp]);
 
   const sentData = async (id, data) => {
-    // const response = await fetch(`${url}house/${id}.json`, {
-    //   method: "PATCH",
-    //   body: JSON.stringify(data),
-    // });
-    // if (!response.ok) {
-    //   throw new Error("Fetch is failed");
-    // }
     const updates = {};
     updates[`/house/${id}/state`] = data;
     update(ref(getDatabase(props.firebaseApp)), updates);
