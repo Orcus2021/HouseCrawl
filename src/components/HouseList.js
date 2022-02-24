@@ -22,7 +22,7 @@ function HouseList(props) {
   //         if (snapshot.exists()) {
   //           initData = [];
   //           let val = snapshot.val();
-  //           console.log(val);
+
   //           for (const key in val) {
   //             let dataObj = {
   //               keyId: key,
@@ -57,14 +57,25 @@ function HouseList(props) {
   //   getDate();
   // }, [props.token, navigate, props.firebaseApp]);
 
-  const sentData = async (id, data) => {
+  const sentStateData = async (id, data) => {
     const updates = {};
     updates[`/house/${id}/state`] = data;
     update(ref(getDatabase(props.firebaseApp)), updates);
   };
+  const sentCommentData = async (id, data) => {
+    const updates = {};
+    updates[`/house/${id}/comment`] = data;
+    update(ref(getDatabase(props.firebaseApp)), updates);
+  };
+
+  const sentCommentHandler = (id, data) => {
+    sentCommentData(id, data).catch((error) => {
+      console.log(error);
+    });
+  };
 
   const sentItemHandler = (id, data) => {
-    sentData(id, data).catch((error) => {
+    sentStateData(id, data).catch((error) => {
       console.log(error);
     });
   };
@@ -132,6 +143,7 @@ function HouseList(props) {
                 comment={d.comment}
                 state={d.state}
                 onSent={sentItemHandler.bind(this, d.keyId)}
+                onComment={sentCommentHandler.bind(this, d.keyId)}
                 onUpdate={updateDataHandler.bind(this, d.keyId)}
               />
             );

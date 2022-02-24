@@ -52,8 +52,8 @@ function ListItem(props) {
   };
 
   const commentHandler = () => {
-    let data = { comment: comment };
-    props.onSent(data);
+    let data = comment;
+    props.onComment(data);
   };
   const commentValueHandler = (event) => {
     const comment = event.target.value;

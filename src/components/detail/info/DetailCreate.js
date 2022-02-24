@@ -40,10 +40,18 @@ const HouseDetail = (props) => {
     e.preventDefault();
     onAdd(detailObj);
   };
+  const clearFormHandler = () => {
+    setName("");
+    setAddress("");
+    setComment("");
+    setEndDate("");
+    setPayDate("");
+    setRent("");
+  };
 
   return (
     <div className={classes.createContent}>
-      <h2>HouseDetail</h2>
+      <h2>Add House Detail</h2>
       <form className={classes.form}>
         <div className={classes.name}>
           <label htmlFor="">Name</label>
@@ -77,7 +85,8 @@ const HouseDetail = (props) => {
 
         <div className={classes.btns}>
           <button onClick={addDateHandler}>Confirm</button>
-          <button>Clear</button>
+          <button onClick={clearFormHandler}>Clear</button>
+          <button>Return</button>
         </div>
       </form>
     </div>

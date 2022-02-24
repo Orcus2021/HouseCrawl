@@ -1,15 +1,22 @@
 import React from "react";
 import classes from "./HouseInfoList.module.css";
 import InfoItem from "./InfoItem";
+import { useNavigate } from "react-router-dom";
 
 const HouseInfoList = (props) => {
+  const navigate = useNavigate();
   let dataIndex = 0;
+  const navCreateHandler = () => {
+    navigate("/houseInfo/create");
+  };
 
   return (
     <div className={classes.container}>
       <h1>House Information List</h1>
       <div className={classes.content}>
-        <button className={classes.btn}>Add+</button>
+        <button className={classes.btn} onClick={navCreateHandler}>
+          Add+
+        </button>
         <ul className={classes.items}>
           <li className={classes.item_no}>No.</li>
           <li className={classes.item_name}>Name</li>

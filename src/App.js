@@ -44,7 +44,18 @@ function App() {
 
       navigate("/list");
     }
-    getAllRentalData();
+    // getAllRentalData();
+    // (async () => {
+    //   // will crate a new collection inside j1hxFeD....... document, call it myCollectionName and return its ref
+    //   let collRef = await collection(
+    //     db,
+    //     "rentData/9GIOkmpW9QcwoRcbjx0K/balance"
+    //   );
+    //   await addDoc(collRef, {
+    //     name: "unnamed collection. firebase has chosen its name",
+    //   });
+    //   console.log("a new coll has been created");
+    // })();
   }, [navigate]);
 
   const tokenHandler = (d) => {
@@ -65,7 +76,7 @@ function App() {
   };
 
   const addRentalData = async (dataObj) => {
-    const docRef = await addDoc(collection(db, "rentData"), dataObj);
+    await addDoc(collection(db, "rentData"), dataObj);
     // console.log("Document written with ID: ", docRef.id);
     // await setDoc(doc(db, "rentData", "LA"), dataObj);
   };
@@ -102,6 +113,7 @@ function App() {
           path="houseInfo"
           element={<HouseInfoList rentalData={rentalData} />}
         />
+        <Route path="houseInfo/:id" element={<HouseDetail />} />
         <Route
           path="houseInfo/create"
           element={<DetailCreate onAdd={addHandler} />}

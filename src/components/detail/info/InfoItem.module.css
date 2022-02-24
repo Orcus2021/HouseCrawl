@@ -25,10 +25,12 @@
 .item_name {
   min-width: 100px;
   width: 100px;
+  font-size: 14px;
 }
 .item_address {
   min-width: 150px;
   width: 150px;
+  font-size: 14px;
 }
 .item_rent {
   min-width: 70px;
@@ -44,9 +46,15 @@
   min-width: 75px;
 }
 .item_comment {
-  overflow-y: auto;
   min-width: 100px;
   flex-grow: 1;
+  overflow-y: auto;
+}
+.item_comment p {
+  height: 100%;
+  font-size: 12px;
+  text-align: left;
+  word-break: normal;
 }
 .item_edit {
   min-width: 50px;
