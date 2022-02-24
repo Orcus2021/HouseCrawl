@@ -14,6 +14,7 @@ import {
   collection,
   addDoc,
   setDoc,
+  getDocs,
   doc,
 } from "firebase/firestore";
 
@@ -34,6 +35,7 @@ function App() {
   const db = getFirestore(app);
   const navigate = useNavigate();
   const [token, setToken] = useState("");
+  const [rentalData, setRentData] = useState([]);
 
   useEffect(() => {
     const localToken = localStorage.getItem("houseListToken");
@@ -42,6 +44,7 @@ function App() {
 
       navigate("/list");
     }
+    getAllRentalData();
   }, [navigate]);
 
   const tokenHandler = (d) => {
@@ -61,13 +64,24 @@ function App() {
     setToken("");
   };
 
-  const addHouseData = async (dataObj) => {
-    // const docRef = await addDoc(collection(db, "rentData"), dataObj);
+  const addRentalData = async (dataObj) => {
+    const docRef = await addDoc(collection(db, "rentData"), dataObj);
     // console.log("Document written with ID: ", docRef.id);
-    await setDoc(doc(db, "rentData", "LA"), dataObj);
+    // await setDoc(doc(db, "rentData", "LA"), dataObj);
+  };
+  const getAllRentalData = async () => {
+    const querySnapshot = await getDocs(collection(db, "rentData"));
+    let rentalArr = [];
+    querySnapshot.forEach((doc) => {
+      let docObj = doc.data();
+      docObj.keyId = doc.id;
+      rentalArr.push(docObj);
+    });
+    console.log(rentalArr);
+    setRentData(rentalArr);
   };
   const addHandler = (dataObj) => {
-    addHouseData(dataObj);
+    addRentalData(dataObj);
   };
 
   return (
@@ -84,7 +98,10 @@ function App() {
           path="/list"
           element={<HouseList token={token} firebaseApp={app} />}
         />
-        <Route path="houseInfo" element={<HouseInfoList />} />
+        <Route
+          path="houseInfo"
+          element={<HouseInfoList rentalData={rentalData} />}
+        />
         <Route
           path="houseInfo/create"
           element={<DetailCreate onAdd={addHandler} />}

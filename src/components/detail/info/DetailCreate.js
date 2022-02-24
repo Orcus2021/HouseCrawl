@@ -34,6 +34,7 @@ const HouseDetail = (props) => {
     rent,
     endDate,
     comment,
+    balance: 0,
   };
   const addDateHandler = (e) => {
     e.preventDefault();

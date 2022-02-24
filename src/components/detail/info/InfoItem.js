@@ -1,17 +1,44 @@
 import React from "react";
 import classes from "./InfoItem.module.css";
 
-const InfoItem = () => {
+const InfoItem = (props) => {
+  const {
+    dataIndex,
+    rentalName,
+    address,
+    rent,
+    payDate,
+    end,
+    balance,
+    comment,
+  } = props;
+
   return (
     <div className={classes.content}>
-      <div className={classes.item_no}>1</div>
-      <div className={classes.item_name}>科技大樓</div>
-      <div className={classes.item_address}>Address</div>
-      <div className={classes.item_rent}>$39000</div>
-      <div className={classes.item_date}>1</div>
-      <div className={classes.item_end}>2027-12-12</div>
-      <div className={classes.item_balance}>$600000</div>
-      <div className={classes.item_comment}>Lorem ipsum</div>
+      <div className={classes.item_no}>
+        <p>{dataIndex}</p>
+      </div>
+      <div className={classes.item_name}>
+        <p>{rentalName}</p>
+      </div>
+      <div className={classes.item_address}>
+        <p>{address}</p>
+      </div>
+      <div className={classes.item_rent}>
+        <p>${rent}</p>
+      </div>
+      <div className={classes.item_date}>
+        <p>{payDate}</p>
+      </div>
+      <div className={classes.item_end}>
+        <p>{end}</p>
+      </div>
+      <div className={classes.item_balance}>
+        <p>${balance}</p>
+      </div>
+      <div className={classes.item_comment}>
+        <p>{comment}</p>
+      </div>
       <div className={classes.item_edit}>GO</div>
     </div>
   );
