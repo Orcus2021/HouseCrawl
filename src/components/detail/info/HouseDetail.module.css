@@ -1,5 +1,5 @@
 .container {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   background-color: white;
@@ -74,18 +74,59 @@
 }
 /* -------balance----------- */
 .balance {
-  width: 100%;
+  width: 400px;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 .editBalance {
   width: 100%;
   display: flex;
+  flex-direction: column;
+}
+.editContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.select {
+  display: flex;
+  flex-direction: row;
+}
+.editInput {
+  display: flex;
+  flex-direction: row;
+}
+.item input,
+.amount input,
+.date input {
+  height: 30px;
+}
+.amount input {
+  width: 70px;
+}
+.item input {
+  width: 100px;
+}
+.date input {
+  width: 130px;
+}
+.balanceHead {
+  display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
-.option {
+.balanceHead button,
+.editInput .btn button {
+  width: 70px;
+  height: 30px;
+  background-color: rgb(133, 3, 240);
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+.filterOption {
   display: flex;
   flex-direction: row;
 }
@@ -96,12 +137,12 @@
   display: none;
 }
 .label input:checked + .box {
-  background-color: rgb(140, 0, 255);
+  background-color: rgb(133, 3, 240);
   color: white;
 }
 
 .box {
-  width: 80px;
+  width: 70px;
   height: 30px;
   background-color: rgb(236, 235, 235);
   color: rgb(167, 164, 170);
