@@ -9,53 +9,53 @@ function HouseList(props) {
   const navigate = useNavigate();
   const [listData, setListData] = useState([]);
 
-  // useEffect(() => {
-  //   if (!props.token) {
-  //     navigate("/");
-  //     return;
-  //   }
+  useEffect(() => {
+    if (!props.token) {
+      navigate("/");
+      return;
+    }
 
-  //   const dbRef = ref(getDatabase(props.firebaseApp));
-  //   const getDate = async () => {
-  //     await get(child(dbRef, "house"))
-  //       .then((snapshot) => {
-  //         if (snapshot.exists()) {
-  //           initData = [];
-  //           let val = snapshot.val();
+    const dbRef = ref(getDatabase(props.firebaseApp));
+    const getDate = async () => {
+      await get(child(dbRef, "house"))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            initData = [];
+            let val = snapshot.val();
 
-  //           for (const key in val) {
-  //             let dataObj = {
-  //               keyId: key,
-  //               id: val[key].id,
-  //               title: val[key].title,
-  //               pattern: val[key].pattern,
-  //               floor: val[key].floor,
-  //               type: val[key].type,
-  //               distant: val[key].distant,
-  //               price: val[key].price,
-  //               state: val[key].state,
-  //               link: val[key].link,
-  //               comment: val[key].comment,
-  //             };
+            for (const key in val) {
+              let dataObj = {
+                keyId: key,
+                id: val[key].id,
+                title: val[key].title,
+                pattern: val[key].pattern,
+                floor: val[key].floor,
+                type: val[key].type,
+                distant: val[key].distant,
+                price: val[key].price,
+                state: val[key].state,
+                link: val[key].link,
+                comment: val[key].comment,
+              };
 
-  //             initData.push(dataObj);
-  //           }
+              initData.push(dataObj);
+            }
 
-  //           let initArr = initData.filter((d) => {
-  //             return d.state !== "delete";
-  //           });
+            let initArr = initData.filter((d) => {
+              return d.state !== "delete";
+            });
 
-  //           setListData(initArr);
-  //         } else {
-  //           console.log("No data available");
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   };
-  //   getDate();
-  // }, [props.token, navigate, props.firebaseApp]);
+            setListData(initArr);
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+    getDate();
+  }, [props.token, navigate, props.firebaseApp]);
 
   const sentStateData = async (id, data) => {
     const updates = {};

@@ -1,0 +1,61 @@
+.recordContent {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  align-items: center;
+}
+.recordContent p {
+  height: 100%;
+  border-bottom: 1px solid black;
+  text-align: center;
+  line-height: 30px;
+}
+.date {
+  width: 100px;
+  min-width: 82px;
+}
+.item {
+  flex-grow: 1;
+  min-width: 100px;
+  width: 120px;
+}
+.amount {
+  width: 100px;
+  min-width: 60px;
+}
+.btns {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+.btns button {
+  width: 60px;
+  height: 25px;
+  background-color: rgb(201, 3, 3);
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+}
+@media (max-width: 370px) {
+  .recordContent p {
+    font-size: 0.8rem;
+  }
+  .date {
+    min-width: 65px;
+  }
+  .item {
+    min-width: 80px;
+  }
+  .amount {
+    min-width: 50px;
+  }
+
+  .btns button {
+    font-size: 0.7rem;
+    width: 40px;
+  }
+} ;

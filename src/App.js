@@ -1,22 +1,27 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import "./App.css";
-import HouseList from "./components/HouseList";
 import Login from "./components/Login";
 import Nav from "./components/Layout/Nav";
-import HouseInfoList from "./components/detail/info/HouseInfoList";
-import HouseDetail from "./components/detail/info/HouseDetail";
+import Home from "./components/Home";
 import DetailCreate from "./components/detail/info/DetailCreate";
-import { Routes, Route, useNavigate } from "react-router";
+import { Routes, Route } from "react-router";
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
 import {
   getFirestore,
   collection,
   addDoc,
-  setDoc,
-  getDocs,
   doc,
+  updateDoc,
+  deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
+
+const HouseInfoList = lazy(() =>
+  import("./components/detail/info/HouseInfoList")
+);
+const HouseList = lazy(() => import("./components/HouseList"));
+const HouseDetail = lazy(() => import("./components/detail/info/HouseDetail"));
 
 const firebaseConfig = {
   apiKey: "AIzaSyATHxfMJPgi6L2ca7OZmD21ZcrqLwcPgyo",
@@ -33,30 +38,17 @@ function App() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-  const navigate = useNavigate();
+
   const [token, setToken] = useState("");
   const [rentalData, setRentData] = useState([]);
 
   useEffect(() => {
-    const localToken = localStorage.getItem("houseListToken");
-    if (localToken) {
-      setToken(localToken);
-
-      navigate("/list");
-    }
-    // getAllRentalData();
-    // (async () => {
-    //   // will crate a new collection inside j1hxFeD....... document, call it myCollectionName and return its ref
-    //   let collRef = await collection(
-    //     db,
-    //     "rentData/9GIOkmpW9QcwoRcbjx0K/balance"
-    //   );
-    //   await addDoc(collRef, {
-    //     name: "unnamed collection. firebase has chosen its name",
-    //   });
-    //   console.log("a new coll has been created");
-    // })();
-  }, [navigate]);
+    getInfoDataChange();
+  }, []);
+  useEffect(() => {
+    let localToken = localStorage.getItem("houseListToken");
+    setToken(localToken);
+  }, []);
 
   const tokenHandler = (d) => {
     setToken(d);
@@ -75,48 +67,94 @@ function App() {
     setToken("");
   };
 
-  const addRentalData = async (dataObj) => {
-    await addDoc(collection(db, "rentData"), dataObj);
-    // console.log("Document written with ID: ", docRef.id);
-    // await setDoc(doc(db, "rentData", "LA"), dataObj);
+  // processing firestore data
+
+  const addCollectionData = async (data, url) => {
+    let refUrl = url;
+
+    let collRef = await collection(db, refUrl);
+    await addDoc(collRef, data);
   };
-  const getAllRentalData = async () => {
-    const querySnapshot = await getDocs(collection(db, "rentData"));
-    let rentalArr = [];
-    querySnapshot.forEach((doc) => {
-      let docObj = doc.data();
-      docObj.keyId = doc.id;
-      rentalArr.push(docObj);
+
+  const updateFieldData = async (data, url) => {
+    const ref = doc(db, url);
+
+    await updateDoc(ref, data);
+  };
+
+  const getInfoDataChange = async () => {
+    await onSnapshot(collection(db, "rentData"), (querySnapshot) => {
+      let rentalArr = [];
+      querySnapshot.forEach((doc) => {
+        let docObj = doc.data();
+        docObj.keyId = doc.id;
+        rentalArr.push(docObj);
+      });
+
+      setRentData(rentalArr);
+      rentalArr = [];
     });
-    console.log(rentalArr);
-    setRentData(rentalArr);
   };
-  const addHandler = (dataObj) => {
-    addRentalData(dataObj);
+
+  const deleteDocData = async (url) => {
+    const ref = doc(db, url);
+    await deleteDoc(ref);
+  };
+
+  // element onClick Handler
+  const addHandler = (data, url) => {
+    console.log("add");
+    addCollectionData(data, url);
+  };
+  const updateHandler = (data, url) => {
+    updateFieldData(data, url);
+  };
+  const deleteHandler = (url) => {
+    deleteDocData(url);
   };
 
   return (
     <div className="app">
       <Nav onLogout={logoutHandler} token={token} />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route
-          path="/"
-          element={
-            <Login onToken={tokenHandler} firebaseApp={app} token={token} />
-          }
+          path="/login"
+          element={<Login onToken={tokenHandler} firebaseApp={app} />}
         />
         <Route
           path="/list"
-          element={<HouseList token={token} firebaseApp={app} />}
+          element={
+            <Suspense fallback="Loading...">
+              <HouseList token={token} firebaseApp={app} />
+            </Suspense>
+          }
         />
         <Route
           path="houseInfo"
-          element={<HouseInfoList rentalData={rentalData} />}
+          element={
+            <Suspense fallback="Loading...">
+              <HouseInfoList rentalData={rentalData} token={token} />
+            </Suspense>
+          }
         />
-        <Route path="houseInfo/:id" element={<HouseDetail />} />
+        <Route
+          path="houseInfo/:id"
+          element={
+            <Suspense fallback="Loading...">
+              <HouseDetail
+                firebaseApp={app}
+                onAdd={addHandler}
+                onUpdate={updateHandler}
+                onDelete={deleteHandler}
+                token={token}
+              />
+            </Suspense>
+          }
+        />
         <Route
           path="houseInfo/create"
-          element={<DetailCreate onAdd={addHandler} />}
+          element={<DetailCreate onAdd={addHandler} token={token} />}
         />
       </Routes>
     </div>

@@ -1,7 +1,9 @@
 import React from "react";
 import classes from "./InfoItem.module.css";
+import { useNavigate } from "react-router";
 
 const InfoItem = (props) => {
+  const navigate = useNavigate();
   const {
     dataIndex,
     rentalName,
@@ -11,7 +13,11 @@ const InfoItem = (props) => {
     end,
     balance,
     comment,
+    keyId,
   } = props;
+  const navHouseDetailHandler = () => {
+    navigate(`/houseInfo/${keyId}`);
+  };
 
   return (
     <div className={classes.content}>
@@ -39,7 +45,9 @@ const InfoItem = (props) => {
       <div className={classes.item_comment}>
         <p>{comment}</p>
       </div>
-      <div className={classes.item_edit}>GO</div>
+      <div className={classes.item_edit} onClick={navHouseDetailHandler}>
+        GO
+      </div>
     </div>
   );
 };

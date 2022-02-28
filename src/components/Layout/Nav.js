@@ -19,12 +19,15 @@ const Nav = (props) => {
       <h1 className={classes.logo}>Dream</h1>
       <div className={classes.nav_items}>
         <ul className={menuClasses}>
+          <Link to="/" className={classes.nav}>
+            HOME
+          </Link>
           {props.token ? (
             <p className={classes.nav} onClick={logoutHandler}>
               LOGOUT
             </p>
           ) : (
-            <Link to="/" className={classes.nav}>
+            <Link to="/login" className={classes.nav}>
               LOGIN
             </Link>
           )}

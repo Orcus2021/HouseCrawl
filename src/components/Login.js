@@ -42,7 +42,7 @@ const Login = (props) => {
       .then(() => signInWithEmailAndPassword(auth, email, password))
       .then((userCredential) => {
         const user = userCredential.user;
-        localStorage.setItem("houseListToken", user.accessToken);
+        localStorage.setItem("houseListToken", `hrent${user.accessToken}`);
         localStorage.setItem("houseListChecked", "true");
         props.onToken(user.accessToken);
         navigate("/list");
@@ -67,7 +67,7 @@ const Login = (props) => {
 
   return (
     <div className={classes.container}>
-      <h1>LOGIN</h1>
+      <h2>LOGIN</h2>
       <div className={classes.content}>
         <div className={classes.email}>
           <label htmlFor="email">Username</label>

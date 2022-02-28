@@ -1,14 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./DetailCreate.module.css";
+import { useNavigate } from "react-router-dom";
 
 const HouseDetail = (props) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!props.token) {
+      navigate("/");
+      return;
+    }
+  }, [props.token, navigate]);
+
+  let editInfo = false;
+  if (props.keyId && props.editDetailInfo) {
+    editInfo = true;
+  }
   const { onAdd } = props;
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [payDate, setPayDate] = useState("");
-  const [rent, setRent] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [comment, setComment] = useState("");
+  const [name, setName] = useState(editInfo ? props.editDetailInfo.name : "");
+  const [address, setAddress] = useState(
+    editInfo ? props.editDetailInfo.address : ""
+  );
+  const [payDate, setPayDate] = useState(
+    editInfo ? props.editDetailInfo.payDate : ""
+  );
+  const [rent, setRent] = useState(editInfo ? props.editDetailInfo.rent : "");
+  const [endDate, setEndDate] = useState(
+    editInfo ? props.editDetailInfo.endDate : ""
+  );
+  const [comment, setComment] = useState(
+    editInfo ? props.editDetailInfo.comment : ""
+  );
+  const [accountNumber, setAccountNumber] = useState(
+    editInfo ? props.editDetailInfo.accountNumber : ""
+  );
+
   const nameHandler = (e) => {
     setName(e.target.value);
   };
@@ -27,26 +52,67 @@ const HouseDetail = (props) => {
   const commentHandler = (e) => {
     setComment(e.target.value);
   };
+  const accountNumberHandler = (e) => {
+    setAccountNumber(e.target.value);
+  };
   let detailObj = {
     name,
     address,
     payDate,
     rent,
+    accountNumber,
     endDate,
     comment,
     balance: 0,
   };
   const addDateHandler = (e) => {
     e.preventDefault();
-    onAdd(detailObj);
+
+    if (
+      name.trim().length > 0 &&
+      address.trim().length > 0 &&
+      payDate.trim().length > 0 &&
+      rent.trim().length > 0 &&
+      accountNumber.trim().length > 0 &&
+      endDate.trim().length > 0
+    ) {
+      if (editInfo) {
+        let newObj = {
+          name,
+          address,
+          payDate,
+          rent,
+          accountNumber,
+          endDate,
+          comment,
+        };
+        props.onUpdate(newObj);
+        props.onClose();
+      } else {
+        onAdd(detailObj, "rentData");
+        navigate("/houseInfo");
+      }
+    } else {
+      alert("有資料未填");
+    }
   };
-  const clearFormHandler = () => {
+  const clearFormHandler = (e) => {
+    e.preventDefault();
     setName("");
     setAddress("");
     setComment("");
     setEndDate("");
     setPayDate("");
     setRent("");
+    setAccountNumber("");
+  };
+  const closeHandler = (e) => {
+    e.preventDefault();
+    if (editInfo) {
+      props.onClose();
+    } else {
+      navigate("/houseInfo");
+    }
   };
 
   return (
@@ -55,7 +121,12 @@ const HouseDetail = (props) => {
       <form className={classes.form}>
         <div className={classes.name}>
           <label htmlFor="">Name</label>
-          <input type="text" value={name} onChange={nameHandler} />
+          <input
+            type="text"
+            value={name}
+            onChange={nameHandler}
+            placeholder={editInfo ? props.editDetailInfo.name : ""}
+          />
         </div>
 
         <div className={classes.address}>
@@ -73,6 +144,15 @@ const HouseDetail = (props) => {
           <input type="text" value={rent} onChange={rentHandler} />
         </div>
 
+        <div className={classes.accountNumber}>
+          <label htmlFor="">Account Number</label>
+          <input
+            type="text"
+            value={accountNumber}
+            onChange={accountNumberHandler}
+          />
+        </div>
+
         <div className={classes.end}>
           <label htmlFor="">End Date</label>
           <input type="text" value={endDate} onChange={endDateHandler} />
@@ -86,7 +166,7 @@ const HouseDetail = (props) => {
         <div className={classes.btns}>
           <button onClick={addDateHandler}>Confirm</button>
           <button onClick={clearFormHandler}>Clear</button>
-          <button>Return</button>
+          <button onClick={closeHandler}>Close</button>
         </div>
       </form>
     </div>

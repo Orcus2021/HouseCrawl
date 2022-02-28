@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Quicksand:wght@600&display=swap");
+
+.homeContent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.homeContent .title {
+  position: absolute;
+  font-size: 7rem;
+  top: 20%;
+  left: calc(50% - 162.4px);
+  z-index: 12;
+  color: #fff;
+  text-shadow: 0 0 20px #cc00ff;
+  font-family: "Quicksand", sans-serif;
+}
+.homeContent .title:after {
+  content: "Fight";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  color: #cc00ff;
+  filter: blur(15px);
+}
+.homeContent .title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e178fc;
+  z-index: -2;
+  opacity: 0.5;
+  filter: blur(40px);
+}
+.homeContent .title2 {
+  position: absolute;
+  font-size: 3.5rem;
+  top: 45%;
+  left: calc(50% - 200px);
+  z-index: 12;
+  color: #fff;
+  text-shadow: 0 0 20px #cc00ff;
+  font-family: "Quicksand", sans-serif;
+}
+.homeContent .title2:after {
+  content: "FOR YOUR LIFE";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  color: #cc00ff;
+  filter: blur(15px);
+}
+.homeContent .title2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e178fc;
+  z-index: -2;
+  opacity: 0.5;
+  filter: blur(40px);
+}
+.imgBx {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 50px);
+  overflow: hidden;
+}
+.imgBx img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  object-fit: cover;
+}
+.back {
+  position: absolute;
+  width: 100%;
+  height: calc(100vh - 50px);
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.8);
+  background-blend-mode: multiply;
+}
+@media (max-width: 450px) {
+  .homeContent .title {
+    font-size: 4rem;
+    top: 30%;
+    left: calc(50% - 94.8px);
+  }
+  .homeContent .title2 {
+    font-size: 2rem;
+    top: 45%;
+    left: calc(50% - 120px);
+  }
+}

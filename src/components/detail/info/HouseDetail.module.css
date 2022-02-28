@@ -1,87 +1,107 @@
 .container {
+  width: 85%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.topBar {
   width: 100%;
+  height: 450px;
   display: flex;
   flex-direction: row;
-  background-color: white;
+
+  justify-content: center;
+  padding: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 /* -------houseInfo----------- */
 .houseInfo {
-  display: grid;
-  grid-template-columns: 80px 200px;
-  grid-template-rows: repeat(5, 40px) 64px 40px;
-  grid-template-areas:
-    "name name1"
-    "address address1"
-    "rent rent1"
-    "endDate end1"
-    "balance balance1"
-    "comment comment1"
-    "btn btn";
-
-  background-color: aqua;
-
-  justify-items: stretch;
-}
-.houseInfo p {
-  height: 100%;
-  border-bottom: 1px solid black;
-  line-height: 40px;
-}
-.houseInfo .name {
-  grid-area: name;
-}
-.houseInfo .nameValue {
-  grid-area: name1;
-}
-.houseInfo .address {
-  grid-area: address;
-}
-.houseInfo .addressValue {
-  grid-area: address1;
-}
-.houseInfo .rent {
-  grid-area: rent;
-}
-
-.houseInfo .rentValue {
-  grid-area: rent1;
-}
-.rentValue span {
-  padding-left: 5px;
-}
-.houseInfo .endDate {
-  grid-area: endDate;
-}
-.houseInfo .endDateValue {
-  grid-area: end1;
-}
-.houseInfo .balance {
-  grid-area: balance;
-}
-.houseInfo .balanceValue {
-  grid-area: balance1;
-}
-.houseInfo .comment {
-  grid-area: comment;
-  line-height: 64px;
-}
-.houseInfo .commentValue {
-  grid-area: comment1;
-  line-height: 64px;
-}
-.houseInfo button {
-  grid-area: btn;
-}
-/* -------balance----------- */
-.balance {
-  width: 400px;
   display: flex;
   flex-direction: column;
+  width: 400px;
+  min-width: 250px;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+
+  flex-grow: 1;
+  padding: 10px 0 0 0;
+}
+
+.houseInfo div {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  padding: 10px;
+  border-bottom: 1px solid black;
+}
+.houseInfo div:nth-child(1) {
+  padding: 0 10px;
+  border-bottom: none;
+}
+
+.houseInfo div:nth-child(8),
+.houseInfo div:nth-child(9) {
+  border-bottom: none;
+}
+.houseInfo .infoBtns {
+  margin: auto 0 10px 0;
+  padding: 0px;
+}
+.houseInfo div label {
+  width: 70px;
+  min-width: 70px;
+  margin-right: 5px;
+}
+.infoEditBtn {
+  width: 100%;
+  height: 30px;
+  background-color: rgb(162, 68, 240);
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  margin: 0 5px 0 0;
+}
+.infoDelBtn {
+  width: 70px;
+  height: 30px;
+  background-color: rgb(201, 3, 3);
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  margin: 0;
+}
+.houseInfo .comment {
+  max-height: 4rem;
+}
+.houseInfo .comment .commentValue {
+  display: block;
+
+  overflow: auto;
+}
+
+/* -------balance----------- */
+.topBar .balanceContent {
+  width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0 0 10px;
+  background-color: rgb(255, 255, 255);
 }
 .editBalance {
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+.editBalance h2 {
+  padding-bottom: 10px;
+  font-size: 1.5rem;
 }
 .editContent {
   width: 100%;
@@ -91,58 +111,101 @@
 .select {
   display: flex;
   flex-direction: row;
+  padding-bottom: 10px;
 }
 .editInput {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 15px;
+  border-bottom: 1px solid black;
+}
+.inputRight {
   display: flex;
   flex-direction: row;
 }
+.amount {
+  width: 70px;
+  min-width: 60px;
+}
+.date {
+  width: 130px;
+}
+.item {
+  width: 100%;
+  min-width: 100px;
+}
+
 .item input,
 .amount input,
 .date input {
+  outline: none;
   height: 30px;
+  width: 100%;
+  border: 1px solid #686868;
+  border-right: 0;
 }
-.amount input {
-  width: 70px;
+/* .inputRight .item input,
+.inputRight .amount input,
+.inputRight .date input {
+} */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
-.item input {
-  width: 100px;
-}
-.date input {
-  width: 130px;
+
+.filterBalance {
+  width: 100%;
+  padding-top: 10px;
 }
 .balanceHead {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 10px;
 }
-.balanceHead button,
+.category p {
+  padding-bottom: 5px;
+}
+/* button */
+.searchBtn,
 .editInput .btn button {
   width: 70px;
   height: 30px;
-  background-color: rgb(133, 3, 240);
+  background-color: rgb(162, 68, 240);
   color: white;
   cursor: pointer;
   border: none;
   border-radius: 5px;
 }
+.inputRight .btn button {
+  border-radius: 0 5px 5px 0;
+}
+.searchBtn {
+  width: 100%;
+  margin: auto 0 10px 0;
+}
 .filterOption {
   display: flex;
   flex-direction: row;
+  padding-bottom: 10px;
 }
 .label {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .label input {
   display: none;
 }
 .label input:checked + .box {
-  background-color: rgb(133, 3, 240);
+  background-color: rgb(162, 68, 240);
   color: white;
 }
 
 .box {
-  width: 70px;
+  width: 80px;
   height: 30px;
   background-color: rgb(236, 235, 235);
   color: rgb(167, 164, 170);
@@ -151,4 +214,137 @@
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+}
+.customize {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.customize input:nth-child(2) {
+  position: relative;
+}
+.customize input:nth-child(2)::after {
+  content: "->";
+  position: absolute;
+  left: 0;
+}
+
+.before {
+  outline-style: none;
+  border: 1px solid black;
+  border-right: 0;
+  width: 135px;
+  height: 30px;
+  background-color: rgb(231, 221, 241);
+  border-radius: 5px 0 0 5px;
+  padding-left: 5px;
+}
+
+.after {
+  outline-style: none;
+  border: 1px solid black;
+  border-left: 0;
+  width: 145px;
+  height: 30px;
+  padding-left: 15px;
+  background-color: rgb(231, 221, 241);
+  border-radius: 0 5px 5px 0;
+}
+
+/* -------balance list----------- */
+.balanceList {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0 0 10px 10px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 10px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 10px 16px 0px;
+}
+
+.balanceList h2 {
+  padding-bottom: 10px;
+}
+.list {
+  width: 80%;
+}
+
+@media (max-width: 770px) {
+  .topBar {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+  }
+  .houseInfo {
+    width: 100%;
+    border-bottom: 1px solid black;
+  }
+  .topBar .balanceContent {
+    padding: 0;
+    width: 100%;
+    align-items: center;
+  }
+  .editBalance,
+  .filterBalance,
+  .searchBtn {
+    width: 95%;
+  }
+  .editInput {
+    border: none;
+  }
+  .list {
+    width: 95%;
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+  }
+  .editInput .btn button {
+    width: 50px;
+  }
+}
+@media (max-width: 420px) {
+  .box {
+    font-size: 0.8rem;
+  }
+  .editContent .editInput {
+    flex-wrap: wrap;
+  }
+  .date {
+    flex-grow: 1;
+    min-width: 200px;
+    padding-bottom: 5px;
+  }
+  .date input {
+    border-right: #686868 1px solid;
+  }
+
+  .inputRight {
+    min-width: 200px;
+    flex-grow: 1;
+    flex-wrap: nowrap;
+  }
+  .item {
+    min-width: none;
+  }
+}
+@media (max-width: 370px) {
+  .balanceList {
+    padding: 10px 0 10px 0;
+  }
+  .label {
+    margin-right: 5px;
+  }
+  .box {
+    width: 70px;
+  }
+  .customize input {
+    font-size: 0.6rem;
+  }
 }

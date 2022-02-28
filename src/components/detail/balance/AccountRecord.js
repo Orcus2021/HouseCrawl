@@ -1,14 +1,19 @@
 import React from "react";
+import classes from "./AccountRecord.module.css";
 
-const AccountRecord = () => {
+const AccountRecord = (props) => {
+  const { amount, recordDate, recordItem } = props.recordData;
+  const deleteRecordHandler = () => {
+    props.onDelete(amount);
+  };
   return (
-    <div className="recordContent">
-      <p className="date">2022-22-22</p>
-      <p className="item">asdfadfa</p>
-      <p className="amount">30000</p>
-      <p className="type">income</p>
-      <div className="btns">
-        <button>Delete</button>
+    <div className={classes.recordContent}>
+      <p className={classes.date}>{recordDate}</p>
+      <p className={classes.item}>{recordItem}</p>
+      <p className={classes.amount}>{amount}</p>
+
+      <div className={classes.btns}>
+        <button onClick={deleteRecordHandler}>Delete</button>
       </div>
     </div>
   );
