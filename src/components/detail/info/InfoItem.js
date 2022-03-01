@@ -46,7 +46,7 @@ const InfoItem = (props) => {
         <p>{comment}</p>
       </div>
       <div className={classes.item_edit} onClick={navHouseDetailHandler}>
-        GO
+        <i class="ri-arrow-right-s-line"></i>
       </div>
     </div>
   );

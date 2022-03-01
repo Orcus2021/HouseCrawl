@@ -7,7 +7,7 @@ const HouseInfoList = (props) => {
   const navigate = useNavigate();
   useEffect(() => {
     if (!props.token) {
-      navigate("/");
+      navigate("/login");
       return;
     }
   }, [props.token, navigate]);

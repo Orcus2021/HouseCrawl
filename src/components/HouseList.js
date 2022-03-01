@@ -11,7 +11,7 @@ function HouseList(props) {
 
   useEffect(() => {
     if (!props.token) {
-      navigate("/");
+      navigate("/login");
       return;
     }
 
