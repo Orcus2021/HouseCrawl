@@ -1,16 +1,26 @@
 import React from "react";
 import classes from "./Home.module.css";
-import img from "../asset/pexels-math-21380.jpg";
+import { useNavigate } from "react-router";
+
 const Home = () => {
+  const navigate = useNavigate();
+  const toListHandler = () => {
+    navigate("/list");
+  };
   return (
     <div className={classes.homeContent}>
-      <h2 className={classes.title}> FIGHT </h2>
-      <h2 className={classes.title2}>FOR YOUR LIFE</h2>
+      <div className={classes.titleContent}>
+        <h2 className={classes.title}> FIGHT </h2>
+        <h2 className={classes.title2}>FOR YOUR LIFE</h2>
+        <button className={classes.loginBtn} onClick={toListHandler}>
+          GO
+        </button>
+      </div>
 
       <div className={classes.imgBx}>
-        <img src={img} alt="background" />
+        <img src="./asset/pexels-math-21380.jpg" alt="background" />
+        <div className={classes.back}></div>
       </div>
-      <div className={classes.back}></div>
     </div>
   );
 };

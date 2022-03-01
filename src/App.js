@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import React, { useState, useEffect, lazy, Suspense, useCallback } from "react";
 import "./App.css";
 import Login from "./components/Login";
 import Nav from "./components/Layout/Nav";
@@ -24,14 +24,14 @@ const HouseList = lazy(() => import("./components/HouseList"));
 const HouseDetail = lazy(() => import("./components/detail/info/HouseDetail"));
 
 const firebaseConfig = {
-  apiKey: "AIzaSyATHxfMJPgi6L2ca7OZmD21ZcrqLwcPgyo",
-  authDomain: "crawl-e3835.firebaseapp.com",
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
   databaseURL:
     "https://crawl-e3835-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "crawl-e3835",
-  storageBucket: "crawl-e3835.appspot.com",
-  messagingSenderId: "1004800967247",
-  appId: "1:1004800967247:web:eb1982820ade5255c3203a",
+  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDERID,
+  appId: process.env.REACT_APP_FIREBASE_APPID,
 };
 
 function App() {
@@ -41,19 +41,33 @@ function App() {
 
   const [token, setToken] = useState("");
   const [rentalData, setRentData] = useState([]);
-
-  useEffect(() => {
-    getInfoDataChange();
-  }, []);
   useEffect(() => {
     let localToken = localStorage.getItem("houseListToken");
     setToken(localToken);
   }, []);
+  // get houseInfo
+  const getInfoDataChange = useCallback(async () => {
+    await onSnapshot(collection(db, "rentData"), (querySnapshot) => {
+      let rentalArr = [];
+      querySnapshot.forEach((doc) => {
+        let docObj = doc.data();
+        docObj.keyId = doc.id;
+        rentalArr.push(docObj);
+      });
+
+      setRentData(rentalArr);
+      rentalArr = [];
+    });
+  }, [onSnapshot, collection, db]);
+
+  useEffect(() => {
+    getInfoDataChange();
+  }, [getInfoDataChange]);
 
   const tokenHandler = (d) => {
     setToken(d);
   };
-
+  // logout handler
   const logoutHandler = () => {
     localStorage.removeItem("houseListToken");
     signOut(auth)
@@ -80,20 +94,6 @@ function App() {
     const ref = doc(db, url);
 
     await updateDoc(ref, data);
-  };
-
-  const getInfoDataChange = async () => {
-    await onSnapshot(collection(db, "rentData"), (querySnapshot) => {
-      let rentalArr = [];
-      querySnapshot.forEach((doc) => {
-        let docObj = doc.data();
-        docObj.keyId = doc.id;
-        rentalArr.push(docObj);
-      });
-
-      setRentData(rentalArr);
-      rentalArr = [];
-    });
   };
 
   const deleteDocData = async (url) => {

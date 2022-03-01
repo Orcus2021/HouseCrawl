@@ -22,6 +22,10 @@
   color: rgb(87, 86, 86);
   margin-bottom: 3px;
 }
+.content div p {
+  color: rgb(250, 27, 27);
+  font-size: 0.8rem;
+}
 .email input {
   margin-bottom: 10px;
   border-radius: 50px;
@@ -30,6 +34,7 @@
   border: 2px solid rgb(163, 163, 163);
   padding: 5px 10px;
 }
+
 .password {
   width: 100%;
   display: flex;
@@ -68,6 +73,12 @@
 }
 .check input {
   margin-top: 2px;
+}
+.email .wrong {
+  border: 2px solid rgb(252, 64, 64);
+}
+.password .wrong {
+  border: 2px solid rgb(252, 64, 64);
 }
 
 @media (max-width: 330px) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import classes from "./HouseDetail.module.css";
 import AccountRecord from "../balance/AccountRecord";
 import { useParams, useNavigate } from "react-router-dom";
@@ -21,6 +21,17 @@ let tody = new Date(
 ).getTime();
 let week = tody - 1000 * 60 * 60 * 24 * 6;
 let month = tody - 1000 * 60 * 60 * 24 * 29;
+let initYear = new Date().getFullYear();
+let initMonth = `${new Date().getMonth() + 1}`;
+let initDay = `${new Date().getDate()}`;
+let initDate;
+if (initMonth.length === 1) {
+  initMonth = "0" + initMonth;
+}
+if (initDay.length === 1) {
+  initDay = "0" + initDay;
+}
+initDate = `${initYear}-${initMonth}-${initDay}`;
 
 const HouseDetail = (props) => {
   const { firebaseApp, onAdd, onUpdate, onDelete } = props;
@@ -29,7 +40,7 @@ const HouseDetail = (props) => {
   const navigate = useNavigate();
   const [detail, setDetail] = useState({});
   const [recordData, setRecordData] = useState([]);
-  const [recordDate, setRecordDate] = useState("");
+  const [recordDate, setRecordDate] = useState(initDate);
   const [amount, setAmount] = useState("");
   const [recordItem, setItem] = useState("");
   const [incomeValue, setIncomeValue] = useState(true);
@@ -40,12 +51,12 @@ const HouseDetail = (props) => {
   const [periodWeek, setPeriodWeek] = useState(true);
   const [periodMonth, setPeriodMonth] = useState(false);
   const [periodCustomize, setPeriodCustomize] = useState(false);
-  const [cusBefore, setCusBefore] = useState("");
-  const [cusAfter, setCusAfter] = useState("");
+  const [cusBefore, setCusBefore] = useState(initDate);
+  const [cusAfter, setCusAfter] = useState(initDate);
   const [editInfo, setEditInfo] = useState(false);
   useEffect(() => {
     if (!props.token) {
-      navigate("/");
+      navigate("/login");
       return;
     }
   }, [props.token, navigate]);
@@ -55,10 +66,6 @@ const HouseDetail = (props) => {
   let newBalance = detail.balance;
   let searchArr = [];
 
-  useEffect(async () => {
-    await getInfoDataChange();
-    await getBalanceCollChange();
-  }, []);
   // sort/date translate function
   const sortCallBack = (a, b) => {
     let dateArr1 = a.recordDate.split("-");
@@ -93,12 +100,12 @@ const HouseDetail = (props) => {
   };
 
   // processing firestore data
-  const getInfoDataChange = async () => {
+  const getInfoDataChange = useCallback(async () => {
     await onSnapshot(doc(db, `/rentData/${keyId}`), (doc) => {
       setDetail(doc.data());
     });
-  };
-  const getBalanceCollChange = async () => {
+  }, [onSnapshot, doc, db, keyId]);
+  const getBalanceCollChange = useCallback(async () => {
     await onSnapshot(
       collection(db, `/rentData/${keyId}/balance`),
       (querySnapshot) => {
@@ -113,7 +120,19 @@ const HouseDetail = (props) => {
         changeArr = [];
       }
     );
-  };
+  }, [onSnapshot, collection, db, keyId, sortCallBack]);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      getInfoDataChange();
+      getBalanceCollChange();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [getInfoDataChange, getBalanceCollChange]);
+
   const queryRecordData = async (q) => {
     const querySnapshot = await getDocs(q);
 
@@ -149,13 +168,18 @@ const HouseDetail = (props) => {
     } else if (periodMonth) {
       queryRecordData(q30);
     } else if (periodCustomize) {
-      queryRecordData(qCus);
+      if (dateToMilTranslate(cusBefore) < dateToMilTranslate(cusAfter)) {
+        queryRecordData(qCus);
+      } else {
+        alert("查詢區間所選擇的結束日需晚於開始日期");
+      }
     }
   };
 
   //input Handler
   const recordDateHandler = (e) => {
     setRecordDate(e.target.value);
+    console.log(e.target.value);
   };
   const amountHandler = (e) => {
     let data = +e.target.value;
@@ -318,7 +342,7 @@ const HouseDetail = (props) => {
         </div>
         <div className={classes.balanceContent}>
           <div className={classes.editBalance}>
-            <h2>EDIT</h2>
+            <h2>BALANCE EDIT</h2>
             <div className={classes.editContent}>
               <div className={classes.select}>
                 <label className={classes.label} onClick={incomeHandler}>
@@ -429,6 +453,7 @@ const HouseDetail = (props) => {
                     className={classes.before}
                     value={cusBefore}
                     onChange={cusBeforeHandler}
+                    placeholder="請輸入日期"
                   />
 
                   <input
@@ -436,6 +461,7 @@ const HouseDetail = (props) => {
                     className={classes.after}
                     value={cusAfter}
                     onChange={cusAfterHandler}
+                    placeholder="請輸入日期"
                   />
                 </div>
               ) : (

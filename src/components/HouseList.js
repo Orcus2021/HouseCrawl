@@ -9,63 +9,72 @@ function HouseList(props) {
   const navigate = useNavigate();
   const [listData, setListData] = useState([]);
 
+  const db = getDatabase(props.firebaseApp);
   useEffect(() => {
     if (!props.token) {
-      navigate("/");
+      navigate("/login");
       return;
     }
-
-    const dbRef = ref(getDatabase(props.firebaseApp));
+  }, [props.token, navigate]);
+  useEffect(() => {
+    let isMounted = true;
+    const dbRef = ref(db);
     const getDate = async () => {
-      await get(child(dbRef, "house"))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            initData = [];
-            let val = snapshot.val();
+      if (isMounted) {
+        await get(child(dbRef, "house"))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              initData = [];
+              let val = snapshot.val();
 
-            for (const key in val) {
-              let dataObj = {
-                keyId: key,
-                id: val[key].id,
-                title: val[key].title,
-                pattern: val[key].pattern,
-                floor: val[key].floor,
-                type: val[key].type,
-                distant: val[key].distant,
-                price: val[key].price,
-                state: val[key].state,
-                link: val[key].link,
-                comment: val[key].comment,
-              };
+              for (const key in val) {
+                let dataObj = {
+                  keyId: key,
+                  id: val[key].id,
+                  title: val[key].title,
+                  pattern: val[key].pattern,
+                  floor: val[key].floor,
+                  type: val[key].type,
+                  distant: val[key].distant,
+                  price: val[key].price,
+                  state: val[key].state,
+                  link: val[key].link,
+                  comment: val[key].comment,
+                };
 
-              initData.push(dataObj);
+                initData.push(dataObj);
+              }
+
+              let initArr = initData.filter((d) => {
+                return d.state !== "delete";
+              });
+
+              setListData(initArr);
+            } else {
+              console.log("No data available");
             }
-
-            let initArr = initData.filter((d) => {
-              return d.state !== "delete";
-            });
-
-            setListData(initArr);
-          } else {
-            console.log("No data available");
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     };
     getDate();
-  }, [props.token, navigate, props.firebaseApp]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [db, get, child, ref]);
 
   const sentStateData = async (id, data) => {
     const updates = {};
     updates[`/house/${id}/state`] = data;
-    update(ref(getDatabase(props.firebaseApp)), updates);
+    update(ref(db), updates);
   };
   const sentCommentData = async (id, data) => {
     const updates = {};
     updates[`/house/${id}/comment`] = data;
-    update(ref(getDatabase(props.firebaseApp)), updates);
+    update(ref(db), updates);
   };
 
   const sentCommentHandler = (id, data) => {
