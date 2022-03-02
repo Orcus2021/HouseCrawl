@@ -58,7 +58,7 @@ function App() {
       setRentData(rentalArr);
       rentalArr = [];
     });
-  }, [onSnapshot, collection, db]);
+  }, [db]);
 
   useEffect(() => {
     getInfoDataChange();

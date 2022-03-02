@@ -6,6 +6,9 @@
   align-items: center;
   margin-bottom: 10px;
 }
+.contentPaddingTop {
+  padding-top: 50px;
+}
 .createContent h2 {
   font-size: 2rem;
 }

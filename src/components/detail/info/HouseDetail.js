@@ -104,7 +104,7 @@ const HouseDetail = (props) => {
     await onSnapshot(doc(db, `/rentData/${keyId}`), (doc) => {
       setDetail(doc.data());
     });
-  }, [onSnapshot, doc, db, keyId]);
+  }, [db, keyId]);
   const getBalanceCollChange = useCallback(async () => {
     await onSnapshot(
       collection(db, `/rentData/${keyId}/balance`),
@@ -120,7 +120,7 @@ const HouseDetail = (props) => {
         changeArr = [];
       }
     );
-  }, [onSnapshot, collection, db, keyId, sortCallBack]);
+  }, [db, keyId]);
 
   useEffect(() => {
     let isMounted = true;

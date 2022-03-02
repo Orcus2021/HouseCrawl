@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import classes from "./DetailCreate.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const HouseDetail = (props) => {
+  const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
     if (!props.token) {
@@ -15,6 +16,9 @@ const HouseDetail = (props) => {
   if (props.keyId && props.editDetailInfo) {
     editInfo = true;
   }
+  let contentClass = `${classes.createContent} ${
+    editInfo ? "" : classes.contentPaddingTop
+  }`;
   const { onAdd } = props;
   const [name, setName] = useState(editInfo ? props.editDetailInfo.name : "");
   const [address, setAddress] = useState(
@@ -34,6 +38,7 @@ const HouseDetail = (props) => {
     editInfo ? props.editDetailInfo.accountNumber : ""
   );
 
+  // input value Handler
   const nameHandler = (e) => {
     setName(e.target.value);
   };
@@ -65,6 +70,7 @@ const HouseDetail = (props) => {
     comment,
     balance: 0,
   };
+
   const addDateHandler = (e) => {
     e.preventDefault();
 
@@ -116,7 +122,7 @@ const HouseDetail = (props) => {
   };
 
   return (
-    <div className={classes.createContent}>
+    <div className={contentClass}>
       <h2>Add House Detail</h2>
       <form className={classes.form}>
         <div className={classes.name}>

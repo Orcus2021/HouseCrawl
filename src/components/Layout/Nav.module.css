@@ -1,4 +1,8 @@
 .nav_contain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
   width: 100%;
   height: 50px;
   background-color: rgb(80, 16, 139);
@@ -7,13 +11,26 @@
   align-items: center;
   flex-direction: row;
 }
+.active {
+  background-color: rgba(80, 16, 139, 0);
+}
+.scrollFixed {
+  box-shadow: 0px 2px 7px 3px #242424;
+}
+
 .logo {
-  margin: 0;
+  position: relative;
+  width: 150px;
+  height: 35px;
+  margin-left: 10px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.logo img {
+  position: absolute;
+  width: 100%;
   height: 100%;
-  padding-left: 2rem;
-  color: white;
-  font-size: 2rem;
-  line-height: 48px;
+  object-fit: cover;
 }
 
 .nav_items {
@@ -41,7 +58,7 @@
   position: relative;
   width: 40px;
   height: 40px;
-  display: none;
+  cursor: pointer;
 }
 .menu p {
   position: absolute;
@@ -91,5 +108,9 @@
   }
   .menuActive {
     left: 0;
+  }
+  .logo {
+    width: 125px;
+    height: 30px;
   }
 } ;

@@ -64,7 +64,7 @@ function HouseList(props) {
     return () => {
       isMounted = false;
     };
-  }, [db, get, child, ref]);
+  }, [db]);
 
   const sentStateData = async (id, data) => {
     const updates = {};

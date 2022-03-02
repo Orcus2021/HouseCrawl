@@ -7,6 +7,7 @@ const Home = () => {
   const toListHandler = () => {
     navigate("/list");
   };
+
   return (
     <div className={classes.homeContent}>
       <div className={classes.titleContent}>
