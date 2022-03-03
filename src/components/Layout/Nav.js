@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classes from "./Nav.module.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
 
 let navBgClasses = "";
 const Nav = (props) => {
@@ -58,7 +58,6 @@ const Nav = (props) => {
   }
   const menuHandler = () => {
     if (hamburgerShow) {
-      console.log("show");
       setMenuShow((pre) => {
         return !pre;
       });
@@ -82,9 +81,15 @@ const Nav = (props) => {
       </h1>
       <div className={classes.nav_items}>
         <ul className={menuClasses}>
-          <Link to="/" className={classes.nav} onClick={menuHandler}>
+          <NavLink
+            to="/"
+            className={(navState) =>
+              navState.isActive ? classes.nav_1 : classes.nav
+            }
+            onClick={menuHandler}
+          >
             HOME
-          </Link>
+          </NavLink>
           {props.token ? (
             <p className={classes.nav} onClick={logoutHandler}>
               LOGOUT
@@ -95,12 +100,24 @@ const Nav = (props) => {
             </Link>
           )}
 
-          <Link to="/list" className={classes.nav} onClick={menuHandler}>
+          <NavLink
+            to="/list"
+            className={(navState) =>
+              navState.isActive ? classes.nav_1 : classes.nav
+            }
+            onClick={menuHandler}
+          >
             LIST
-          </Link>
-          <Link to="/houseInfo" className={classes.nav} onClick={menuHandler}>
+          </NavLink>
+          <NavLink
+            to="/houseInfo"
+            className={(navState) =>
+              navState.isActive ? classes.nav_1 : classes.nav
+            }
+            onClick={menuHandler}
+          >
             INFORMATION
-          </Link>
+          </NavLink>
         </ul>
         {hamburgerShow && (
           <div className={classes.menu} onClick={menuHandler}>

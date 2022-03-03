@@ -37,8 +37,8 @@
   width: 65px;
   padding: 0.2rem 0.5rem;
 
-  border: rgb(247, 126, 166) 2px solid;
-  background-color: rgb(247, 126, 166);
+  border: #ffc6ff 2px solid;
+  background-color: #ffc6ff;
   font-size: 1rem;
   cursor: pointer;
   color: black;
@@ -47,8 +47,8 @@
   width: 65px;
   padding: 0.2rem 0.5rem;
 
-  border: rgb(188, 255, 197) 2px solid;
-  background-color: rgb(188, 255, 197);
+  border: #caffbf 2px solid;
+  background-color: #caffbf;
   font-size: 1rem;
   cursor: pointer;
   color: black;
@@ -57,8 +57,8 @@
   width: 65px;
   padding: 0.2rem 0.5rem;
 
-  border: rgb(253, 247, 196) 2px solid;
-  background-color: rgb(253, 247, 196);
+  border: #fdffb6 2px solid;
+  background-color: #fdffb6;
   font-size: 1rem;
   cursor: pointer;
   color: black;

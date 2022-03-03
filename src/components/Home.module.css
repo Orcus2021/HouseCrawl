@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Quicksand:wght@600&display=swap");
-
 .homeContent {
   display: flex;
   flex-direction: row;
@@ -28,7 +26,7 @@
   text-shadow: 0 0 20px #cc00ff;
   font-family: "Quicksand", sans-serif;
 }
-.homeContent .title:after {
+.homeContent .title::after {
   content: "Fight";
   position: absolute;
   top: 0;

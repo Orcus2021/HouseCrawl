@@ -54,6 +54,16 @@
   text-decoration: none;
   cursor: pointer;
 }
+.nav_1 {
+  color: white;
+  margin-right: 0.5rem;
+  border-bottom: 2px solid white;
+  font-size: 1rem;
+  list-style: none;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
 .menu {
   position: relative;
   width: 40px;
@@ -90,7 +100,7 @@
     position: absolute;
     width: 100%;
     min-height: 100vh;
-    background-color: rgb(80, 16, 139);
+    background-color: rgb(45, 10, 78);
     top: 0;
     left: -100%;
     display: flex;
@@ -105,7 +115,39 @@
 
   .nav {
     font-size: 2rem;
+    margin-bottom: 5px;
   }
+  .nav_1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 10;
+    color: #fff;
+    text-shadow: 0 0 20px #cc00ff;
+    font-family: "Quicksand", sans-serif;
+  }
+  .nav_1::after {
+    content: "FFFFF";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    color: #cc00ff;
+    filter: blur(15px);
+  }
+  .nav_1::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e178fc;
+    z-index: -2;
+    opacity: 0.5;
+    filter: blur(40px);
+  }
+
   .menuActive {
     left: 0;
   }

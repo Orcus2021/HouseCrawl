@@ -59,6 +59,9 @@ function ListItem(props) {
     const comment = event.target.value;
     setComment(comment);
   };
+  const openNewView = () => {
+    window.open(props.link);
+  };
 
   let state = `${classes.listContent}`;
 
@@ -72,9 +75,11 @@ function ListItem(props) {
   return (
     <Fragment>
       <div className={state}>
-        <p className={classes.id}>{props.id}</p>
-        <p className={classes.title}>
-          <a href={props.link} rel="noreferrer">
+        <p className={classes.id} onClick={openNewView}>
+          {props.id}
+        </p>
+        <p className={classes.title} onClick={openNewView}>
+          <a href="#" rel="noreferrer">
             {props.title}
           </a>
         </p>

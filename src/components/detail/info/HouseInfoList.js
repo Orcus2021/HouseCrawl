@@ -18,7 +18,7 @@ const HouseInfoList = (props) => {
 
   return (
     <div className={classes.container}>
-      <h1>House Information List</h1>
+      <h1>Information List</h1>
       <div className={classes.content}>
         <button className={classes.btn} onClick={navCreateHandler}>
           Add+
