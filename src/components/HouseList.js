@@ -8,8 +8,14 @@ let initData = [];
 function HouseList(props) {
   const navigate = useNavigate();
   const [listData, setListData] = useState([]);
-
+  const [waitShow, setWaitShow] = useState(false);
+  const [seeShow, setSeeShow] = useState(false);
+  const [askShow, setAskShow] = useState(false);
   const db = getDatabase(props.firebaseApp);
+  let waitClass = "";
+  let seeClass = "";
+  let askClass = "";
+  let backCircle = "";
   useEffect(() => {
     if (!props.token) {
       navigate("/login");
@@ -110,29 +116,59 @@ function HouseList(props) {
   };
 
   const seeHandler = () => {
+    setSeeShow(true);
+    setAskShow(false);
+    setWaitShow(false);
     filter("save");
   };
   const askHandler = () => {
+    setSeeShow(false);
+    setAskShow(true);
+    setWaitShow(false);
     filter("standby");
   };
   const waitHandler = () => {
+    setSeeShow(false);
+    setAskShow(false);
+    setWaitShow(true);
     filter("wait");
   };
 
+  if (waitShow) {
+    waitClass = classes.btnActive;
+  } else if (seeShow) {
+    seeClass = classes.btnActive;
+  } else if (askShow) {
+    askClass = classes.btnActive;
+  }
+  if (waitShow || seeShow || askShow) {
+    backCircle = <div className={classes.indicator}></div>;
+  }
   return (
     <div className={classes.container}>
       <h1>House List</h1>
-      <div className={classes.btns}>
-        <span>Filter :</span>
-        <button className={classes.wait} onClick={waitHandler}>
-          發財
-        </button>
-        <button className={classes.see} onClick={seeHandler}>
-          待看
-        </button>
-        <button className={classes.ask} onClick={askHandler}>
-          待問
-        </button>
+      <div className={classes.content}>
+        <div className={classes.btns}>
+          <div className={waitClass}>
+            <button className={classes.wait} onClick={waitHandler}>
+              <i class="ri-money-dollar-circle-line"></i>
+              <span>發財</span>
+            </button>
+          </div>
+          <div className={seeClass}>
+            <button className={classes.see} onClick={seeHandler}>
+              <i class="ri-map-pin-line"></i>
+              <span>待看</span>
+            </button>
+          </div>
+          <div className={askClass}>
+            <button className={classes.ask} onClick={askHandler}>
+              <i class="ri-phone-line"></i>
+              <span>待問</span>
+            </button>
+          </div>
+          {backCircle}
+        </div>
       </div>
 
       <div className={classes.list}>
@@ -158,7 +194,7 @@ function HouseList(props) {
             );
           })
         ) : (
-          <h1>沒有物件，繼續努力</h1>
+          <h2>沒有物件，繼續努力</h2>
         )}
       </div>
     </div>

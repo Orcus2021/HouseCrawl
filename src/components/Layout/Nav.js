@@ -83,6 +83,7 @@ const Nav = (props) => {
         <ul className={menuClasses}>
           <NavLink
             to="/"
+            data-text="HOME"
             className={(navState) =>
               navState.isActive ? classes.nav_1 : classes.nav
             }
@@ -95,13 +96,21 @@ const Nav = (props) => {
               LOGOUT
             </p>
           ) : (
-            <Link to="/login" className={classes.nav} onClick={menuHandler}>
+            <NavLink
+              to="/login"
+              data-text="LOGIN"
+              className={(navState) =>
+                navState.isActive ? classes.nav_1 : classes.nav
+              }
+              onClick={menuHandler}
+            >
               LOGIN
-            </Link>
+            </NavLink>
           )}
 
           <NavLink
             to="/list"
+            data-text="LIST"
             className={(navState) =>
               navState.isActive ? classes.nav_1 : classes.nav
             }
@@ -111,6 +120,7 @@ const Nav = (props) => {
           </NavLink>
           <NavLink
             to="/houseInfo"
+            data-text="INFORMATION"
             className={(navState) =>
               navState.isActive ? classes.nav_1 : classes.nav
             }

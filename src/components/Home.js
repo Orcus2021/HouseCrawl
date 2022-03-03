@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Home.module.css";
 import { useNavigate } from "react-router";
-
+let left = 0;
+let top = 0;
 const Home = () => {
   const navigate = useNavigate();
-  const toListHandler = () => {
-    navigate("/list");
+  const [showRipple, setShowRipple] = useState(false);
+
+  const toListHandler = (e) => {
+    let x = e.clientX - e.target.offsetLeft;
+    let y = e.clientY - e.target.offsetTop;
+    left = x + "px";
+    top = y + "px";
+
+    setShowRipple(true);
+    setTimeout(() => {
+      setShowRipple(false);
+    }, 300);
+    setTimeout(() => {
+      navigate("/list");
+    }, 400);
   };
 
   return (
@@ -15,6 +29,9 @@ const Home = () => {
         <h2 className={classes.title2}>FOR YOUR LIFE</h2>
         <button className={classes.loginBtn} onClick={toListHandler}>
           GO
+          {showRipple && (
+            <span style={{ left: `${left}`, top: `${top}` }}></span>
+          )}
         </button>
       </div>
 

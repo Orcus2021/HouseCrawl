@@ -7,16 +7,134 @@
 }
 .container h1 {
   padding: 0 10px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   border-bottom: 5px solid rgb(80, 16, 139);
 }
+
 .content {
-  width: 100%;
+  position: relative;
   display: flex;
-  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 240px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+.btns {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  background-color: rgb(255, 255, 255);
+  height: 50px;
+  width: 210px;
 }
 
+.btns div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 70px;
+  z-index: 2;
+}
+.wait,
+.see,
+.ask {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  font-size: 1rem;
+  cursor: pointer;
+  color: black;
+}
+
+.wait i,
+.see i,
+.ask i {
+  position: relative;
+  display: block;
+  font-size: 1.5em;
+
+  color: black;
+  transition: 0.5s;
+  opacity: 0;
+}
+
+.btnActive .wait i {
+  transform: translateY(-32px);
+  opacity: 1;
+  color: #ff9bff;
+}
+.btnActive .see i {
+  transform: translateY(-32px);
+  opacity: 1;
+  color: rgb(52, 216, 134);
+}
+.btnActive .ask i {
+  transform: translateY(-32px);
+  opacity: 1;
+  color: #f6b054;
+}
+
+.wait span {
+  position: absolute;
+  background-color: #ff9bff;
+  padding: 2px 12px;
+  border-radius: 10px;
+  transition: 0.5s;
+  font-size: 1rem;
+}
+.see span {
+  position: absolute;
+  background-color: rgb(52, 216, 134);
+  padding: 2px 12px;
+  border-radius: 10px;
+  transition: 0.5s;
+  font-size: 1rem;
+  /* opacity: 0; */
+}
+.ask span {
+  position: absolute;
+  background-color: #f6b054;
+  padding: 2px 12px;
+  border-radius: 10px;
+  transition: 0.5s;
+  font-size: 1rem;
+  /* opacity: 0; */
+  /* transform: translateY(15px); */
+}
+.btnActive span {
+  transform: translateY(-4px);
+  opacity: 1;
+}
+.btns .indicator {
+  position: absolute;
+
+  top: -45%;
+  width: 70px;
+  height: 70px;
+  background-color: rgb(255, 255, 255);
+  z-index: 1;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.btns div:nth-child(1).btnActive ~ .indicator {
+  transform: translateX(calc(70px * 0));
+}
+.btns div:nth-child(2).btnActive ~ .indicator {
+  transform: translateX(calc(70px * 1));
+}
+.btns div:nth-child(3).btnActive ~ .indicator {
+  transform: translateX(calc(70px * 2));
+}
 .list {
   width: 100%;
   display: flex;
@@ -25,48 +143,12 @@
   align-items: center;
   justify-content: center;
 }
-
-.btns {
-  margin-bottom: 1rem;
+.container h2 {
+  padding-top: 10px;
 }
-.btns span {
-  padding-right: 5px;
-}
-
-.wait {
-  width: 65px;
-  padding: 0.2rem 0.5rem;
-
-  border: #ffc6ff 2px solid;
-  background-color: #ffc6ff;
-  font-size: 1rem;
-  cursor: pointer;
-  color: black;
-}
-.see {
-  width: 65px;
-  padding: 0.2rem 0.5rem;
-
-  border: #caffbf 2px solid;
-  background-color: #caffbf;
-  font-size: 1rem;
-  cursor: pointer;
-  color: black;
-}
-.ask {
-  width: 65px;
-  padding: 0.2rem 0.5rem;
-
-  border: #fdffb6 2px solid;
-  background-color: #fdffb6;
-  font-size: 1rem;
-  cursor: pointer;
-  color: black;
-}
-@media (max-width: 280px) {
-  .wait,
-  .see,
-  .ask {
-    width: 60px;
+@media (max-width: 350px) {
+  .container h2 {
+    font-size: 1rem;
+    padding-top: 10px;
   }
 }

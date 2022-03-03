@@ -194,8 +194,18 @@ input[type="number"]::-webkit-outer-spin-button {
   border-radius: 0 5px 5px 0;
 }
 .searchBtn {
+  position: relative;
   width: 100%;
   margin: auto 0 10px 0;
+  overflow: hidden;
+}
+.searchBtn span {
+  position: absolute;
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  animation: animate 0.3s linear infinite;
 }
 .filterOption {
   display: flex;
@@ -306,6 +316,7 @@ input[type="number"]::-webkit-outer-spin-button {
   .editBalance,
   .filterBalance,
   .searchBtn {
+    position: relative;
     width: 95%;
   }
   .editInput {
@@ -360,5 +371,17 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   .customize input {
     font-size: 0.6rem;
+  }
+}
+@keyframes animate {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0.5;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0;
   }
 }

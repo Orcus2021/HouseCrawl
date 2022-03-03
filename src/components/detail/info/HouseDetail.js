@@ -14,6 +14,9 @@ import {
 import Modal from "../../Layout/Modal";
 import DetailCreate from "../info/DetailCreate";
 
+let left = 0;
+let top = 0;
+
 let tody = new Date(
   new Date().getFullYear(),
   new Date().getMonth(),
@@ -32,8 +35,10 @@ if (initDay.length === 1) {
   initDay = "0" + initDay;
 }
 initDate = `${initYear}-${initMonth}-${initDay}`;
+let changeArr = [];
 
 const HouseDetail = (props) => {
+  console.log("run");
   const { firebaseApp, onAdd, onUpdate, onDelete } = props;
   const db = getFirestore(firebaseApp);
   const params = useParams();
@@ -54,17 +59,27 @@ const HouseDetail = (props) => {
   const [cusBefore, setCusBefore] = useState(initDate);
   const [cusAfter, setCusAfter] = useState(initDate);
   const [editInfo, setEditInfo] = useState(false);
+  const [showRipple, setShowRipple] = useState(false);
+  let lastScrollY = 0;
+  let keyId = params.id;
+  let newBalance = detail.balance;
+  let searchArr = [];
   useEffect(() => {
     if (!props.token) {
       navigate("/login");
       return;
     }
   }, [props.token, navigate]);
-
-  let keyId = params.id;
-  let changeArr = [];
-  let newBalance = detail.balance;
-  let searchArr = [];
+  const scrollScreen = () => {
+    lastScrollY = window.scrollY;
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", scrollScreen);
+    scrollScreen();
+    return () => {
+      window.removeEventListener("scroll", scrollScreen);
+    };
+  });
 
   // sort/date translate function
   const sortCallBack = (a, b) => {
@@ -154,7 +169,17 @@ const HouseDetail = (props) => {
     searchArr = [];
   };
   // filter recordData
-  const filterDataHandler = () => {
+  const filterDataHandler = (e) => {
+    //ripple effect
+    let x = e.clientX - e.target.offsetLeft;
+    let y = e.clientY - e.target.offsetTop + lastScrollY;
+
+    left = x + "px";
+    top = y + "px";
+
+    setShowRipple(true);
+
+    //select search condition
     const ref = collection(db, `/rentData/${keyId}/balance`);
     const q7 = query(ref, where("recordDate", ">=", week));
     const q30 = query(ref, where("recordDate", ">=", month));
@@ -174,6 +199,9 @@ const HouseDetail = (props) => {
         alert("查詢區間所選擇的結束日需晚於開始日期");
       }
     }
+    setTimeout(() => {
+      setShowRipple(false);
+    }, 300);
   };
 
   //input Handler
@@ -471,6 +499,9 @@ const HouseDetail = (props) => {
           </div>
           <button className={classes.searchBtn} onClick={filterDataHandler}>
             Search
+            {showRipple && (
+              <span style={{ left: `${left}`, top: `${top}` }}></span>
+            )}
           </button>
         </div>
       </div>

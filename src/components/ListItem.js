@@ -64,21 +64,29 @@ function ListItem(props) {
   };
 
   let state = `${classes.listContent}`;
+  let idClass = `${classes.id}`;
+  let titleClass = `${classes.title}`;
 
   if (saveShow) {
     state = `${classes.listContent} ${classes.active}`;
+    idClass = `${classes.id} ${classes.titleActive}`;
+    titleClass = `${classes.title} ${classes.titleActive}`;
   } else if (deleteShow) {
     state = `${classes.listContent} ${classes.bad}`;
+    idClass = `${classes.id} ${classes.titleBad}`;
+    titleClass = `${classes.title} ${classes.titleBad}`;
   } else if (waitShow) {
     state = `${classes.listContent} ${classes.wait}`;
+    idClass = `${classes.id} ${classes.titleWait}`;
+    titleClass = `${classes.title} ${classes.titleWait}`;
   }
   return (
     <Fragment>
       <div className={state}>
-        <p className={classes.id} onClick={openNewView}>
+        <p className={idClass} onClick={openNewView}>
           {props.id}
         </p>
-        <p className={classes.title} onClick={openNewView}>
+        <p className={titleClass} onClick={openNewView}>
           <a href="#" rel="noreferrer">
             {props.title}
           </a>
