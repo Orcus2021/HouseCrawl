@@ -87,7 +87,7 @@ async function scrawl() {
 
   // Start crawl get Data
   async function getData(n) {
-    let houseUrl = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,42000&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=${n}&totalRows=157`;
+    let houseUrl = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,42000&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=${n}&totalRows=146`;
 
     await page.goto(houseUrl);
     await page
@@ -164,7 +164,7 @@ async function scrawl() {
   };
 
   try {
-    await getAllData(157);
+    await getAllData(146);
   } catch (error) {
     console.log(error);
   }
