@@ -8,7 +8,7 @@
 .container h1 {
   padding: 0 10px;
   margin-bottom: 30px;
-  border-bottom: 5px solid rgb(80, 16, 139);
+  border-bottom: 5px solid var(--primary);
 }
 
 .content {
@@ -18,7 +18,7 @@
   justify-content: center;
   height: 50px;
   width: 240px;
-  background-color: rgb(255, 255, 255);
+  background-color: #eae3ff;
   border-radius: 10px;
 }
 .btns {
@@ -26,7 +26,7 @@
   display: flex;
   align-items: center;
 
-  background-color: rgb(255, 255, 255);
+  background-color: #eae3ff;
   height: 50px;
   width: 210px;
 }
@@ -70,12 +70,12 @@
 .btnActive .wait i {
   transform: translateY(-32px);
   opacity: 1;
-  color: #ff9bff;
+  color: #fcb1b4;
 }
 .btnActive .see i {
   transform: translateY(-32px);
   opacity: 1;
-  color: rgb(52, 216, 134);
+  color: #7fd681;
 }
 .btnActive .ask i {
   transform: translateY(-32px);
@@ -85,7 +85,7 @@
 
 .wait span {
   position: absolute;
-  background-color: #ff9bff;
+  background-color: #ffc2c4;
   padding: 2px 12px;
   border-radius: 10px;
   transition: 0.5s;
@@ -93,7 +93,7 @@
 }
 .see span {
   position: absolute;
-  background-color: rgb(52, 216, 134);
+  background-color: #8deb8e;
   padding: 2px 12px;
   border-radius: 10px;
   transition: 0.5s;
@@ -102,7 +102,7 @@
 }
 .ask span {
   position: absolute;
-  background-color: #f6b054;
+  background-color: #ffe367;
   padding: 2px 12px;
   border-radius: 10px;
   transition: 0.5s;
@@ -120,7 +120,7 @@
   top: -45%;
   width: 70px;
   height: 70px;
-  background-color: rgb(255, 255, 255);
+  background-color: #eae3ff;
   z-index: 1;
   border-radius: 50%;
   transition: 0.5s;

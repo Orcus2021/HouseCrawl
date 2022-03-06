@@ -151,19 +151,19 @@ function HouseList(props) {
         <div className={classes.btns}>
           <div className={waitClass}>
             <button className={classes.wait} onClick={waitHandler}>
-              <i class="ri-money-dollar-circle-line"></i>
+              <i className="ri-money-dollar-circle-line"></i>
               <span>發財</span>
             </button>
           </div>
           <div className={seeClass}>
             <button className={classes.see} onClick={seeHandler}>
-              <i class="ri-map-pin-line"></i>
+              <i className="ri-map-pin-line"></i>
               <span>待看</span>
             </button>
           </div>
           <div className={askClass}>
             <button className={classes.ask} onClick={askHandler}>
-              <i class="ri-phone-line"></i>
+              <i className="ri-phone-line"></i>
               <span>待問</span>
             </button>
           </div>

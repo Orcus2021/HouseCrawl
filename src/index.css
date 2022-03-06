@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Quicksand:wght@600&display=swap");
+:root {
+  --primary: #9d6ab9;
+  --primaryBtn: #9d6ab9;
+}
 * {
   margin: 0;
   padding: 0;
@@ -10,5 +14,5 @@
   -moz-osx-font-smoothing: grayscale;
 }
 body {
-  background-color: rgb(233, 223, 243);
+  background-color: #f8f9fa;
 }

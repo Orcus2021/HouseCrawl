@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Nav from "./components/Layout/Nav";
 import Home from "./components/Home";
 import DetailCreate from "./components/detail/info/DetailCreate";
+import User from "./components/user/User";
 import { Routes, Route } from "react-router";
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
@@ -156,6 +157,7 @@ function App() {
           path="houseInfo/create"
           element={<DetailCreate onAdd={addHandler} token={token} />}
         />
+        <Route path="/api/user" element={<User />} />
       </Routes>
     </div>
   );
