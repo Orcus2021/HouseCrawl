@@ -7,6 +7,9 @@ const crawler = require("./crawler");
 
 app.use(cors());
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("running");
+});
 
 app.post("/api/user", async (req, res) => {
   console.log(req.body);
