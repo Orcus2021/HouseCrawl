@@ -29,13 +29,10 @@ const getInitData = async () => {
   console.log("getting data");
   let ref = db.ref("house");
   let initData;
-  await ref
-    .once("value", function (data) {
-      initData = data.val();
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
+  await ref.once("value", function (data) {
+    initData = data.val();
+  });
+
   console.log("already get data ");
   return initData;
 };
