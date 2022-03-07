@@ -128,6 +128,14 @@ const Nav = (props) => {
           >
             INFORMATION
           </NavLink>
+          <NavLink
+            to="/api/user"
+            className={(navState) =>
+              navState.isActive ? classes.nav_1 : classes.nav
+            }
+          >
+            USER
+          </NavLink>
         </ul>
         {hamburgerShow && (
           <div className={classes.menu} onClick={menuHandler}>
