@@ -200,6 +200,9 @@ async function scrawl(url) {
 
   try {
     await getAllData(pageIndex);
+    initArr = [];
+    initTitle = [];
+    amount = 0;
     return "success";
   } catch (error) {
     return error;
