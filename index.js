@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const port = 4000;
+const PORT = process.env.PORT || 8080;
+
 const cors = require("cors");
 const crawler = require("./crawler");
 
@@ -23,6 +24,6 @@ app.post("/api/user", async (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}....`);
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}....`);
 });
