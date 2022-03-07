@@ -11,7 +11,8 @@ app.get("/", (req, res) => {
   res.send("running");
 });
 
-app.post("/api/user", async (req, res) => {
+const newLocal = "/api/user";
+app.post(newLocal, async (req, res) => {
   console.log(req.body);
   let message = {
     message: "",
