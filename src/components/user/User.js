@@ -8,21 +8,25 @@ const User = () => {
   //sent to backend
   const sentData = async (data) => {
     setDataState("Loading...");
-    const res = await axios
-      .post("http://localhost:4000/api/user", {
-        url: data,
-      })
-      .catch((err) => {
-        setDataState(err);
-      });
-    if (res.data.message) {
-      setDataState(res.data.message);
-    }
+    const res = axios.post("https://housecrawler.herokuapp.com/api/user", {
+      url: data,
+    });
+    return res;
   };
 
   const searchDataHandler = () => {
     let url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,42000&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=${urlTotal}`;
-    sentData(url);
+    sentData(url)
+      .then((res) => {
+        if (res.data.message) {
+          setDataState(res.data.message);
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          setDataState(err);
+        }
+      });
   };
 
   const setURlHandler = (e) => {
@@ -66,8 +70,8 @@ const User = () => {
           <div className={classes.user_line}>
             <div className="lineItem"></div>
             <label htmlFor="">Notify Function:</label>
-            <input type="radio" name="line" checked />
-            <input type="radio" name="line" checked />
+            <input type="radio" name="line" />
+            <input type="radio" name="line" />
             <div className={classes.line_token}>
               <p>Token:*********************</p>
               <p>change token</p>
