@@ -30,8 +30,8 @@
   margin: 10px 0;
   padding: 0.2rem 0.5rem;
   border-radius: 5px;
-  border: #416eb6 2px solid;
-  background-color: #416eb6;
+  border: var(--secondary) 2px solid;
+  background-color: var(--secondary);
   font-size: 1rem;
   cursor: pointer;
   color: white;

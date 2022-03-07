@@ -521,7 +521,7 @@ const HouseDetail = (props) => {
         </div>
       </div>
       {editInfo ? (
-        <Modal onClose={editInfoHandler}>
+        <Modal style={{ width: "500px" }} onClose={editInfoHandler}>
           <DetailCreate
             editDetailInfo={detail}
             keyId={keyId}

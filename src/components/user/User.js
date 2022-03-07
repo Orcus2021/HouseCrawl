@@ -5,7 +5,7 @@ import axios from "axios";
 const User = () => {
   const [dataState, setDataState] = useState("");
   const [urlTotal, setUrlTotal] = useState("");
-
+  //sent to backend
   const sentData = async (data) => {
     setDataState("Loading...");
     const res = await axios
@@ -37,21 +37,48 @@ const User = () => {
   };
   return (
     <div className={classes.user_container}>
-      <div className="user_title">
+      <div className={classes.user_title}>
         <h2>Your Account</h2>
         <p>Logout</p>
       </div>
-      <div className="user_main">
-        <div className="user_function">
+      <div className={classes.user_main}>
+        <div className={classes.user_function}>
           <p>照片</p>
           <p>function</p>
         </div>
-        <div className="user_content">
-          <div className="user_urlCopy">
+        <div className={classes.user_content}>
+          <div className={classes.user_info}>
+            <div className={classes.user_infoItem}>
+              <p>name</p>
+              <p>change name</p>
+            </div>
+            <div className={classes.user_infoItem}>
+              <p>email</p>
+              <p>change email</p>
+            </div>
+            <div className={classes.user_infoItem}>
+              <p>password</p>
+              <p>change password</p>
+            </div>
+
+            <p>total profit:$100000</p>
+          </div>
+          <div className={classes.user_line}>
+            <div className="lineItem"></div>
+            <label htmlFor="">Notify Function:</label>
+            <input type="radio" name="line" checked />
+            <input type="radio" name="line" checked />
+            <div className={classes.line_token}>
+              <p>Token:*********************</p>
+              <p>change token</p>
+            </div>
+          </div>
+
+          <div className={classes.user_urlCopy}>
             <p>591租屋網網址</p>
             <button onClick={copyUrlHandler}>Copy</button>
           </div>
-          <div className="user_search">
+          <div className={classes.user_search}>
             <label htmlFor="">Total:</label>
             <input type="text" onChange={setURlHandler} value={urlTotal} />
             <button onClick={searchDataHandler}>send</button>

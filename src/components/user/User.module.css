@@ -1,3 +1,39 @@
 .user_container {
+  width: 100vw;
   margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 48px;
+}
+.user_title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.user_main {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.user_function {
+  width: 320px;
+  padding: 24px;
+  background-color: bisque;
+}
+.user_content {
+  flex-grow: 1;
+}
+.user_info {
+  width: 100%;
+}
+.user_infoItem {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }

@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Quicksand:wght@600&display=swap");
 :root {
-  --primary: #9d6ab9;
+  --primary: #79589f;
   --primaryBtn: #9d6ab9;
+  --secondary: #416eb6;
 }
 * {
   margin: 0;
