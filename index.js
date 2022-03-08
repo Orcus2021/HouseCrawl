@@ -6,6 +6,7 @@ const crawler = require("./crawler");
 const corsOptions = {
   origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type",
   preflightContinue: false,
   optionsSuccessStatus: 200,
 };
