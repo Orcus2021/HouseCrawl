@@ -34,8 +34,6 @@ app.post(newLocal, async (req, res) => {
       message.message = err;
       res.json(message);
     });
-  message.message = "keep going";
-  res.json(message);
 });
 
 app.listen(PORT, () => {
