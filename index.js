@@ -1,4 +1,5 @@
 const express = require("express");
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 const cors = require("cors");
@@ -13,17 +14,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("running");
 });
 
 const newLocal = "/api/user";
 app.post(newLocal, async (req, res) => {
-  console.log(req.body);
   let message = {
     message: "",
   };
-  await crawler(req.body.url)
+
+  crawler(req.body.url)
     .then((data) => {
       message.message = data;
       res.json(message);
@@ -32,6 +34,8 @@ app.post(newLocal, async (req, res) => {
       message.message = err;
       res.json(message);
     });
+  message.message = "keep going";
+  res.json(message);
 });
 
 app.listen(PORT, () => {
