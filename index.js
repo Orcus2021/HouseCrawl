@@ -10,8 +10,6 @@ const corsOptions = {
     "http://localhost:3000",
     "https://crawl-e3835.firebaseapp.com/",
   ],
-  methods: "GET,POST",
-  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
