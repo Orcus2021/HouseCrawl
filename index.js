@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
-
 const cors = require("cors");
 const crawler = require("./crawler");
 const corsOptions = {
@@ -10,21 +9,15 @@ const corsOptions = {
   preflightContinue: false,
   optionsSuccessStatus: 200,
 };
-
 app.use(cors(corsOptions));
-app.use(function (req, res, next) {
-  // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  // Pass to next layer of middleware
-  next();
-});
+
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("running");
 });
 
 const newLocal = "/api/user";
-app.post(newLocal, cors(corsOptions), async (req, res) => {
+app.post(newLocal, async (req, res) => {
   console.log(req.body);
   let message = {
     message: "",
