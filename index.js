@@ -4,8 +4,17 @@ const PORT = process.env.PORT || 8080;
 
 const cors = require("cors");
 const crawler = require("./crawler");
+const corsOptions = {
+  origin: [
+    "https://crawl-e3835.web.app",
+    "http://localhost:3000",
+    "https://crawl-e3835.firebaseapp.com/",
+  ],
+  methods: "GET,POST",
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("running");
