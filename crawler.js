@@ -17,6 +17,11 @@ admin.initializeApp({
 });
 const db = admin.database();
 const getDb = getDatabase();
+const chromeOptions = {
+  headless: true,
+  defaultViewport: null,
+  args: ["--incognito", "--no-sandbox", "--single-process", "--no-zygote"],
+};
 
 let result = [];
 let initArr = [];
@@ -53,7 +58,7 @@ async function scrawl(url) {
   let initUrl = url;
   let pageIndex = 0;
   let crawlUrl = "";
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch(chromeOptions);
   const page = await browser.newPage();
   //init process url
 
@@ -195,6 +200,9 @@ async function scrawl(url) {
 
   try {
     await getAllData(pageIndex);
+    initArr = [];
+    initTitle = [];
+    amount = 0;
     return "success";
   } catch (error) {
     return error;

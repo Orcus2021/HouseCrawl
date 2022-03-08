@@ -1,13 +1,18 @@
 const express = require("express");
 const app = express();
-const port = 4000;
+const PORT = process.env.PORT || 8080;
+
 const cors = require("cors");
 const crawler = require("./crawler");
 
 app.use(cors());
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("running");
+});
 
-app.post("/api/user", async (req, res) => {
+const newLocal = "/api/user";
+app.post(newLocal, async (req, res) => {
   console.log(req.body);
   let message = {
     message: "",
@@ -23,6 +28,6 @@ app.post("/api/user", async (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}....`);
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}....`);
 });
