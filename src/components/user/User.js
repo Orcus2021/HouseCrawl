@@ -7,7 +7,6 @@ const User = () => {
   const [urlTotal, setUrlTotal] = useState("");
   //sent to backend
   const sentData = async (data) => {
-    setDataState("Loading...");
     const res = axios.post("https://housecrawler.herokuapp.com/api/user", {
       url: data,
     });
