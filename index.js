@@ -8,8 +8,11 @@ const corsOptions = {
   origin: [
     "https://crawl-e3835.web.app",
     "http://localhost:3000",
-    "https://crawl-e3835.firebaseapp.com/",
+    "https://crawl-e3835.firebaseapp.com",
   ],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
