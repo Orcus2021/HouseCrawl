@@ -5,11 +5,7 @@ const PORT = process.env.PORT || 8080;
 const cors = require("cors");
 const crawler = require("./crawler");
 const corsOptions = {
-  origin: [
-    "https://crawl-e3835.web.app",
-    "http://localhost:3000",
-    "https://crawl-e3835.firebaseapp.com",
-  ],
+  origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 200,
@@ -22,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 const newLocal = "/api/user";
-app.post(newLocal, async (req, res) => {
+app.post(newLocal, cors(corsOptions), async (req, res) => {
   console.log(req.body);
   let message = {
     message: "",
