@@ -12,6 +12,12 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(function (req, res, next) {
+  // Website you wish to allow to connect
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Pass to next layer of middleware
+  next();
+});
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("running");
