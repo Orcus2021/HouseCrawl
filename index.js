@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 
 const newLocal = "/api/user";
 app.post(newLocal, async (req, res) => {
-  crawler(req.body.url)
+  crawler(req.body)
     .then((data) => {
       console.log(data);
     })

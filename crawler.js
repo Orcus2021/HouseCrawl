@@ -1,7 +1,6 @@
 const puppeteer = require("puppeteer");
 const admin = require("firebase-admin");
 const { getDatabase } = require("firebase-admin/database");
-
 const dotenv = require("dotenv");
 dotenv.config();
 // const serviceAccount = require("./firebase-adminsdk.json");
@@ -23,6 +22,8 @@ const chromeOptions = {
   args: ["--incognito", "--no-sandbox", "--single-process", "--no-zygote"],
 };
 
+let browser;
+let page;
 let result = [];
 let initArr = [];
 let initTitle = [];
@@ -53,13 +54,131 @@ const sentData = async (d) => {
   });
 };
 
+// crawler rukuya
+async function getRakuyaData(url) {
+  console.log("Start Rukuya");
+  let rakuyaUrlArr = url.split("page=");
+  let maxPage = +rakuyaUrlArr[1];
+
+  for (let i = 1; i <= maxPage; i++) {
+    let rakuyaUrl = rakuyaUrlArr[0] + "page=" + i;
+    await page.goto(rakuyaUrl);
+    await page
+      .waitForSelector(
+        "body > div.container.obj-search-list.obj-search-rent.clearfix > div > div.content-main > div:nth-child(4) > div > div.obj-item.clearfix > div.obj-info"
+      )
+      .then(() => {
+        console.log("rakuya got it");
+      });
+    const title = await page.$$eval("div.obj-info > div >h6 > a", (links) =>
+      links.map((link) => link.textContent)
+    );
+    const distant = await page.$$eval("div.obj-info > div > p", (links) =>
+      links.map((link) => link.textContent)
+    );
+    const linkList = await page.$$eval("div.obj-info > div >h6 > a", (links) =>
+      links.map((link) => link.href)
+    );
+    const price = await page.$$eval(
+      "div.obj-info > ul.obj-data.clearfix >li.obj-price > span",
+      (links) => links.map((link) => link.textContent)
+    );
+    const type = await page.$$eval(
+      "div.obj-info > ul.obj-data.clearfix >li:nth-child(2) > span:nth-child(1)",
+      (links) => links.map((link) => link.textContent)
+    );
+    const pattern = await page.$$eval(
+      "div.obj-info > ul.obj-data.clearfix >li:nth-child(2) > span:nth-child(2)",
+      (links) => links.map((link) => link.textContent)
+    );
+    const floor = await page.$$eval(
+      "div.obj-info > ul.obj-data.clearfix >li:nth-child(3) > span:nth-child(2)",
+      (links) => links.map((link) => link.textContent)
+    );
+
+    // 逐一加入result
+    for (let i = 0; i < title.length; i++) {
+      let result1 = pattern[i].includes("1衛");
+      let linkResult = initArr.find((d) => d === linkList[i]);
+      let titleResult = initTitle.find((d) => d === title[i]);
+      if (linkResult || titleResult || result1) {
+        console.log("repeat");
+      } else {
+        amount = amount + 1;
+        console.log(amount);
+        id = id + 1;
+        let resultObj = {
+          id,
+          title: title[i],
+          distant: distant[i],
+          link: linkList[i],
+          price: price[i],
+          type: type[i],
+          pattern: pattern[i],
+          floor: floor[i],
+          comment: "",
+          state: "standby",
+        };
+        await sentData(resultObj);
+      }
+    }
+    await page.waitForTimeout(3000);
+  }
+}
+
+//  Get Detail
+async function getDetail(url, index) {
+  try {
+    await page.goto(url);
+    await page
+      .waitForSelector("#houseInfo > div.house-pattern > span:nth-child(1)")
+      .then(() => {
+        console.log("detail-got it");
+        console.log(amount);
+      });
+
+    const pattern = await page.$eval(
+      "#houseInfo > div.house-pattern > span:nth-child(1)",
+      (el) => el.textContent
+    );
+    const floor = await page.$eval(
+      "#houseInfo > div.house-pattern > span:nth-child(5)",
+      (el) => el.textContent
+    );
+    const type = await page.$eval(
+      "#houseInfo > div.house-pattern > span:nth-child(7)",
+      (el) => el.textContent
+    );
+    const distant = await page.$eval(
+      "#positionRound > div.surround-list > div:nth-child(1) > a > p > span",
+      (el) => el.textContent
+    );
+    const price = await page.$eval(
+      "#houseInfo > div.house-price > span > b",
+      (el) => el.textContent
+    );
+
+    result[index].pattern = pattern;
+    result[index].floor = floor;
+    result[index].type = type;
+    result[index].distant = distant.trim();
+    result[index].price = price;
+    result[index].state = "standby";
+    result[index].comment = "";
+  } catch (error) {
+    throw new Error(err);
+  }
+  amount++;
+}
+
 // Start crawl
-async function scrawl(url) {
-  let initUrl = url;
+async function scrawl(urlObj) {
+  let initUrl = urlObj.rent591Url;
+  let rukuyaUrl = urlObj.rukuyaUrl;
   let pageIndex = 0;
   let crawlUrl = "";
-  const browser = await puppeteer.launch(chromeOptions);
-  const page = await browser.newPage();
+  browser = await puppeteer.launch(chromeOptions);
+  page = await browser.newPage();
   //init process url
 
   let urlArr = initUrl.split("&");
@@ -68,52 +187,6 @@ async function scrawl(url) {
     crawlUrl = crawlUrl + urlArr[i] + "&";
   }
   pageIndex = total[1];
-
-  //  Get Detail
-
-  async function getDetail(url, index) {
-    try {
-      await page.goto(url);
-      await page
-        .waitForSelector("#houseInfo > div.house-pattern > span:nth-child(1)")
-        .then(() => {
-          console.log("detail-got it");
-          console.log(amount);
-        });
-
-      const pattern = await page.$eval(
-        "#houseInfo > div.house-pattern > span:nth-child(1)",
-        (el) => el.textContent
-      );
-      const floor = await page.$eval(
-        "#houseInfo > div.house-pattern > span:nth-child(5)",
-        (el) => el.textContent
-      );
-      const type = await page.$eval(
-        "#houseInfo > div.house-pattern > span:nth-child(7)",
-        (el) => el.textContent
-      );
-      const distant = await page.$eval(
-        "#positionRound > div.surround-list > div:nth-child(1) > a > p > span",
-        (el) => el.textContent
-      );
-      const price = await page.$eval(
-        "#houseInfo > div.house-price > span > b",
-        (el) => el.textContent
-      );
-
-      result[index].pattern = pattern;
-      result[index].floor = floor;
-      result[index].type = type;
-      result[index].distant = distant.trim();
-      result[index].price = price;
-      result[index].state = "standby";
-      result[index].comment = "";
-    } catch (error) {
-      throw new Error(err);
-    }
-    amount++;
-  }
 
   // Start crawl get Data
   async function getData(n) {
@@ -192,17 +265,17 @@ async function scrawl(url) {
         throw new Error(err);
       });
 
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(2000);
     }
-
-    console.log("End");
   };
 
   try {
     await getAllData(pageIndex);
+    await getRakuyaData(rukuyaUrl);
     initArr = [];
     initTitle = [];
     amount = 0;
+    console.log("End");
     return "success";
   } catch (error) {
     return error;
