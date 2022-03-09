@@ -22,7 +22,7 @@ const User = (props) => {
   }, [props.token, navigate]);
   //sent to backend
   const sentData = async (data) => {
-    const res = axios.post("http://localhost:8080" + "/api/user", {
+    const res = axios.post(herokuUrl + "/api/user", {
       rent591Url: data.rent591Url,
       rukuyaUrl: data.rukuyaUrl,
     });
