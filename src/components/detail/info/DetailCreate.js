@@ -95,7 +95,7 @@ const HouseDetail = (props) => {
         props.onUpdate(newObj);
         props.onClose();
       } else {
-        onAdd(detailObj, "rentData");
+        onAdd(detailObj, "/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo");
         navigate("/houseInfo");
       }
     } else {

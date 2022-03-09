@@ -63,6 +63,7 @@ const Login = (props) => {
       .then(() => signInWithEmailAndPassword(auth, email, password))
       .then((userCredential) => {
         const user = userCredential.user;
+        console.log(user);
         localStorage.setItem("houseListToken", `hrent${user.accessToken}`);
         localStorage.setItem("houseListChecked", "true");
         props.onToken(user.accessToken);

@@ -48,17 +48,20 @@ function App() {
   }, []);
   // get houseInfo
   const getInfoDataChange = useCallback(async () => {
-    await onSnapshot(collection(db, "rentData"), (querySnapshot) => {
-      let rentalArr = [];
-      querySnapshot.forEach((doc) => {
-        let docObj = doc.data();
-        docObj.keyId = doc.id;
-        rentalArr.push(docObj);
-      });
+    await onSnapshot(
+      collection(db, "/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo"),
+      (querySnapshot) => {
+        let rentalArr = [];
+        querySnapshot.forEach((doc) => {
+          let docObj = doc.data();
+          docObj.keyId = doc.id;
+          rentalArr.push(docObj);
+        });
 
-      setRentData(rentalArr);
-      rentalArr = [];
-    });
+        setRentData(rentalArr);
+        rentalArr = [];
+      }
+    );
   }, [db]);
 
   useEffect(() => {
