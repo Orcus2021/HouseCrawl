@@ -22,10 +22,10 @@ const chromeOptions = {
   // args: ["--incognito", "--no-sandbox", "--single-process", "--no-zygote"],
 };
 
-// let result = [];
-// let initArr = [];
-// let initTitle = [];
-// let id = 0;
+let result = [];
+let initArr = [];
+let initTitle = [];
+let id = 0;
 // let amount = 0;
 
 // Get initData
@@ -118,9 +118,11 @@ async function scrawl(url) {
   // }
 
   // Start crawl get Data
-  async function getData() {
-    // let url = crawlUrl + "firstRow=" + n + "&" + urlArr[urlArr.length - 1];
-    await page.goto(initUrl);
+  async function getRakuyaData(n) {
+    let rakuyaUrlArr = url.split("page=");
+    let maxPage = rakuyaUrlArr[1];
+    let rakuyaUrl = rakuyaUrlArr[0] + "page=" + n;
+    await page.goto(url);
     await page
       .waitForSelector(
         "body > div.container.obj-search-list.obj-search-rent.clearfix > div > div.content-main > div:nth-child(4) > div > div.obj-item.clearfix > div.obj-info"
@@ -129,60 +131,60 @@ async function scrawl(url) {
         console.log("got it");
       });
     const title = await page.$$eval("div.obj-info > div >h6 > a", (links) =>
+      links.map((link) => {
+        let title = link.textContent;
+        let titleArr = title.split("）");
+        title = titleArr[1];
+        return title;
+      })
+    );
+    const distant = await page.$$eval("div.obj-info > div > p", (links) =>
       links.map((link) => link.textContent)
     );
     const linkList = await page.$$eval("div.obj-info > div >h6 > a", (links) =>
       links.map((link) => link.href)
     );
-    console.log(title, linkList);
+    const price = await page.$$eval(
+      "div.obj-info > ul.obj-data.clearfix >li.obj-price > span",
+      (links) => links.map((link) => link.textContent)
+    );
+    const type = await page.$$eval(
+      "div.obj-info > ul.obj-data.clearfix >li:nth-child(2) > span:nth-child(1)",
+      (links) => links.map((link) => link.textContent)
+    );
+    const pattern = await page.$$eval(
+      "div.obj-info > ul.obj-data.clearfix >li:nth-child(2) > span:nth-child(2)",
+      (links) => links.map((link) => link.textContent)
+    );
+    const floor = await page.$$eval(
+      "div.obj-info > ul.obj-data.clearfix >li:nth-child(3) > span:nth-child(2)",
+      (links) => links.map((link) => link.textContent)
+    );
+    console.log(title);
     // 逐一加入result
-    // for (let data of linkList) {
-    //   console.log("detail");
-    //   // const pattern = await page.$eval(
-    //   //   "div.obj-title > a",
-    //   //   (el) => el.textContent,
-    //   //   data
-    //   // );
-
-    //   const a = await page.evaluate(
-    //     (el) => el.querySelector("div.obj-title > a").getAttribute("href"),
-    //     data
-    //   );
-    //   // let title = await page.evaluate(
-    //   //   (el) => el.querySelector("div.obj-title > a").textContent,
-    //   //   data
-    //   // );
-    //   console.log(a);
-
-    //   // title = title.trim();
-    //   // let linkResult = initArr.find((d) => d === a);
-    //   // let titleResult = initTitle.find((d) => d === title);
-
-    //   // if (linkResult || titleResult) {
-    //   //   console.log("repeat");
-    //   // } else {
-    //   //   id = id + 1;
-    //   //   result.push({ id, title, link: a });
-    //   //   console.log(a);
-    //   // }
-    // }
-    //Filter 1衛 開放式
-    // for (let j = 0; j < result.length; j++) {
-    //   let detailUrl = result[j].link;
-    //   await getDetail(detailUrl, j);
-
-    //   let result1 = result[j].pattern.includes("1衛");
-    //   let result2 = result[j].pattern.includes("開放式");
-
-    //   if (!result1 && !result2) {
-    //     await sentData(result[j]);
-    //     await page.waitForTimeout(2000);
-    //   } else if (result1 || result2) {
-    //     console.log("Failed pattern");
-    //   }
-    // }
-
-    // result = [];
+    for (let i = 0; i < title.length; i++) {
+      let result1 = pattern[i].includes("1衛");
+      let linkResult = initArr.find((d) => d === linkList[i]);
+      let titleResult = initTitle.find((d) => d === title[i]);
+      if (linkResult || titleResult || result1) {
+        console.log("repeat");
+      } else {
+        id = id + 1;
+        let resultObj = {
+          id,
+          title: title[i],
+          distant: distant[i],
+          link: linkList[i],
+          price: price[i],
+          type: type[i],
+          pattern: pattern[i],
+          floor: floor[i],
+          comment: "",
+          state: "standby",
+        };
+        await sentData(resultObj);
+      }
+    }
   }
 
   // get All house Data
