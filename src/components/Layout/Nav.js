@@ -133,6 +133,7 @@ const Nav = (props) => {
             className={(navState) =>
               navState.isActive ? classes.nav_1 : classes.nav
             }
+            onClick={menuHandler}
           >
             USER
           </NavLink>

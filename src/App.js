@@ -157,7 +157,7 @@ function App() {
           path="houseInfo/create"
           element={<DetailCreate onAdd={addHandler} token={token} />}
         />
-        <Route path="/api/user" element={<User />} />
+        <Route path="/api/user" element={<User token={token} />} />
       </Routes>
     </div>
   );
