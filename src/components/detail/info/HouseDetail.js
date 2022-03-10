@@ -116,10 +116,13 @@ const HouseDetail = (props) => {
 
   // processing firestore data
   const getInfoDataChange = useCallback(async () => {
-    await onSnapshot(doc(db, `/rentData/${userId}/${keyId}`), (doc) => {
-      setDetail(doc.data());
-    });
-  }, [db, keyId]);
+    await onSnapshot(
+      doc(db, `/rentData/${userId}/houseInfo/${keyId}`),
+      (doc) => {
+        setDetail(doc.data());
+      }
+    );
+  }, [db, keyId, userId]);
   const getBalanceCollChange = useCallback(async () => {
     await onSnapshot(
       collection(db, `/rentData/${userId}/houseInfo/${keyId}/balance`),
@@ -135,7 +138,7 @@ const HouseDetail = (props) => {
         changeArr = [];
       }
     );
-  }, [db, keyId]);
+  }, [db, keyId, userId]);
 
   useEffect(() => {
     let isMounted = true;

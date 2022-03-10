@@ -16,6 +16,7 @@ import {
   updateDoc,
   deleteDoc,
   onSnapshot,
+  connectFirestoreEmulator,
 } from "firebase/firestore";
 
 const HouseInfoList = lazy(() =>
@@ -35,21 +36,58 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APPID,
 };
 let localUserId = localStorage.getItem("houseUserID");
-
 function App() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState(localUserId);
   const [rentalData, setRentData] = useState([]);
   useEffect(() => {
     let localToken = localStorage.getItem("houseListToken");
+    localUserId = localStorage.getItem("houseUserID");
 
     setToken(localToken);
     setUserId(localUserId);
   }, []);
+  // processing firestore data
+
+  // const getDataChange = async (url) => {
+  //   let rentalArr = [];
+
+  //   await onSnapshot(
+  //     collection(db, url),
+
+  //     (querySnapshot) => {
+  //       querySnapshot.forEach((doc) => {
+  //         let docObj = doc.data();
+  //         docObj.keyId = doc.id;
+  //         rentalArr.push(docObj);
+  //       });
+  //       console.log(rentalArr);
+  //       dataResult = [...rentalArr];
+  //     }
+  //   );
+
+  // };
+
+  const addCollectionData = async (data, url) => {
+    let refUrl = url;
+
+    let collRef = await collection(db, refUrl);
+    await addDoc(collRef, data);
+  };
+
+  const updateFieldData = async (data, url) => {
+    const ref = doc(db, url);
+
+    await updateDoc(ref, data);
+  };
+
+  const deleteDocData = async (url) => {
+    const ref = doc(db, url);
+    await deleteDoc(ref);
+  };
   // get houseInfo
   const getInfoDataChange = useCallback(async () => {
     await onSnapshot(
@@ -66,8 +104,18 @@ function App() {
         rentalArr = [];
       }
     );
-  }, [db]);
+  }, [db, userId]);
 
+  // const getHouseInfoChange = useCallback(() => {
+  //   let url = `/rentData/${userId}/houseInfo`;
+  //   getDataChange(url).then((res) => {
+  //     console.log("res", res);
+  //     setRentData(res);
+  //   });
+  // }, [userId, getDataChange]);
+  // useEffect(() => {
+  //   getHouseInfoChange();
+  // }, []);
   useEffect(() => {
     getInfoDataChange();
   }, [getInfoDataChange]);
@@ -92,29 +140,8 @@ function App() {
     setToken("");
   };
 
-  // processing firestore data
-
-  const addCollectionData = async (data, url) => {
-    let refUrl = url;
-
-    let collRef = await collection(db, refUrl);
-    await addDoc(collRef, data);
-  };
-
-  const updateFieldData = async (data, url) => {
-    const ref = doc(db, url);
-
-    await updateDoc(ref, data);
-  };
-
-  const deleteDocData = async (url) => {
-    const ref = doc(db, url);
-    await deleteDoc(ref);
-  };
-
   // element onClick Handler
   const addHandler = (data, url) => {
-    console.log("add");
     addCollectionData(data, url);
   };
   const updateHandler = (data, url) => {
@@ -173,7 +200,16 @@ function App() {
           path=":uid/houseInfo/create"
           element={<DetailCreate onAdd={addHandler} token={token} />}
         />
-        <Route path=":uid/api/user" element={<User token={token} />} />
+        <Route
+          path=":uid/api/user"
+          element={
+            <User
+              token={token}
+              onLogout={logoutHandler}
+              onUpdate={updateHandler}
+            />
+          }
+        />
       </Routes>
     </div>
   );

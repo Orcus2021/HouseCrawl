@@ -124,7 +124,7 @@ const HouseDetail = (props) => {
 
   return (
     <div className={contentClass}>
-      <h2>Add House Detail</h2>
+      <h2>{editInfo ? "Edit House Detail" : "Add House Detail"}</h2>
       <form className={classes.form}>
         <div className={classes.name}>
           <label htmlFor="">Name</label>
