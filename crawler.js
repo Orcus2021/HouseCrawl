@@ -275,6 +275,7 @@ async function scrawl(urlObj) {
     initArr = [];
     initTitle = [];
     amount = 0;
+    id = 0;
     console.log("End");
     return "success";
   } catch (error) {
