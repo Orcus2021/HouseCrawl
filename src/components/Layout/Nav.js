@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import classes from "./Nav.module.css";
-import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 
 let navBgClasses = "";
 const Nav = (props) => {
+  const { onLogout, token, uid } = props;
   const location = useLocation();
   const navigate = useNavigate();
   const [menuShow, setMenuShow] = useState(false);
   const [hamburgerShow, setHamburgerShow] = useState(false);
   const [scrollShow, setScrollShow] = useState(false);
-
+  let houseInfoUrl = `/${uid}/houseInfo`;
+  let houseUser = `/${uid}/api/user`;
   const screenWidth = () => {
     let width = window.innerWidth;
     if (width <= 550) {
@@ -64,7 +66,7 @@ const Nav = (props) => {
     }
   };
   const logoutHandler = () => {
-    props.onLogout();
+    onLogout();
     navigate("/");
     menuHandler();
   };
@@ -91,7 +93,7 @@ const Nav = (props) => {
           >
             HOME
           </NavLink>
-          {props.token ? (
+          {token ? (
             <p className={classes.nav} onClick={logoutHandler}>
               LOGOUT
             </p>
@@ -119,7 +121,7 @@ const Nav = (props) => {
             LIST
           </NavLink>
           <NavLink
-            to="/houseInfo"
+            to={houseInfoUrl}
             data-text="INFORMATION"
             className={(navState) =>
               navState.isActive ? classes.nav_1 : classes.nav
@@ -129,7 +131,7 @@ const Nav = (props) => {
             INFORMATION
           </NavLink>
           <NavLink
-            to="/api/user"
+            to={houseUser}
             className={(navState) =>
               navState.isActive ? classes.nav_1 : classes.nav
             }

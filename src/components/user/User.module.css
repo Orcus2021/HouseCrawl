@@ -12,6 +12,15 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 20px;
+}
+.user_title h2 {
+  font-size: 2.5rem;
+}
+.user_title p {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 .user_main {
   width: 100%;
@@ -24,16 +33,117 @@
   padding: 24px;
   background-color: bisque;
 }
+.plan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.plan i {
+  font-size: 3.5rem;
+  color: var(--primary);
+}
+.plan p {
+  font-size: 2rem;
+}
 .user_content {
   flex-grow: 1;
+  margin-left: 20px;
 }
 .user_info {
   width: 100%;
 }
-.user_infoItem {
+.user_mail,
+.user_password {
   display: flex;
   flex-direction: row;
   width: 100%;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.user_mail p:nth-child(2),
+.user_password p:nth-child(2),
+.line_token p:nth-child(2) {
+  color: var(--primary);
+  font-weight: 500;
+  font-size: 1rem;
+}
+.user_mail p:nth-child(1) {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.user_line {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.lineItem {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.lineItem input {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  appearance: none;
+  background: #c5c5c5;
+  outline: none;
+  border-radius: 20px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+}
+.lineItem input:checked {
+  background-color: #03a9f4;
+}
+.lineItem input:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  transition: 0.5s;
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.lineItem input:checked:before {
+  left: 20px;
+}
+.line_token {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.user_urlCopy {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.user_urlCopy div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.copyItem button,
+.user_search button {
+  width: 70px;
+  height: 25px;
+  border: var(--primaryBtn) 2px solid;
+  color: var(--primaryBtn);
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 5px;
 }

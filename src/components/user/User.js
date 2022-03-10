@@ -8,7 +8,7 @@ const User = (props) => {
   const [urlTotal, setUrlTotal] = useState("");
   const [rukuyaPage, setRukuyaPage] = useState("");
   const navigate = useNavigate();
-  const herokuUrl = "https://housecrawler.herokuapp.com";
+  const herokuUrl = process.env.REACT_APP_HEROKU;
   const rent591List =
     "https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,42000&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=136";
   const rukuyaList =
@@ -69,53 +69,66 @@ const User = (props) => {
       </div>
       <div className={classes.user_main}>
         <div className={classes.user_function}>
-          <p>照片</p>
-          <p>function</p>
+          <div className={classes.plan}>
+            <i class="ri-bookmark-3-line"></i>
+            <p>Free</p>
+            <p>$0</p>
+            <p>forever</p>
+          </div>
+
+          <p>Setting</p>
+          <p>Function</p>
         </div>
         <div className={classes.user_content}>
           <div className={classes.user_info}>
-            <div className={classes.user_infoItem}>
-              <p>name</p>
-              <p>change name</p>
+            <div className={classes.user_mail}>
+              <p>House@gmail.com</p>
+              <p>Change Email</p>
             </div>
-            <div className={classes.user_infoItem}>
-              <p>email</p>
-              <p>change email</p>
+            <div className={classes.user_password}>
+              <p>
+                Password:<span>**********</span>
+              </p>
+              <p>Change Password</p>
             </div>
-            <div className={classes.user_infoItem}>
-              <p>password</p>
-              <p>change password</p>
-            </div>
-
-            <p>total profit:$100000</p>
           </div>
           <div className={classes.user_line}>
-            <div className="lineItem"></div>
-            <label htmlFor="">Notify Function:</label>
-            <input type="radio" name="line" />
-            <input type="radio" name="line" />
+            <div className={classes.lineItem}>
+              <label htmlFor="line">Line Notify</label>
+              <input type="checkbox" id="line" name="line" />
+            </div>
+
             <div className={classes.line_token}>
               <p>Token:*********************</p>
-              <p>change token</p>
+              <p>Change Token</p>
             </div>
           </div>
 
           <div className={classes.user_urlCopy}>
-            <p>591租屋網網址</p>
-            <button onClick={copyUrlHandler.bind(this, rent591List)}>
-              Copy
-            </button>
-            <p>樂屋網網址</p>
-            <button onClick={copyUrlHandler.bind(this, rukuyaList)}>
-              Copy
-            </button>
+            <div className={classes.copyItem}>
+              <p>591租屋網網址</p>
+              <button onClick={copyUrlHandler.bind(this, rent591List)}>
+                Copy
+              </button>
+            </div>
+            <div className={classes.copyItem}>
+              <p>樂屋網網址</p>
+              <button onClick={copyUrlHandler.bind(this, rukuyaList)}>
+                Copy
+              </button>
+            </div>
           </div>
           <div className={classes.user_search}>
-            <label htmlFor="">Total Raws:</label>
-            <input type="text" onChange={setURlHandler} value={urlTotal} />
-            <label htmlFor="">Total Pages:</label>
-            <input type="text" onChange={setPageHandler} value={rukuyaPage} />
-            <button onClick={searchDataHandler}>send</button>
+            <div>
+              <label htmlFor="">Total Raws:</label>
+              <input type="text" onChange={setURlHandler} value={urlTotal} />
+            </div>
+            <div>
+              <label htmlFor="">Total Pages:</label>
+              <input type="text" onChange={setPageHandler} value={rukuyaPage} />
+            </div>
+
+            <button onClick={searchDataHandler}>Crawler</button>
             <p>{dataState}</p>
           </div>
         </div>

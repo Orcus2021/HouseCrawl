@@ -38,7 +38,6 @@ initDate = `${initYear}-${initMonth}-${initDay}`;
 let changeArr = [];
 
 const HouseDetail = (props) => {
-  console.log("run");
   const { firebaseApp, onAdd, onUpdate, onDelete } = props;
   const db = getFirestore(firebaseApp);
   const params = useParams();
@@ -62,6 +61,7 @@ const HouseDetail = (props) => {
   const [showRipple, setShowRipple] = useState(false);
   let lastScrollY = 0;
   let keyId = params.id;
+  let userId = params.uid;
   let newBalance = detail.balance;
   let searchArr = [];
   useEffect(() => {
@@ -116,19 +116,13 @@ const HouseDetail = (props) => {
 
   // processing firestore data
   const getInfoDataChange = useCallback(async () => {
-    await onSnapshot(
-      doc(db, `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}`),
-      (doc) => {
-        setDetail(doc.data());
-      }
-    );
+    await onSnapshot(doc(db, `/rentData/${userId}/${keyId}`), (doc) => {
+      setDetail(doc.data());
+    });
   }, [db, keyId]);
   const getBalanceCollChange = useCallback(async () => {
     await onSnapshot(
-      collection(
-        db,
-        `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}/balance`
-      ),
+      collection(db, `/rentData/${userId}/houseInfo/${keyId}/balance`),
       (querySnapshot) => {
         querySnapshot.forEach((doc) => {
           let singleData = milToDateTranslate(doc.data());
@@ -188,7 +182,7 @@ const HouseDetail = (props) => {
     //select search condition
     const ref = collection(
       db,
-      `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}/balance`
+      `/rentData/${userId}/houseInfo/${keyId}/balance`
     );
     const q7 = query(ref, where("recordDate", ">=", week));
     const q30 = query(ref, where("recordDate", ">=", month));
@@ -258,25 +252,19 @@ const HouseDetail = (props) => {
         dataObj.amount = dataObj.amount * -1;
 
         newBalance += dataObj.amount;
-        onAdd(
-          dataObj,
-          `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}/balance`
-        );
+        onAdd(dataObj, `/rentData/${userId}/houseInfo/${keyId}/balance`);
 
         onUpdate(
           { balance: newBalance },
-          `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}`
+          `/rentData/${userId}/houseInfo/${keyId}`
         );
       } else {
         newBalance += dataObj.amount;
-        onAdd(
-          dataObj,
-          `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}/balance`
-        );
+        onAdd(dataObj, `/rentData/${userId}/houseInfo/${keyId}/balance`);
 
         onUpdate(
           { balance: newBalance },
-          `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}`
+          `/rentData/${userId}/houseInfo/${keyId}`
         );
       }
     } else {
@@ -285,12 +273,9 @@ const HouseDetail = (props) => {
   };
 
   const deleteHandler = (id, deleteAmount) => {
-    let url = `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}/balance/${id}`;
+    let url = `/rentData/${userId}/houseInfo/${keyId}/balance/${id}`;
     newBalance -= deleteAmount;
-    onUpdate(
-      { balance: newBalance },
-      `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}`
-    );
+    onUpdate({ balance: newBalance }, `/rentData/${userId}/houseInfo/${keyId}`);
     onDelete(url);
   };
   // edit Info
@@ -300,12 +285,12 @@ const HouseDetail = (props) => {
     });
   };
   const updateEditInfoHandler = (data) => {
-    onUpdate(data, `/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}`);
+    onUpdate(data, `/rentData/${userId}/houseInfo/${keyId}`);
   };
   const delInfoHandler = () => {
     if (window.confirm("你確定刪除嗎?")) {
-      onDelete(`/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/${keyId}`);
-      navigate("/houseInfo");
+      onDelete(`/rentData/${userId}/houseInfo/${keyId}`);
+      navigate(`/${userId}/houseInfo`);
     }
   };
 

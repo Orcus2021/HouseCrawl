@@ -34,6 +34,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDERID,
   appId: process.env.REACT_APP_FIREBASE_APPID,
 };
+let localUserId = localStorage.getItem("houseUserID");
 
 function App() {
   const app = initializeApp(firebaseConfig);
@@ -41,15 +42,18 @@ function App() {
   const db = getFirestore(app);
 
   const [token, setToken] = useState("");
+  const [userId, setUserId] = useState(localUserId);
   const [rentalData, setRentData] = useState([]);
   useEffect(() => {
     let localToken = localStorage.getItem("houseListToken");
+
     setToken(localToken);
+    setUserId(localUserId);
   }, []);
   // get houseInfo
   const getInfoDataChange = useCallback(async () => {
     await onSnapshot(
-      collection(db, "/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo"),
+      collection(db, `/rentData/${userId}/houseInfo`),
       (querySnapshot) => {
         let rentalArr = [];
         querySnapshot.forEach((doc) => {
@@ -67,9 +71,12 @@ function App() {
   useEffect(() => {
     getInfoDataChange();
   }, [getInfoDataChange]);
-
+  //set Token uid
   const tokenHandler = (d) => {
     setToken(d);
+  };
+  const userIdHandler = (d) => {
+    setUserId(d);
   };
   // logout handler
   const logoutHandler = () => {
@@ -119,12 +126,18 @@ function App() {
 
   return (
     <div className="app">
-      <Nav onLogout={logoutHandler} token={token} />
+      <Nav onLogout={logoutHandler} token={token} uid={userId} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
           path="/login"
-          element={<Login onToken={tokenHandler} firebaseApp={app} />}
+          element={
+            <Login
+              onToken={tokenHandler}
+              onUserId={userIdHandler}
+              firebaseApp={app}
+            />
+          }
         />
         <Route
           path="/list"
@@ -135,7 +148,7 @@ function App() {
           }
         />
         <Route
-          path="houseInfo"
+          path=":uid/houseInfo"
           element={
             <Suspense fallback="Loading...">
               <HouseInfoList rentalData={rentalData} token={token} />
@@ -143,7 +156,7 @@ function App() {
           }
         />
         <Route
-          path="houseInfo/:id"
+          path=":uid/houseInfo/:id"
           element={
             <Suspense fallback="Loading...">
               <HouseDetail
@@ -157,10 +170,10 @@ function App() {
           }
         />
         <Route
-          path="houseInfo/create"
+          path=":uid/houseInfo/create"
           element={<DetailCreate onAdd={addHandler} token={token} />}
         />
-        <Route path="/api/user" element={<User token={token} />} />
+        <Route path=":uid/api/user" element={<User token={token} />} />
       </Routes>
     </div>
   );

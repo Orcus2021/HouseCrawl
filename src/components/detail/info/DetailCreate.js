@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import classes from "./DetailCreate.module.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const HouseDetail = (props) => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const params = useParams();
+  const userId = params.uid;
   useEffect(() => {
     if (!props.token) {
       navigate("/login");
@@ -95,8 +96,8 @@ const HouseDetail = (props) => {
         props.onUpdate(newObj);
         props.onClose();
       } else {
-        onAdd(detailObj, "/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo");
-        navigate("/houseInfo");
+        onAdd(detailObj, `/rentData/${userId}/houseInfo`);
+        navigate(`/${userId}/houseInfo`);
       }
     } else {
       alert("有資料未填");
@@ -117,7 +118,7 @@ const HouseDetail = (props) => {
     if (editInfo) {
       props.onClose();
     } else {
-      navigate("/houseInfo");
+      navigate(`/${userId}/houseInfo`);
     }
   };
 

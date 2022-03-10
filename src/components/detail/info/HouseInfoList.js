@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import classes from "./HouseInfoList.module.css";
 import InfoItem from "./InfoItem";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const HouseInfoList = (props) => {
+  const params = useParams();
   const navigate = useNavigate();
+  const userId = params.uid;
   useEffect(() => {
     if (!props.token) {
       navigate("/login");
@@ -13,7 +15,7 @@ const HouseInfoList = (props) => {
   }, [props.token, navigate]);
   let dataIndex = 0;
   const navCreateHandler = () => {
-    navigate("/houseInfo/create");
+    navigate(`/${userId}/houseInfo/create`);
   };
 
   return (

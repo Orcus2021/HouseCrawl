@@ -1,9 +1,11 @@
 import React from "react";
 import classes from "./InfoItem.module.css";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const InfoItem = (props) => {
+  const params = useParams();
   const navigate = useNavigate();
+  const userId = params.uid;
   const {
     dataIndex,
     rentalName,
@@ -16,7 +18,7 @@ const InfoItem = (props) => {
     keyId,
   } = props;
   const navHouseDetailHandler = () => {
-    navigate(`/houseInfo/${keyId}`);
+    navigate(`${keyId}`);
   };
 
   return (

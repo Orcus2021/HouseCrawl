@@ -12,6 +12,7 @@ import {
 let isChecked = false;
 
 const Login = (props) => {
+  const { firebaseApp, onToken, onUserId } = props;
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +20,7 @@ const Login = (props) => {
   const [passwordValid, setPasswordValid] = useState(true);
   const [checked, setChecked] = useState(false);
 
-  const auth = getAuth(props.firebaseApp);
+  const auth = getAuth(firebaseApp);
 
   let emailClass = emailValid ? "" : `${classes.wrong}`;
   let passwordClass = passwordValid ? "" : `${classes.wrong}`;
@@ -66,7 +67,9 @@ const Login = (props) => {
         console.log(user);
         localStorage.setItem("houseListToken", `hrent${user.accessToken}`);
         localStorage.setItem("houseListChecked", "true");
-        props.onToken(user.accessToken);
+        localStorage.setItem("houseUserID", user.uid);
+        onToken(user.accessToken);
+        onUserId(user.uid);
         navigate("/list");
         if (isChecked) {
           localStorage.setItem("houseListEmail", email);
