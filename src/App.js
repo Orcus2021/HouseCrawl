@@ -17,6 +17,7 @@ import {
   deleteDoc,
   onSnapshot,
   connectFirestoreEmulator,
+  getDoc,
 } from "firebase/firestore";
 
 const HouseInfoList = lazy(() =>
@@ -50,26 +51,6 @@ function App() {
     setToken(localToken);
     setUserId(localUserId);
   }, []);
-  // processing firestore data
-
-  // const getDataChange = async (url) => {
-  //   let rentalArr = [];
-
-  //   await onSnapshot(
-  //     collection(db, url),
-
-  //     (querySnapshot) => {
-  //       querySnapshot.forEach((doc) => {
-  //         let docObj = doc.data();
-  //         docObj.keyId = doc.id;
-  //         rentalArr.push(docObj);
-  //       });
-  //       console.log(rentalArr);
-  //       dataResult = [...rentalArr];
-  //     }
-  //   );
-
-  // };
 
   const addCollectionData = async (data, url) => {
     let refUrl = url;
@@ -106,19 +87,10 @@ function App() {
     );
   }, [db, userId]);
 
-  // const getHouseInfoChange = useCallback(() => {
-  //   let url = `/rentData/${userId}/houseInfo`;
-  //   getDataChange(url).then((res) => {
-  //     console.log("res", res);
-  //     setRentData(res);
-  //   });
-  // }, [userId, getDataChange]);
-  // useEffect(() => {
-  //   getHouseInfoChange();
-  // }, []);
   useEffect(() => {
     getInfoDataChange();
   }, [getInfoDataChange]);
+
   //set Token uid
   const tokenHandler = (d) => {
     setToken(d);
