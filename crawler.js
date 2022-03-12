@@ -220,8 +220,7 @@ async function scrawl(urlObj) {
       if (linkResult || titleResult) {
         console.log("repeat");
       } else {
-        id = id + 1;
-        result.push({ id, title, link: a });
+        result.push({ title, link: a });
         console.log(a);
       }
     }
@@ -234,7 +233,8 @@ async function scrawl(urlObj) {
       let result2 = result[j].pattern.includes("開放式");
 
       if (!result1 && !result2) {
-        await sentData(result[j]);
+        id = id + 1;
+        result[j].id = await sentData(result[j]);
         await page.waitForTimeout(2000);
       } else if (result1 || result2) {
         console.log("Failed pattern");
