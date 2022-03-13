@@ -37,7 +37,10 @@
   flex-direction: row;
   width: 95%;
   padding: 10px;
-  border-bottom: 1px solid black;
+  border-bottom: 1.5px solid var(--line);
+}
+.houseInfo div h2 {
+  color: var(--darkPrimary);
 }
 .houseInfo div:nth-child(1) {
   padding: 0 10px;
@@ -60,7 +63,7 @@
 .infoEditBtn {
   width: 100%;
   height: 30px;
-  background-color: var(--primaryBtn);
+  background-color: var(--primary);
   color: white;
   cursor: pointer;
   border: none;
@@ -103,7 +106,7 @@
 .editBalance h2 {
   padding-bottom: 10px;
   font-size: 1.5rem;
-  color: #79589f;
+  color: var(--darkPrimary);
 }
 .editContent {
   width: 100%;
@@ -182,7 +185,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .editInput .btn button {
   width: 70px;
   height: 30px;
-  background-color: var(--primaryBtn);
+  background-color: var(--primary);
   color: white;
   cursor: pointer;
   border: none;
@@ -217,7 +220,7 @@ input[type="number"]::-webkit-outer-spin-button {
   display: none;
 }
 .label input:checked + .box {
-  background-color: var(--primaryBtn);
+  background-color: var(--primary);
   color: white;
 }
 

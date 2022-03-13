@@ -1,8 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Quicksand:wght@600&display=swap");
 :root {
   --primary: #79589f;
+  --lightPrimary: #bfaace;
+  --darkPrimary: #553a80;
   --primaryBtn: #9d6ab9;
   --secondary: #416eb6;
+  --lightSecondary: #cee6fd;
+  --darkSecondary: #30489e;
+  --line: #d8d8d8;
 }
 * {
   margin: 0;

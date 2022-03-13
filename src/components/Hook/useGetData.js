@@ -1,15 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
 import {
   getFirestore,
-  collection,
-  addDoc,
   doc,
-  updateDoc,
-  deleteDoc,
-  onSnapshot,
-  connectFirestoreEmulator,
+  getDocs,
   getDoc,
+  collection,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -23,13 +19,15 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APPID,
 };
 
-const useGetData = (url) => {
+const useGetData = (url, method) => {
   const [onceData, setOnceData] = useState({});
+  const [allData, setAllData] = useState([]);
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
   useEffect(() => {
     let isMounted = true;
+
     const getDocOnce = async (url) => {
       let dataObj = {};
       const docRef = doc(db, url);
@@ -42,13 +40,36 @@ const useGetData = (url) => {
       }
     };
 
-    getDocOnce(url);
+    const getAllDocOnce = async (url) => {
+      let dataObj = {};
+      let dataArr = [];
+
+      const docRef = collection(db, url);
+
+      const docSnap = await getDocs(docRef);
+      docSnap.forEach((doc) => {
+        dataObj = doc.data();
+
+        dataObj.keyId = doc.id;
+        dataArr.push(dataObj);
+      });
+      if (isMounted) {
+        setAllData(dataArr);
+      }
+    };
+
+    if (method === "aDoc") {
+      getDocOnce(url);
+    } else if (method === "allDocs") {
+      getAllDocOnce(url);
+    }
+
     return () => {
       isMounted = false;
     };
-  }, [url]);
+  }, [url, method]);
 
-  return { onceData };
+  return { onceData, allData };
 };
 
 export default useGetData;

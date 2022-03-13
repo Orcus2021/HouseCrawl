@@ -8,7 +8,8 @@
 .container h1 {
   padding: 0 10px;
   margin-bottom: 30px;
-  border-bottom: 5px solid var(--primary);
+  font-size: 2.5rem;
+  color: var(--darkPrimary);
 }
 
 .content {
@@ -18,7 +19,7 @@
   justify-content: center;
   height: 50px;
   width: 240px;
-  background-color: #eae3ff;
+  background-color: var(--lightSecondary);
   border-radius: 10px;
 }
 .btns {
@@ -26,7 +27,7 @@
   display: flex;
   align-items: center;
 
-  background-color: #eae3ff;
+  background-color: var(--lightSecondary);
   height: 50px;
   width: 210px;
 }
@@ -120,7 +121,7 @@
   top: -45%;
   width: 70px;
   height: 70px;
-  background-color: #eae3ff;
+  background-color: var(--lightSecondary);
   z-index: 1;
   border-radius: 50%;
   transition: 0.5s;

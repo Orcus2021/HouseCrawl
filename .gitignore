@@ -5,6 +5,7 @@
 /HouseCrawl
 /.pnp
 .pnp.js
+.ai
 
 # testing
 /coverage

@@ -6,7 +6,7 @@
 }
 .container h2 {
   width: fit-content;
-  border-bottom: 5px solid rgb(80, 16, 139);
+  border-bottom: 5px solid var(--darkPrimary);
   margin-bottom: 10px;
 }
 .content {
@@ -57,7 +57,7 @@
   width: 100%;
   color: white;
   border: none;
-  background-color: rgb(80, 16, 139);
+  background-color: var(--primary);
   border-radius: 50px;
   font-size: 1rem;
   padding: 8px 20px;
