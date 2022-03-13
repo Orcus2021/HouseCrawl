@@ -234,7 +234,8 @@ async function scrawl(urlObj) {
 
       if (!result1 && !result2) {
         id = id + 1;
-        result[j].id = await sentData(result[j]);
+        result[j].id = id;
+        await sentData(result[j]);
         await page.waitForTimeout(2000);
       } else if (result1 || result2) {
         console.log("Failed pattern");
