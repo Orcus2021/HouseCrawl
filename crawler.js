@@ -262,9 +262,7 @@ async function scrawl(urlObj) {
     id = initArr.length;
 
     for (let i = 0; i <= total; i += 30) {
-      await getData(i).catch((err) => {
-        throw new Error(err);
-      });
+      await getData(i);
 
       await page.waitForTimeout(2000);
     }
