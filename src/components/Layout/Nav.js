@@ -3,6 +3,7 @@ import classes from "./Nav.module.css";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 
 let navBgClasses = "";
+
 const Nav = (props) => {
   const { onLogout, token, uid } = props;
   const location = useLocation();
@@ -12,6 +13,7 @@ const Nav = (props) => {
   const [scrollShow, setScrollShow] = useState(false);
   let houseInfoUrl = `/${uid}/houseInfo`;
   let houseUser = `/${uid}/api/user`;
+
   const screenWidth = () => {
     let width = window.innerWidth;
     if (width <= 550) {
@@ -75,11 +77,11 @@ const Nav = (props) => {
   };
 
   let menuClasses = `${classes.nav_item} ${menuShow ? classes.menuActive : ""}`;
-
+  console.log("nav");
   return (
     <div className={navBgClasses}>
       <h1 className={classes.logo} onClick={navHomeHandler}>
-        <img src="./asset/Slice1.png" alt="Logo" />
+        <img src="asset/Slice1.png" alt="Logo" />
       </h1>
       <div className={classes.nav_items}>
         <ul className={menuClasses}>

@@ -10,6 +10,7 @@ const User = (props) => {
   const { token, onLogout, onUpdate } = props;
   const [dataState, setDataState] = useState("");
   const [urlTotal, setUrlTotal] = useState("");
+  const [rent591Price, setRent591Price] = useState(42000);
   const [rukuyaPage, setRukuyaPage] = useState("");
   const [editShow, setEditShow] = useState(false);
   const [itemType, setItemType] = useState("");
@@ -42,7 +43,7 @@ const User = (props) => {
   }, [token, navigate]);
   //sent to backend to scrawler
   const sentData = async (data) => {
-    const res = axios.post(herokuUrl + "/api/user", {
+    const res = axios.post("http://localhost:8080" + "/api/user", {
       rent591Url: data.rent591Url,
       rukuyaUrl: data.rukuyaUrl,
     });
@@ -51,7 +52,7 @@ const User = (props) => {
 
   const searchDataHandler = () => {
     setDataState("Waiting....");
-    let rent591Url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,42000&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=${urlTotal}`;
+    let rent591Url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,${rent591Price}&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=${urlTotal}`;
     let rukuyaUrl = `https://www.rakuya.com.tw/search/rent_search/index?display=list&con=eJw9jUEOwiAQRe8yaxZQaU08BisT46IFjGPQIUAX1Xh3Z4i6-cl_8_LnBUsMhegOhxPsQAGcFXhsm3QtJWDNaeYOCWtj45KIipyHr07LDR9BiJOaC_oojc920Lqv1DgXfxXax5m0LUdPoZvOsOtkz1mJkeNoxFrrX9oznIQ9Mf-Y4XXFaXuOPSdJw1_fHwBQOv0&tab=def&sort=11&ds=&page=${rukuyaPage}`;
     let urlObj = {
       rent591Url,
@@ -73,6 +74,9 @@ const User = (props) => {
   // set url handler
   const setURlHandler = (e) => {
     setUrlTotal(e.target.value);
+  };
+  const setPriceHandler = (e) => {
+    setRent591Price(e.target.value);
   };
   const setPageHandler = (e) => {
     setRukuyaPage(e.target.value);
@@ -196,6 +200,14 @@ const User = (props) => {
               <div>
                 <label htmlFor="">Total Raws:</label>
                 <input type="text" onChange={setURlHandler} value={urlTotal} />
+              </div>
+              <div>
+                <label htmlFor="">591Price:</label>
+                <input
+                  type="text"
+                  onChange={setPriceHandler}
+                  value={rent591Price}
+                />
               </div>
               <div>
                 <label htmlFor="">Total Pages:</label>
