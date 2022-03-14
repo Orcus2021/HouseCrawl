@@ -130,12 +130,11 @@ async function getRakuyaData(url) {
 async function getDetail(url, index) {
   try {
     await page.goto(url);
-    await page
-      .waitForSelector("#houseInfo > div.house-pattern > span:nth-child(1)")
-      .then(() => {
-        console.log("detail-got it");
-        console.log(amount);
-      });
+
+    await page.waitForSelector("#houseInfo > div.house-title > h1").then(() => {
+      console.log("detail-got it");
+      console.log(amount);
+    });
 
     const pattern = await page.$eval(
       "#houseInfo > div.house-pattern > span:nth-child(1)",
@@ -149,10 +148,14 @@ async function getDetail(url, index) {
       "#houseInfo > div.house-pattern > span:nth-child(7)",
       (el) => el.textContent
     );
-    const distant = await page.$eval(
-      "#positionRound > div.surround-list > div:nth-child(1) > a > p > span",
-      (el) => el.textContent
-    );
+    const distant = await page
+      .$eval(
+        "#positionRound > div.surround-list > div:nth-child(1) > a > p > span",
+        (el) => el.textContent
+      )
+      .catch((err) => {
+        console.log(err);
+      });
     const price = await page.$eval(
       "#houseInfo > div.house-price > span > b",
       (el) => el.textContent
@@ -166,7 +169,7 @@ async function getDetail(url, index) {
     result[index].state = "standby";
     result[index].comment = "";
   } catch (error) {
-    throw new Error(err);
+    console.log(error);
   }
   amount++;
 }
@@ -191,6 +194,7 @@ async function scrawl(urlObj) {
   // Start crawl get Data
   async function getData(n) {
     let url = crawlUrl + "firstRow=" + n + "&" + urlArr[urlArr.length - 1];
+
     await page.goto(url);
     await page
       .waitForSelector(
@@ -257,7 +261,7 @@ async function scrawl(urlObj) {
         }
       })
       .catch((err) => {
-        throw new Error(err);
+        console.log(err);
       });
     id = initArr.length;
 
@@ -269,7 +273,9 @@ async function scrawl(urlObj) {
   };
 
   try {
-    await getAllData(pageIndex);
+    await getAllData(pageIndex).catch((err) => {
+      console.log(err);
+    });
     await getRakuyaData(rukuyaUrl);
     initArr = [];
     initTitle = [];
@@ -278,7 +284,7 @@ async function scrawl(urlObj) {
     console.log("End");
     return "success";
   } catch (error) {
-    return error;
+    console.log(error);
   }
 }
 
