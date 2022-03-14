@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import classes from "./HouseDetail.module.css";
 import AccountRecord from "../balance/AccountRecord";
+import EditBalance from "../balance/EditBalance";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   getFirestore,
@@ -185,7 +186,7 @@ const HouseDetail = (props) => {
     //select search condition
     const ref = collection(
       db,
-      `/rentData/${userId}/houseInfo/${keyId}/balance`
+      `/rentData/${userId}/houseInfo/${keyId}/b alance`
     );
     const q7 = query(ref, where("recordDate", ">=", week));
     const q30 = query(ref, where("recordDate", ">=", month));
@@ -380,6 +381,10 @@ const HouseDetail = (props) => {
             </button>
           </div>
         </div>
+        <EditBalance onAdd={onAdd} onUpdate={onUpdate} />
+      </div>
+
+      <div className={classes.balanceList}>
         <div className={classes.balanceContent}>
           <div className={classes.editBalance}>
             <h2>BALANCE EDIT</h2>
@@ -516,11 +521,8 @@ const HouseDetail = (props) => {
             )}
           </button>
         </div>
-      </div>
-
-      <div className={classes.balanceList}>
-        <h2>Account Record</h2>
         <div className={classes.list}>
+          <h2>Account Record</h2>
           {recordData.map((d) => {
             return (
               <AccountRecord
