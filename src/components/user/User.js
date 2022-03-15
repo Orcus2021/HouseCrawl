@@ -43,7 +43,7 @@ const User = (props) => {
   }, [token, navigate]);
   //sent to backend to scrawler
   const sentData = async (data) => {
-    const res = axios.post("http://localhost:8080" + "/api/user", {
+    const res = axios.post(herokuUrl + "/api/user", {
       rent591Url: data.rent591Url,
       rukuyaUrl: data.rukuyaUrl,
     });
@@ -52,7 +52,8 @@ const User = (props) => {
 
   const searchDataHandler = () => {
     setDataState("Waiting....");
-    let rent591Url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,${rent591Price}&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=${urlTotal}`;
+    // let rent591Url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,${rent591Price}&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=${urlTotal}`;
+    let rent591Url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,${rent591Price}&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&firstRow=30&totalRows=${urlTotal}`;
     let rukuyaUrl = `https://www.rakuya.com.tw/search/rent_search/index?display=list&con=eJw9jUEOwiAQRe8yaxZQaU08BisT46IFjGPQIUAX1Xh3Z4i6-cl_8_LnBUsMhegOhxPsQAGcFXhsm3QtJWDNaeYOCWtj45KIipyHr07LDR9BiJOaC_oojc920Lqv1DgXfxXax5m0LUdPoZvOsOtkz1mJkeNoxFrrX9oznIQ9Mf-Y4XXFaXuOPSdJw1_fHwBQOv0&tab=def&sort=11&ds=&page=${rukuyaPage}`;
     let urlObj = {
       rent591Url,

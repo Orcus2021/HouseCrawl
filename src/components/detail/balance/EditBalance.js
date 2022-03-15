@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import classes from "./EditBalance.module.css";
+import { collection, query, where } from "firebase/firestore";
 let left = 0;
 let top = 0;
 
@@ -21,9 +22,19 @@ if (initDay.length === 1) {
   initDay = "0" + initDay;
 }
 initDate = `${initYear}-${initMonth}-${initDay}`;
-
+// let lastScrollY = 0;
 const EditBalance = (props) => {
-  const { onAdd, onUpdate } = props;
+  const {
+    onAdd,
+    onUpdate,
+    onQuery,
+    newBalance,
+    keyId,
+    userId,
+    db,
+    lastScrollY,
+  } = props;
+  let initBalance = newBalance;
   const [recordDate, setRecordDate] = useState(initDate);
   const [amount, setAmount] = useState("");
   const [recordItem, setItem] = useState("");
@@ -39,6 +50,7 @@ const EditBalance = (props) => {
   const [cusAfter, setCusAfter] = useState(initDate);
 
   const [showRipple, setShowRipple] = useState(false);
+
   const dateToMilTranslate = (d) => {
     if (!typeof d === "string") {
       return "Invalid date";
@@ -52,27 +64,9 @@ const EditBalance = (props) => {
       return dateMilliseconds;
     }
   };
-  const queryRecordData = async (q) => {
-    const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      let searchSingleData = milToDateTranslate(doc.data());
-
-      searchSingleData.keyId = doc.id;
-      if (categoryAll) {
-        searchArr.push(searchSingleData);
-      } else if (categoryIncome && searchSingleData.amount > 0) {
-        searchArr.push(searchSingleData);
-      } else if (categoryExpense && searchSingleData.amount < 0) {
-        searchArr.push(searchSingleData);
-      }
-    });
-    searchArr.sort(sortCallBack);
-
-    setRecordData(searchArr);
-    searchArr = [];
-  };
   // filter recordData
+
   const filterDataHandler = (e) => {
     //ripple effect
     let x = e.clientX - e.target.offsetLeft;
@@ -96,12 +90,12 @@ const EditBalance = (props) => {
       where("recordDate", "<=", dateToMilTranslate(cusAfter))
     );
     if (periodWeek) {
-      queryRecordData(q7);
+      onQuery(q7, categoryAll, categoryIncome, categoryExpense);
     } else if (periodMonth) {
-      queryRecordData(q30);
+      onQuery(q30, categoryAll, categoryIncome, categoryExpense);
     } else if (periodCustomize) {
       if (dateToMilTranslate(cusBefore) < dateToMilTranslate(cusAfter)) {
-        queryRecordData(qCus);
+        onQuery(qCus, categoryAll, categoryIncome, categoryExpense);
       } else {
         alert("查詢區間所選擇的結束日需晚於開始日期");
       }
@@ -114,7 +108,6 @@ const EditBalance = (props) => {
   //input Handler
   const recordDateHandler = (e) => {
     setRecordDate(e.target.value);
-    console.log(e.target.value);
   };
   const amountHandler = (e) => {
     let data = +e.target.value;
@@ -147,6 +140,7 @@ const EditBalance = (props) => {
       amount,
       recordItem,
     };
+
     if (
       recordDate.trim().length > 0 &&
       amount > 0 &&
@@ -155,19 +149,21 @@ const EditBalance = (props) => {
       if (expenseValue) {
         dataObj.amount = dataObj.amount * -1;
 
-        newBalance += dataObj.amount;
+        initBalance += dataObj.amount;
+
         onAdd(dataObj, `/rentData/${userId}/houseInfo/${keyId}/balance`);
 
         onUpdate(
-          { balance: newBalance },
+          { balance: initBalance },
           `/rentData/${userId}/houseInfo/${keyId}`
         );
       } else {
-        newBalance += dataObj.amount;
+        initBalance += dataObj.amount;
+
         onAdd(dataObj, `/rentData/${userId}/houseInfo/${keyId}/balance`);
 
         onUpdate(
-          { balance: newBalance },
+          { balance: initBalance },
           `/rentData/${userId}/houseInfo/${keyId}`
         );
       }

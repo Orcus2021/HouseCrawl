@@ -16,8 +16,6 @@ import {
   updateDoc,
   deleteDoc,
   onSnapshot,
-  connectFirestoreEmulator,
-  getDoc,
 } from "firebase/firestore";
 
 const HouseInfoList = lazy(() =>
