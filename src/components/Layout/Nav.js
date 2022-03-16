@@ -77,7 +77,7 @@ const Nav = (props) => {
   };
 
   let menuClasses = `${classes.nav_item} ${menuShow ? classes.menuActive : ""}`;
-  console.log("nav");
+
   return (
     <div className={navBgClasses}>
       <h1 className={classes.logo} onClick={navHomeHandler}>

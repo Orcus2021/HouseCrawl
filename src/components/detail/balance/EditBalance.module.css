@@ -70,9 +70,6 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-/* input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-  } */
 
 .filterBalance {
   width: 100%;
@@ -191,5 +188,68 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 500px;
     height: 500px;
     opacity: 0;
+  }
+}
+@media (max-width: 920px) {
+  .balanceContent {
+    padding: 0;
+    width: 100%;
+    align-items: center;
+  }
+  .editBalance h2 {
+    padding-top: 10px;
+  }
+  .editBalance,
+  .filterBalance,
+  .searchBtn {
+    position: relative;
+    width: 95%;
+  }
+  .editInput {
+    border: none;
+  }
+  .list {
+    width: 95%;
+  }
+}
+@media (max-width: 480px) {
+  .editInput .btn button {
+    width: 50px;
+  }
+}
+@media (max-width: 420px) {
+  .box {
+    font-size: 0.8rem;
+  }
+  .editInput {
+    flex-wrap: wrap;
+  }
+  .date {
+    flex-grow: 1;
+    min-width: 200px;
+    padding-bottom: 5px;
+  }
+  .date input {
+    border-right: #686868 1px solid;
+  }
+
+  .inputRight {
+    min-width: 200px;
+    flex-grow: 1;
+    flex-wrap: nowrap;
+  }
+  .item {
+    min-width: none;
+  }
+}
+@media (max-width: 370px) {
+  .label {
+    margin-right: 5px;
+  }
+  .box {
+    width: 70px;
+  }
+  .customize input {
+    font-size: 0.6rem;
   }
 }

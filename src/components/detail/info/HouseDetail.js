@@ -156,7 +156,7 @@ const HouseDetail = (props) => {
       <div className={classes.topBar}>
         <div className={classes.houseInfo}>
           <div>
-            <h2>INFORMATION</h2>
+            <h2>Information</h2>
           </div>
 
           <div className={classes.name}>
@@ -172,6 +172,13 @@ const HouseDetail = (props) => {
             <p className={classes.rentValue}>
               ${detail.rent}
               <span>-{detail.payDate}th/month</span>
+            </p>
+          </div>
+          <div className={classes.fee}>
+            <label>Fee:</label>
+            <p className={classes.feeValue}>
+              ${detail.fee}
+              <span>-{detail.feeDate}th/month</span>
             </p>
           </div>
           <div className={classes.accountNumber}>
@@ -201,7 +208,7 @@ const HouseDetail = (props) => {
           </div>
         </div>
         <div>
-          <h2>TEST</h2>
+          <h2>Tenant</h2>
         </div>
       </div>
 

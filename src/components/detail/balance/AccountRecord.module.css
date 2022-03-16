@@ -18,10 +18,10 @@
 .item {
   flex-grow: 1;
   min-width: 100px;
-  width: 120px;
+  width: 100px;
 }
 .amount {
-  width: 100px;
+  width: 80px;
   min-width: 60px;
 }
 .btns {

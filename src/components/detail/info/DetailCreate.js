@@ -38,6 +38,10 @@ const HouseDetail = (props) => {
   const [accountNumber, setAccountNumber] = useState(
     editInfo ? props.editDetailInfo.accountNumber : ""
   );
+  const [fee, setFee] = useState(editInfo ? props.editDetailInfo.fee : "");
+  const [feeDate, setFeeDate] = useState(
+    editInfo ? props.editDetailInfo.feeDate : ""
+  );
 
   // input value Handler
   const nameHandler = (e) => {
@@ -61,6 +65,12 @@ const HouseDetail = (props) => {
   const accountNumberHandler = (e) => {
     setAccountNumber(e.target.value);
   };
+  const feeHandler = (e) => {
+    setFee(e.target.value);
+  };
+  const feeDateHandler = (e) => {
+    setFeeDate(e.target.value);
+  };
   let detailObj = {
     name,
     address,
@@ -69,6 +79,8 @@ const HouseDetail = (props) => {
     accountNumber,
     endDate,
     comment,
+    fee,
+    feeDate,
     balance: 0,
   };
 
@@ -81,7 +93,9 @@ const HouseDetail = (props) => {
       payDate.trim().length > 0 &&
       rent.trim().length > 0 &&
       accountNumber.trim().length > 0 &&
-      endDate.trim().length > 0
+      endDate.trim().length > 0 &&
+      fee.trim().length > 0 &&
+      feeDate.trim().length
     ) {
       if (editInfo) {
         let newObj = {
@@ -92,6 +106,8 @@ const HouseDetail = (props) => {
           accountNumber,
           endDate,
           comment,
+          fee,
+          feeDate,
         };
         props.onUpdate(newObj);
         props.onClose();
@@ -112,6 +128,8 @@ const HouseDetail = (props) => {
     setPayDate("");
     setRent("");
     setAccountNumber("");
+    setFee("");
+    setFeeDate("");
   };
   const closeHandler = (e) => {
     e.preventDefault();
@@ -149,6 +167,14 @@ const HouseDetail = (props) => {
         <div className={classes.rent}>
           <label htmlFor="">Rent</label>
           <input type="text" value={rent} onChange={rentHandler} />
+        </div>
+        <div className={classes.fee}>
+          <label htmlFor="">Fee</label>
+          <input type="text" value={fee} onChange={feeHandler} />
+        </div>
+        <div className={classes.feeDate}>
+          <label htmlFor="">Fee Date</label>
+          <input type="text" value={feeDate} onChange={feeDateHandler} />
         </div>
 
         <div className={classes.accountNumber}>
