@@ -13,8 +13,19 @@ const useInput = (condition) => {
   const blurHandler = () => {
     setBlur(true);
   };
+  const initValueHandler = (value) => {
+    setValue(value);
+  };
 
-  return { value, valid, changeHandler, resetHandler, blurHandler, blur };
+  return {
+    value,
+    valid,
+    changeHandler,
+    resetHandler,
+    blurHandler,
+    blur,
+    initValueHandler,
+  };
 };
 
 export default useInput;

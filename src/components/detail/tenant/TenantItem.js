@@ -20,7 +20,12 @@ const TenantItem = (props) => {
       </div>
       {showEdit && (
         <Modal onClose={editTenantHandler}>
-          <EditTenant onClose={editTenantHandler} edit={"edit"} />
+          <EditTenant
+            onClose={editTenantHandler}
+            edit={true}
+            keyId={data.keyId}
+            tenantData={data}
+          />
         </Modal>
       )}
     </Fragment>

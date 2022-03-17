@@ -1,34 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./EditTenant.module.css";
 import useMutation from "../../Hook/useMutation";
 import useInput from "../../Hook/useInput";
+
 let titleName = "Add";
+
 const EditTenant = (props) => {
-  const { onClose, edit } = props;
+  let condition = (d) => {
+    return d.trim().length > 0;
+  };
+  const { onClose, edit, keyId, tenantData, userId, houseId } = props;
+  const { addCollectionData, updateFieldData, deleteDocData } = useMutation();
+  let url = `/rentData/${userId}/houseInfo/${houseId}/tenant`;
   if (edit) {
     titleName = "Edit";
   }
-  const { addCollectionData, updateFieldData, deleteDocData } = useMutation();
+
   const {
     value: room,
     valid: roomValid,
     changeHandler: roomHandler,
-  } = useInput((d) => d.trim().length > 0);
+    initValueHandler: setInitRoom,
+  } = useInput(condition);
+
   const {
     value: tenantName,
     valid: tenantNameValid,
     changeHandler: tenantNameHandler,
-  } = useInput((d) => d.trim().length > 0);
+    initValueHandler: setInitTenantName,
+  } = useInput(condition);
   const {
     value: rent,
     valid: rentValid,
     changeHandler: rentHandler,
-  } = useInput((d) => d.trim().length > 0);
+    initValueHandler: setInitRent,
+  } = useInput(condition);
   const {
     value: expire,
     valid: expireValid,
     changeHandler: expireHandler,
-  } = useInput((d) => d.trim().length > 0);
+    initValueHandler: setInitExpire,
+  } = useInput(condition);
+  useEffect(() => {
+    if (edit) {
+      let expireDate = tenantData.expire.split("-");
+      for (let i = 0; i < expireDate.length; i++) {
+        if (expireDate[i].length < 2) {
+          expireDate[i] = "0" + expireDate[i];
+        }
+      }
+      expireDate = expireDate.join("-");
+      setInitRoom(tenantData.roomNumber);
+      setInitTenantName(tenantData.tenantName);
+      setInitRent(tenantData.rent);
+      setInitExpire(expireDate);
+    }
+  }, []);
 
   const dateToMilTranslate = (d) => {
     if (!typeof d === "string") {
@@ -52,10 +79,21 @@ const EditTenant = (props) => {
       expire: milExpire,
     };
     if (roomValid && tenantNameValid && rentValid && expireValid) {
-      addCollectionData(
-        tenantObj,
-        "/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/Myt0e2HWEh98mrGmpMoW/tenant"
-      );
+      if (edit) {
+        updateFieldData(tenantObj, url + `/${keyId}`);
+      } else {
+        addCollectionData(tenantObj, url);
+      }
+
+      onClose();
+    } else {
+      alert("Please input valid value.");
+    }
+  };
+
+  const deleteHandler = () => {
+    if (window.confirm("你確定刪除嗎?")) {
+      deleteDocData(url + `/${keyId}`);
       onClose();
     }
   };
@@ -84,7 +122,7 @@ const EditTenant = (props) => {
       <div className={classes.btns}>
         <button onClick={mutationHandler}>Confirm</button>
         <button onClick={onClose}>Close</button>
-        <button>Delete</button>
+        {edit && <button onClick={deleteHandler}>Delete</button>}
       </div>
     </div>
   );

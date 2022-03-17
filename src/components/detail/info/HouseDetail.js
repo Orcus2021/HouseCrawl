@@ -208,7 +208,7 @@ const HouseDetail = (props) => {
             </button>
           </div>
         </div>
-        <Tenant />
+        <Tenant userId={userId} houseId={keyId} />
       </div>
 
       <div className={classes.balanceList}>

@@ -5,10 +5,11 @@ import Modal from "../../Layout/Modal";
 import useGetData from "../../Hook/useGetData";
 import TenantItem from "./TenantItem";
 
-const Tenant = () => {
+const Tenant = (props) => {
+  const { userId, houseId } = props;
   const [editShow, setEditShow] = useState(false);
   const { allData } = useGetData(
-    "/rentData/IAJiKr03ggdfNISJm44KKoQww333/houseInfo/Myt0e2HWEh98mrGmpMoW/tenant",
+    `/rentData/${userId}/houseInfo/${houseId}/tenant`,
     "allDocs"
   );
   const milToDateTranslate = (d) => {
@@ -25,9 +26,7 @@ const Tenant = () => {
   const editHandler = () => {
     setEditShow((pre) => !pre);
   };
-  const editTenantHandler = () => {
-    setEditShow(true);
-  };
+
   return (
     <Fragment>
       <div className={classes.container}>
@@ -47,7 +46,14 @@ const Tenant = () => {
           {allData.map((d) => {
             let dataObj = milToDateTranslate(d);
 
-            return <TenantItem key={dataObj.keyId} data={dataObj} />;
+            return (
+              <TenantItem
+                key={dataObj.keyId}
+                data={dataObj}
+                userId={userId}
+                houseId={userId}
+              />
+            );
           })}
 
           <div>
@@ -59,7 +65,7 @@ const Tenant = () => {
       </div>
       {editShow && (
         <Modal onClose={editHandler}>
-          <EditTenant onClose={editHandler} />
+          <EditTenant onClose={editHandler} userId={userId} houseId={userId} />
         </Modal>
       )}
     </Fragment>
