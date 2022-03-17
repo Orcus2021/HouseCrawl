@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import classes from "./HouseDetail.module.css";
 import AccountRecord from "../balance/AccountRecord";
 import EditBalance from "../balance/EditBalance";
+import Tenant from "../tenant/Tenant";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   getFirestore,
@@ -207,9 +208,7 @@ const HouseDetail = (props) => {
             </button>
           </div>
         </div>
-        <div>
-          <h2>Tenant</h2>
-        </div>
+        <Tenant />
       </div>
 
       <div className={classes.balanceList}>

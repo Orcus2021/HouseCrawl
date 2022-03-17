@@ -1,0 +1,24 @@
+.listItem {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.listItem p {
+  list-style: none;
+  width: 70px;
+  text-align: center;
+  padding: 5px;
+  border-bottom: 2px var(--line) solid;
+}
+
+.listItem p:nth-child(1),
+.listItem p:nth-child(5) {
+  width: 50px;
+}
+
+.listItem p:nth-child(4) {
+  flex-grow: 1;
+}

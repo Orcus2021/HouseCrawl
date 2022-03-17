@@ -32,7 +32,7 @@ const User = (props) => {
     }
   }, [lineNotify]);
   const rent591List =
-    "https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,42000&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=136";
+    "https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,42000&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&firstRow=30&totalRows=136";
   const rukuyaList =
     "https://www.rakuya.com.tw/search/rent_search/index?display=list&con=eJw9jUEOwiAQRe8yaxZQaU08BisT46IFjGPQIUAX1Xh3Z4i6-cl_8_LnBUsMhegOhxPsQAGcFXhsm3QtJWDNaeYOCWtj45KIipyHr07LDR9BiJOaC_oojc920Lqv1DgXfxXax5m0LUdPoZvOsOtkz1mJkeNoxFrrX9oznIQ9Mf-Y4XXFaXuOPSdJw1_fHwBQOv0&tab=def&sort=11&ds=&page=1";
   useEffect(() => {
