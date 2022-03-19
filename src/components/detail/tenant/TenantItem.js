@@ -16,7 +16,9 @@ const TenantItem = (props) => {
         <p>{data.tenantName}</p>
         <p>{data.rent}</p>
         <p>{data.expire}</p>
-        <p onClick={editTenantHandler}>go</p>
+        <p onClick={editTenantHandler}>
+          <i className="ri-edit-2-line"></i>
+        </p>
       </div>
       {showEdit && (
         <Modal onClose={editTenantHandler}>

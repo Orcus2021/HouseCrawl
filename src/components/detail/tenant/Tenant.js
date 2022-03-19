@@ -8,6 +8,7 @@ import TenantItem from "./TenantItem";
 const Tenant = (props) => {
   const { userId, houseId } = props;
   const [editShow, setEditShow] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const { allData } = useGetData(
     `/rentData/${userId}/houseInfo/${houseId}/tenant`,
     "allDocs"
@@ -26,16 +27,27 @@ const Tenant = (props) => {
   const editHandler = () => {
     setEditShow((pre) => !pre);
   };
+  const showContentHandler = () => {
+    setShowContent((pre) => !pre);
+  };
+  let arrowClassName = "ri-arrow-right-s-line";
+  let tenantClassName = `${classes.list} ${classes.hide}`;
+  if (showContent) {
+    arrowClassName = `ri-arrow-right-s-line ${classes.active}`;
+    tenantClassName = classes.list;
+  }
 
   return (
     <Fragment>
       <div className={classes.container}>
         <div className={classes.title}>
           <h2>Tenant</h2>
-          <span>V</span>
+          <span onClick={showContentHandler}>
+            <i className={arrowClassName}></i>
+          </span>
         </div>
 
-        <div className={classes.list}>
+        <div className={tenantClassName}>
           <ul className={classes.listTitle}>
             <li>Room</li>
             <li>Name</li>

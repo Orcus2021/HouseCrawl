@@ -7,7 +7,7 @@
 }
 .recordContent p {
   height: 100%;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--line);
   text-align: center;
   line-height: 30px;
 }
@@ -17,19 +17,20 @@
 }
 .item {
   flex-grow: 1;
-  min-width: 100px;
-  width: 100px;
+  min-width: 80px;
+  width: 80px;
 }
 .amount {
-  width: 80px;
   min-width: 60px;
+  width: 60px;
+  flex-grow: 1;
 }
 .btns {
   display: flex;
   flex-direction: row;
   height: 30px;
   align-items: center;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--line);
 }
 .btns button {
   width: 60px;

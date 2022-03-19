@@ -67,7 +67,7 @@ const useGetData = (url, method) => {
     return () => {
       isMounted = false;
     };
-  }, [url, method]);
+  }, [url, method, db]);
 
   return { onceData, allData };
 };

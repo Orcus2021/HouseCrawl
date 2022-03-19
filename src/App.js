@@ -5,6 +5,7 @@ import Nav from "./components/Layout/Nav";
 import Home from "./components/Home";
 import DetailCreate from "./components/detail/info/DetailCreate";
 import User from "./components/user/User";
+import useGetData from "./components/Hook/useGetData";
 import { Routes, Route } from "react-router";
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
@@ -35,13 +36,16 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APPID,
 };
 let localUserId = localStorage.getItem("houseUserID");
+
 function App() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState(localUserId);
-  const [rentalData, setRentData] = useState([]);
+  const { allData } = useGetData(`/rentData/${userId}/houseInfo`, "allDocs");
+  const [rentalData, setRentData] = useState(allData);
+
   useEffect(() => {
     let localToken = localStorage.getItem("houseListToken");
     localUserId = localStorage.getItem("houseUserID");

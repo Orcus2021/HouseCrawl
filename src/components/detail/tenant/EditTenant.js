@@ -55,7 +55,14 @@ const EditTenant = (props) => {
       setInitRent(tenantData.rent);
       setInitExpire(expireDate);
     }
-  }, []);
+  }, [
+    edit,
+    tenantData,
+    setInitRoom,
+    setInitTenantName,
+    setInitRent,
+    setInitExpire,
+  ]);
 
   const dateToMilTranslate = (d) => {
     if (!typeof d === "string") {
@@ -122,7 +129,11 @@ const EditTenant = (props) => {
       <div className={classes.btns}>
         <button onClick={mutationHandler}>Confirm</button>
         <button onClick={onClose}>Close</button>
-        {edit && <button onClick={deleteHandler}>Delete</button>}
+        {edit && (
+          <button className={classes.delBtn} onClick={deleteHandler}>
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );

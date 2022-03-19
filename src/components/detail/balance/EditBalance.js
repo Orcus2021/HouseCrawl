@@ -208,7 +208,7 @@ const EditBalance = (props) => {
   return (
     <div className={classes.balanceContent}>
       <div className={classes.editBalance}>
-        <h2>BALANCE EDIT</h2>
+        <h2>Balance Edit</h2>
         <div className={classes.editContent}>
           <div className={classes.select}>
             <label className={classes.label} onClick={incomeHandler}>

@@ -74,7 +74,12 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+.user_mail p,
+.user_password p,
+.line_token p {
+  margin-bottom: 5px;
 }
 .user_password {
   margin-bottom: 30px;
@@ -157,6 +162,18 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+.user_search div {
+  margin-bottom: 10px;
+}
+.user_search div input {
+  outline: none;
+  border-radius: 20px;
+  border: 1px var(--line) solid;
+  padding-left: 10px;
+}
+.user_search div input:focus {
+  border: 1px var(--darkPrimary) solid;
 }
 .copyItem button,
 .user_search button {

@@ -41,17 +41,12 @@
   height: auto;
   min-height: 50px;
   background-color: #f6b054;
-  color: white;
+  color: black;
+  cursor: pointer;
   border-bottom-left-radius: 50%;
   border-bottom-right-radius: 50%;
 }
 
-.title a {
-  text-decoration: none;
-
-  color: black;
-  cursor: pointer;
-}
 .titleActive {
   background-color: rgb(52, 216, 134);
 }

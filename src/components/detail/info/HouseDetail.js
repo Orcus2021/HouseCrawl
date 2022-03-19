@@ -157,7 +157,7 @@ const HouseDetail = (props) => {
       <div className={classes.topBar}>
         <div className={classes.houseInfo}>
           <div>
-            <h2>Information</h2>
+            <h2>Information Detail</h2>
           </div>
 
           <div className={classes.name}>

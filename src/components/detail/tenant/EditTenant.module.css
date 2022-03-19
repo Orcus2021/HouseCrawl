@@ -7,6 +7,7 @@
   border-radius: 20px;
   padding: 10px;
 }
+
 .edit_container h2 {
   color: var(--darkPrimary);
   font-size: 2rem;
@@ -43,4 +44,7 @@
   border: none;
   border-radius: 5px;
   margin: 10px 5px;
+}
+.edit_container .btns .delBtn {
+  background-color: rgb(201, 3, 3);
 }

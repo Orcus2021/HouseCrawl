@@ -3,7 +3,7 @@ import classes from "./Nav.module.css";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 
 let navBgClasses = "";
-
+let logoName = process.env.REACT_APP_LOGO + "asset/Slice1.png";
 const Nav = (props) => {
   const { onLogout, token, uid } = props;
   const location = useLocation();
@@ -81,7 +81,7 @@ const Nav = (props) => {
   return (
     <div className={navBgClasses}>
       <h1 className={classes.logo} onClick={navHomeHandler}>
-        <img src="asset/Slice1.png" alt="Logo" />
+        <img src={logoName} alt="Logo" />
       </h1>
       <div className={classes.nav_items}>
         <ul className={menuClasses}>

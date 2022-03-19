@@ -11,7 +11,7 @@
 .content div {
   height: 100%;
   list-style: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--line);
   padding: 5px;
 
   display: flex;

@@ -19,7 +19,7 @@ const User = (props) => {
   const userId = params.uid;
   const herokuUrl = process.env.REACT_APP_HEROKU;
   const { onceData: userData } = useGetData(`/rentData/${userId}`, "aDoc");
-  const { accountLevel, email, expire, lineNotify } = userData;
+  const { accountLevel, email, expire, lineNotify, lineToken } = userData;
   const { allData: totalBalance } = useGetData(
     `/rentData/${userId}/houseInfo`,
     "allDocs"
@@ -32,7 +32,7 @@ const User = (props) => {
     }
   }, [lineNotify]);
   const rent591List =
-    "https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,42000&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&firstRow=30&totalRows=136";
+    "https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,42000&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=134";
   const rukuyaList =
     "https://www.rakuya.com.tw/search/rent_search/index?display=list&con=eJw9jUEOwiAQRe8yaxZQaU08BisT46IFjGPQIUAX1Xh3Z4i6-cl_8_LnBUsMhegOhxPsQAGcFXhsm3QtJWDNaeYOCWtj45KIipyHr07LDR9BiJOaC_oojc920Lqv1DgXfxXax5m0LUdPoZvOsOtkz1mJkeNoxFrrX9oznIQ9Mf-Y4XXFaXuOPSdJw1_fHwBQOv0&tab=def&sort=11&ds=&page=1";
   useEffect(() => {
@@ -52,8 +52,8 @@ const User = (props) => {
 
   const searchDataHandler = () => {
     setDataState("Waiting....");
-    // let rent591Url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,${rent591Price}&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=${urlTotal}`;
-    let rent591Url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,${rent591Price}&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&firstRow=30&totalRows=${urlTotal}`;
+    let rent591Url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,${rent591Price}&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&other=newPost&firstRow=0&totalRows=${urlTotal}`;
+    // let rent591Url = `https://rent.591.com.tw/?region=1&section=3,5,7,1,4&kind=1&rentprice=1,${rent591Price}&showMore=1&multiNotice=not_cover&searchtype=1&multiFloor=2_6,6_12,12_&multiRoom=3,4&firstRow=30&totalRows=${urlTotal}`;
     let rukuyaUrl = `https://www.rakuya.com.tw/search/rent_search/index?display=list&con=eJw9jUEOwiAQRe8yaxZQaU08BisT46IFjGPQIUAX1Xh3Z4i6-cl_8_LnBUsMhegOhxPsQAGcFXhsm3QtJWDNaeYOCWtj45KIipyHr07LDR9BiJOaC_oojc920Lqv1DgXfxXax5m0LUdPoZvOsOtkz1mJkeNoxFrrX9oznIQ9Mf-Y4XXFaXuOPSdJw1_fHwBQOv0&tab=def&sort=11&ds=&page=${rukuyaPage}`;
     let urlObj = {
       rent591Url,
@@ -90,10 +90,14 @@ const User = (props) => {
   //-----
   const notifyHandler = (e) => {
     let useNotify = e.target.checked;
-    console.log(e.target.checked);
+
     let url = `/rentData/${userId}`;
     if (e.target.checked) {
       onUpdate({ lineNotify: useNotify }, url);
+      if (lineToken.length < 1) {
+        console.log(lineToken.length);
+        tokenChangeHandler();
+      }
     } else {
       onUpdate({ lineNotify: useNotify }, url);
     }
@@ -160,7 +164,7 @@ const User = (props) => {
               </div>
               <div className={classes.user_password}>
                 <p>
-                  Password:<span>**********</span>
+                  Password :<span> **********</span>
                 </p>
                 <p onClick={passwordChangeHandler}>Change Password</p>
               </div>
@@ -176,11 +180,12 @@ const User = (props) => {
                   onChange={notifyHandler}
                 />
               </div>
-
-              <div className={classes.line_token}>
-                <p>Token:**********</p>
-                <p onClick={tokenChangeHandler}>Change Token</p>
-              </div>
+              {notify && (
+                <div className={classes.line_token}>
+                  <p>Token : **********</p>
+                  <p onClick={tokenChangeHandler}>Change Token</p>
+                </div>
+              )}
             </div>
 
             <div className={classes.user_urlCopy}>
@@ -199,20 +204,27 @@ const User = (props) => {
             </div>
             <div className={classes.user_search}>
               <div>
-                <label htmlFor="">Total Raws:</label>
-                <input type="text" onChange={setURlHandler} value={urlTotal} />
+                <label htmlFor="searchRows">Total Raws : </label>
+                <input
+                  type="text"
+                  id="searchRows"
+                  onChange={setURlHandler}
+                  value={urlTotal}
+                />
               </div>
               <div>
-                <label htmlFor="">591Price:</label>
+                <label htmlFor="searchPrice">591Price : </label>
                 <input
+                  id="searchPrice"
                   type="text"
                   onChange={setPriceHandler}
                   value={rent591Price}
                 />
               </div>
               <div>
-                <label htmlFor="">Total Pages:</label>
+                <label htmlFor="rukuyaPage">Total Pages : </label>
                 <input
+                  id="rukuyaPage"
                   type="text"
                   onChange={setPageHandler}
                   value={rukuyaPage}
@@ -220,7 +232,7 @@ const User = (props) => {
               </div>
 
               <button onClick={searchDataHandler}>Crawler</button>
-              <p>{dataState}</p>
+              <span>{dataState}</span>
             </div>
           </div>
         </div>

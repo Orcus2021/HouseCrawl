@@ -16,6 +16,7 @@
 
 .modal {
   position: fixed;
+
   background-color: white;
   width: 500px;
   top: calc(50% - 40vh);
@@ -28,7 +29,7 @@
   justify-content: center;
   align-items: flex-start;
   animation: slide-down 300ms ease-out forwards;
-  height: 80vh;
+  max-height: 80vh;
   overflow: auto;
 }
 .modal div {

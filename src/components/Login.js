@@ -64,7 +64,7 @@ const Login = (props) => {
       .then(() => signInWithEmailAndPassword(auth, email, password))
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
+
         localStorage.setItem("houseListToken", `hrent${user.accessToken}`);
         localStorage.setItem("houseListChecked", "true");
         localStorage.setItem("houseUserID", user.uid);
@@ -120,8 +120,13 @@ const Login = (props) => {
           {!passwordValid && <p>Please input at least 6 letters.</p>}
         </div>
         <div className={classes.check}>
-          <input type="checkbox" onChange={checkHandler} checked={checked} />
-          <span>Remember Username</span>
+          <input
+            id="rememberUser"
+            type="checkbox"
+            onChange={checkHandler}
+            checked={checked}
+          />
+          <label htmlFor="rememberUser">Remember Username</label>
         </div>
 
         <button onClick={loginHandler}>Login</button>

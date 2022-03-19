@@ -87,9 +87,7 @@ function ListItem(props) {
           {props.id}
         </p>
         <p className={titleClass} onClick={openNewView}>
-          <a href="#" rel="noreferrer">
-            {props.title}
-          </a>
+          {props.title}
         </p>
         <p className={classes.pattern}>{props.pattern}</p>
         <p className={classes.floor}>
