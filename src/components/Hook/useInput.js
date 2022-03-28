@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const useInput = (condition) => {
-  const [value, setValue] = useState("");
+const useInput = (condition, initValue) => {
+  const [value, setValue] = useState(initValue ? initValue : "");
   const [blur, setBlur] = useState(false);
   const valid = condition(value);
   const changeHandler = (e) => {
@@ -13,9 +13,6 @@ const useInput = (condition) => {
   const blurHandler = () => {
     setBlur(true);
   };
-  const initValueHandler = (value) => {
-    setValue(value);
-  };
 
   return {
     value,
@@ -24,7 +21,6 @@ const useInput = (condition) => {
     resetHandler,
     blurHandler,
     blur,
-    initValueHandler,
   };
 };
 

@@ -7,6 +7,7 @@ import TenantItem from "./TenantItem";
 
 const Tenant = (props) => {
   const { userId, houseId } = props;
+
   const [editShow, setEditShow] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const { allData } = useGetData(
@@ -63,7 +64,7 @@ const Tenant = (props) => {
                 key={dataObj.keyId}
                 data={dataObj}
                 userId={userId}
-                houseId={userId}
+                houseId={houseId}
               />
             );
           })}

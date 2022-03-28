@@ -4,7 +4,7 @@ import Modal from "../../Layout/Modal";
 import EditTenant from "./EditTenant";
 
 const TenantItem = (props) => {
-  const { data } = props;
+  const { data, userId, houseId } = props;
   const [showEdit, setShowEdit] = useState(false);
   const editTenantHandler = () => {
     setShowEdit((pre) => !pre);
@@ -27,6 +27,8 @@ const TenantItem = (props) => {
             edit={true}
             keyId={data.keyId}
             tenantData={data}
+            houseId={houseId}
+            userId={userId}
           />
         </Modal>
       )}

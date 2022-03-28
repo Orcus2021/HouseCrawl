@@ -12,6 +12,7 @@
   text-align: center;
   padding: 5px;
   border-bottom: 2px var(--line) solid;
+  height: 30px;
 }
 .listItem p i {
   font-size: 1rem;

@@ -258,7 +258,7 @@ const EditBalance = (props) => {
       </div>
       <div className={classes.filterBalance}>
         <div className={classes.balanceHead}>
-          <h2>FILTER</h2>
+          <h2>Filter</h2>
         </div>
         <div className={classes.category}>
           <p>交易類型</p>
