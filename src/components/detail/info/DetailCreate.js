@@ -3,44 +3,45 @@ import classes from "./DetailCreate.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 
 const HouseDetail = (props) => {
+  const { token, keyId, editDetailInfo, onAdd, onUpdate, onClose } = props;
   const navigate = useNavigate();
   const params = useParams();
   const userId = params.uid;
   useEffect(() => {
-    if (!props.token) {
+    if (!token) {
       navigate("/login");
       return;
     }
-  }, [props.token, navigate]);
+  }, [token, navigate]);
 
   let editInfo = false;
-  if (props.keyId && props.editDetailInfo) {
+  if (keyId && editDetailInfo) {
     editInfo = true;
   }
   let contentClass = `${classes.createContent} ${
     editInfo ? "" : classes.contentPaddingTop
   }`;
-  const { onAdd } = props;
-  const [name, setName] = useState(editInfo ? props.editDetailInfo.name : "");
+
+  const [name, setName] = useState(editInfo ? editDetailInfo.name : "");
   const [address, setAddress] = useState(
-    editInfo ? props.editDetailInfo.address : ""
+    editInfo ? editDetailInfo.address : ""
   );
   const [payDate, setPayDate] = useState(
-    editInfo ? props.editDetailInfo.payDate : ""
+    editInfo ? editDetailInfo.payDate : ""
   );
-  const [rent, setRent] = useState(editInfo ? props.editDetailInfo.rent : "");
+  const [rent, setRent] = useState(editInfo ? editDetailInfo.rent : "");
   const [endDate, setEndDate] = useState(
-    editInfo ? props.editDetailInfo.endDate : ""
+    editInfo ? editDetailInfo.endDate : ""
   );
   const [comment, setComment] = useState(
-    editInfo ? props.editDetailInfo.comment : ""
+    editInfo ? editDetailInfo.comment : ""
   );
   const [accountNumber, setAccountNumber] = useState(
-    editInfo ? props.editDetailInfo.accountNumber : ""
+    editInfo ? editDetailInfo.accountNumber : ""
   );
-  const [fee, setFee] = useState(editInfo ? props.editDetailInfo.fee : "");
+  const [fee, setFee] = useState(editInfo ? editDetailInfo.fee : "");
   const [feeDate, setFeeDate] = useState(
-    editInfo ? props.editDetailInfo.feeDate : ""
+    editInfo ? editDetailInfo.feeDate : ""
   );
 
   // input value Handler
@@ -109,8 +110,8 @@ const HouseDetail = (props) => {
           fee,
           feeDate,
         };
-        props.onUpdate(newObj);
-        props.onClose();
+        onUpdate(newObj);
+        onClose();
       } else {
         onAdd(detailObj, `/rentData/${userId}/houseInfo`);
         navigate(`/${userId}/houseInfo`);
@@ -134,7 +135,7 @@ const HouseDetail = (props) => {
   const closeHandler = (e) => {
     e.preventDefault();
     if (editInfo) {
-      props.onClose();
+      onClose();
     } else {
       navigate(`/${userId}/houseInfo`);
     }
@@ -150,7 +151,7 @@ const HouseDetail = (props) => {
             type="text"
             value={name}
             onChange={nameHandler}
-            placeholder={editInfo ? props.editDetailInfo.name : ""}
+            placeholder={editInfo ? editDetailInfo.name : ""}
           />
         </div>
 

@@ -67,10 +67,6 @@ function App() {
     await updateDoc(ref, data);
   };
 
-  const deleteDocData = async (url) => {
-    const ref = doc(db, url);
-    await deleteDoc(ref);
-  };
   // get houseInfo
   const getInfoDataChange = useCallback(async () => {
     await onSnapshot(
@@ -121,9 +117,6 @@ function App() {
   const updateHandler = (data, url) => {
     updateFieldData(data, url);
   };
-  const deleteHandler = (url) => {
-    deleteDocData(url);
-  };
 
   return (
     <div className="app">
@@ -160,13 +153,7 @@ function App() {
           path=":uid/houseInfo/:id"
           element={
             <Suspense fallback="Loading...">
-              <HouseDetail
-                firebaseApp={app}
-                onAdd={addHandler}
-                onUpdate={updateHandler}
-                onDelete={deleteHandler}
-                token={token}
-              />
+              <HouseDetail firebaseApp={app} token={token} />
             </Suspense>
           }
         />

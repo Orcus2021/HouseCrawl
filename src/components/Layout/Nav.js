@@ -111,36 +111,42 @@ const Nav = (props) => {
               LOGIN
             </NavLink>
           )}
+          {token && (
+            <NavLink
+              to="/list"
+              data-text="LIST"
+              className={(navState) =>
+                navState.isActive ? classes.nav_1 : classes.nav
+              }
+              onClick={menuHandler}
+            >
+              LIST
+            </NavLink>
+          )}
+          {token && (
+            <NavLink
+              to={houseInfoUrl}
+              data-text="INFORMATION"
+              className={(navState) =>
+                navState.isActive ? classes.nav_1 : classes.nav
+              }
+              onClick={menuHandler}
+            >
+              INFORMATION
+            </NavLink>
+          )}
 
-          <NavLink
-            to="/list"
-            data-text="LIST"
-            className={(navState) =>
-              navState.isActive ? classes.nav_1 : classes.nav
-            }
-            onClick={menuHandler}
-          >
-            LIST
-          </NavLink>
-          <NavLink
-            to={houseInfoUrl}
-            data-text="INFORMATION"
-            className={(navState) =>
-              navState.isActive ? classes.nav_1 : classes.nav
-            }
-            onClick={menuHandler}
-          >
-            INFORMATION
-          </NavLink>
-          <NavLink
-            to={houseUser}
-            className={(navState) =>
-              navState.isActive ? classes.nav_1 : classes.nav
-            }
-            onClick={menuHandler}
-          >
-            USER
-          </NavLink>
+          {token && (
+            <NavLink
+              to={houseUser}
+              className={(navState) =>
+                navState.isActive ? classes.nav_1 : classes.nav
+              }
+              onClick={menuHandler}
+            >
+              <i className="ri-user-line"></i>
+            </NavLink>
+          )}
         </ul>
         {hamburgerShow && (
           <div className={classes.menu} onClick={menuHandler}>

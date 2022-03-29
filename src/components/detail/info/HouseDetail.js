@@ -3,6 +3,7 @@ import classes from "./HouseDetail.module.css";
 import AccountRecord from "../balance/AccountRecord";
 import EditBalance from "../balance/EditBalance";
 import Tenant from "../tenant/Tenant";
+import useMutation from "../../Hook/useMutation";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   getFirestore,
@@ -16,7 +17,8 @@ import DetailCreate from "../info/DetailCreate";
 
 let changeArr = [];
 const HouseDetail = (props) => {
-  const { firebaseApp, onAdd, onUpdate, onDelete } = props;
+  const { firebaseApp, token } = props;
+  const { updateFieldData, deleteDocData } = useMutation();
   const db = getFirestore(firebaseApp);
   const params = useParams();
   const navigate = useNavigate();
@@ -30,11 +32,11 @@ const HouseDetail = (props) => {
   let newBalance = detail.balance;
   let searchArr = [];
   useEffect(() => {
-    if (!props.token) {
+    if (!token) {
       navigate("/login");
       return;
     }
-  }, [props.token, navigate]);
+  }, [token, navigate]);
   const scrollScreen = () => {
     lastScrollY = window.scrollY;
   };
@@ -133,8 +135,11 @@ const HouseDetail = (props) => {
   const deleteHandler = (id, deleteAmount) => {
     let url = `/rentData/${userId}/houseInfo/${keyId}/balance/${id}`;
     newBalance -= deleteAmount;
-    onUpdate({ balance: newBalance }, `/rentData/${userId}/houseInfo/${keyId}`);
-    onDelete(url);
+    updateFieldData(
+      { balance: newBalance },
+      `/rentData/${userId}/houseInfo/${keyId}`
+    );
+    deleteDocData(url);
   };
   // edit Info
   const editInfoHandler = () => {
@@ -143,11 +148,11 @@ const HouseDetail = (props) => {
     });
   };
   const updateEditInfoHandler = (data) => {
-    onUpdate(data, `/rentData/${userId}/houseInfo/${keyId}`);
+    updateFieldData(data, `/rentData/${userId}/houseInfo/${keyId}`);
   };
   const delInfoHandler = () => {
     if (window.confirm("你確定刪除嗎?")) {
-      onDelete(`/rentData/${userId}/houseInfo/${keyId}`);
+      deleteDocData(`/rentData/${userId}/houseInfo/${keyId}`);
       navigate(`/${userId}/houseInfo`);
     }
   };
@@ -213,8 +218,6 @@ const HouseDetail = (props) => {
 
       <div className={classes.balanceList}>
         <EditBalance
-          onAdd={onAdd}
-          onUpdate={onUpdate}
           onQuery={queryRecordData}
           newBalance={newBalance}
           keyId={keyId}
@@ -242,7 +245,7 @@ const HouseDetail = (props) => {
             keyId={keyId}
             onClose={editInfoHandler}
             onUpdate={updateEditInfoHandler}
-            token={props.token}
+            token={token}
           />
         </Modal>
       ) : (

@@ -9,7 +9,7 @@ const Tenant = (props) => {
   const { userId, houseId } = props;
 
   const [editShow, setEditShow] = useState(false);
-  const [showContent, setShowContent] = useState(false);
+  const [showContent, setShowContent] = useState(true);
   const { allData } = useGetData(
     `/rentData/${userId}/houseInfo/${houseId}/tenant`,
     "allDocs"

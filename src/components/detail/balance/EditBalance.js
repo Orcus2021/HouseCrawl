@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import classes from "./EditBalance.module.css";
 import { collection, query, where } from "firebase/firestore";
+import useMutation from "../../Hook/useMutation";
 let left = 0;
 let top = 0;
 
@@ -24,16 +25,8 @@ if (initDay.length === 1) {
 initDate = `${initYear}-${initMonth}-${initDay}`;
 // let lastScrollY = 0;
 const EditBalance = (props) => {
-  const {
-    onAdd,
-    onUpdate,
-    onQuery,
-    newBalance,
-    keyId,
-    userId,
-    db,
-    lastScrollY,
-  } = props;
+  const { onQuery, newBalance, keyId, userId, db, lastScrollY } = props;
+  const { addCollectionData, updateFieldData } = useMutation();
   let initBalance = newBalance;
   const [recordDate, setRecordDate] = useState(initDate);
   const [amount, setAmount] = useState("");
@@ -151,22 +144,31 @@ const EditBalance = (props) => {
 
         initBalance += dataObj.amount;
 
-        onAdd(dataObj, `/rentData/${userId}/houseInfo/${keyId}/balance`);
+        addCollectionData(
+          dataObj,
+          `/rentData/${userId}/houseInfo/${keyId}/balance`
+        );
 
-        onUpdate(
+        updateFieldData(
           { balance: initBalance },
           `/rentData/${userId}/houseInfo/${keyId}`
         );
       } else {
         initBalance += dataObj.amount;
 
-        onAdd(dataObj, `/rentData/${userId}/houseInfo/${keyId}/balance`);
+        addCollectionData(
+          dataObj,
+          `/rentData/${userId}/houseInfo/${keyId}/balance`
+        );
 
-        onUpdate(
+        updateFieldData(
           { balance: initBalance },
           `/rentData/${userId}/houseInfo/${keyId}`
         );
       }
+      setRecordDate(initDate);
+      setAmount("");
+      setItem("");
     } else {
       alert("請輸入正確日期、金額、名稱");
     }
