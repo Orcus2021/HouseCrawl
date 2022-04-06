@@ -28,6 +28,7 @@ const Tenant = (props) => {
   const editHandler = () => {
     setEditShow((pre) => !pre);
   };
+
   const showContentHandler = () => {
     setShowContent((pre) => !pre);
   };

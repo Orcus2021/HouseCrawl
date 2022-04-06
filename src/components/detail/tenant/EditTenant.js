@@ -10,6 +10,8 @@ const EditTenant = (props) => {
     return d.trim().length > 0;
   };
   const { onClose, edit, keyId, tenantData, userId, houseId } = props;
+  console.log(tenantData);
+  const { expire, keyId, rent, roomNumber, tenantName } = tenantData;
   const { addCollectionData, updateFieldData, deleteDocData } = useMutation();
   let url = `/rentData/${userId}/houseInfo/${houseId}/tenant`;
   if (edit) {
@@ -29,7 +31,7 @@ const EditTenant = (props) => {
     valid: roomValid,
     changeHandler: roomHandler,
     // initValueHandler: setInitRoom,
-  } = useInput(condition, tenantData.roomNumber);
+  } = useInput(condition, tenantData?.roomNumber);
 
   const {
     value: tenantName,
